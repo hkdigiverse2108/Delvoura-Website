@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap");
+
+@import "../public/assets/css/Header.css";
+@import "../public/assets/css/auth.css";
+
+:root {
+  --color-primary: #3a0f1b;
+  --color-accent: #5a1e2e;
+  --color-soft-accent: #7a2e3e;
+  --color-bg: #f8f4f6;
+  --color-card: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b5b63;
+  --color-border: #e8dde2;
+  --color-hover-dark: #2a0a13;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Jost", sans-serif, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: normal;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: "Jost", sans-serif, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.global-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(248, 244, 246, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+.loader {
+  width: 80px;
+  aspect-ratio: 1;
+  border: 10px solid transparent;
+  box-sizing: border-box;
+  background:
+    radial-gradient(farthest-side, #000 98%, #0000) top,
+    radial-gradient(farthest-side, #000 98%, #0000) top,
+    radial-gradient(farthest-side, #000 98%, #0000) left,
+    radial-gradient(farthest-side, #000 98%, #0000) right,
+    radial-gradient(farthest-side, #000 98%, #0000) bottom;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  animation: l19 2s infinite;
+}
+
+@keyframes l19 {
+  0% {
+    background-position: top, top, left, right, bottom;
+  }
+  25% {
+    background-position: right, top, left, right, bottom;
+  }
+  50% {
+    background-position: bottom, top, left, right, bottom;
+  }
+  75% {
+    background-position: left, top, left, right, bottom;
+  }
+  100% {
+    background-position: top, top, left, right, bottom;
+  }
+}
+
+/* 
+
+Primary (Deep Wine):      #3A0F1B
+Accent (Royal Rose):      #5A1E2E
+Soft Accent:              #7A2E3E
+Background:               #F8F4F6
+Card:                     #FFFFFF
+Text Primary:             #1A1A1A
+Text Secondary:           #6B5B63
+Border:                   #E8DDE2
+Hover Dark:               #2A0A13 */
+
+
+

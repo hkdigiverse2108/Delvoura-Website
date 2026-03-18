@@ -1,0 +1,55 @@
+.delvoura-auth-content .ant-tabs-nav::before {
+  display: none;
+}
+
+.delvoura-auth-content .ant-tabs-nav {
+  margin-bottom: 20px !important;
+}
+
+.delvoura-auth-content .ant-tabs-nav-list {
+  display: flex;
+  gap: 12px;
+  background: #f1ecee;
+  padding: 8px;
+  border-radius: 999px;
+  width: 100%;
+}
+
+.delvoura-auth-content .ant-tabs-tab {
+  flex: 1;
+  margin: 0 !important;
+  border-radius: 999px;
+  padding: 0;
+}
+
+.delvoura-auth-content .ant-tabs-tab-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tab-label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #6b5b63;
+}
+
+.delvoura-auth-content .ant-tabs-tab-active {
+  background: #ffffff;
+  box-shadow: 0 10px 25px -18px rgba(0, 0, 0, 0.35);
+}
+
+.delvoura-auth-content .ant-tabs-tab-active .tab-label {
+  color: var(--color-primary);
+}
+
+.delvoura-auth-content .ant-tabs-ink-bar {
+  display: none !important;
+}

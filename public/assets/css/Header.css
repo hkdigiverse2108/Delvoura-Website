@@ -1,0 +1,426 @@
+.collection-scroll {
+  scrollbar-width: none;
+}
+
+.collection-scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+.collection-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.collection-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.delvoura-header-theme {
+  --color-primary: #f6eadf;
+  --color-accent: #ff7a45;
+  --color-soft-accent: #d4a373;
+  --color-bg: #120d16;
+  --color-card: #1a1421;
+  --color-text: #f7efe7;
+  --color-text-muted: #c3b6ad;
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-hover-dark: #0f0a12;
+}
+
+.delvoura-header-shell {
+  position: relative;
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(255, 122, 69, 0.16) 0%, rgba(18, 13, 22, 0.96) 55%),
+    linear-gradient(135deg, rgba(16, 12, 18, 0.96), rgba(24, 16, 28, 0.98));
+  backdrop-filter: blur(18px);
+  border-bottom: none;
+  box-shadow: 0 24px 50px -35px rgba(0, 0, 0, 0.85);
+}
+
+.delvoura-header-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0 20% auto 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 214, 170, 0.35), transparent);
+}
+
+.delvoura-hero-header {
+  --color-primary: #141414;
+  --color-accent: #e15b2f;
+  --color-soft-accent: #b64826;
+  --color-bg: rgba(255, 255, 255, 0.85);
+  --color-card: rgba(255, 255, 255, 0.92);
+  --color-text: #161616;
+  --color-text-muted: #4a4a4a;
+  --color-border: transparent;
+  --color-hover-dark: #111111;
+}
+
+.delvoura-hero-header .delvoura-header-shell {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 28px;
+  box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(18px);
+}
+
+.delvoura-hero-header .delvoura-glow-pill {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.35);
+  color: #141414;
+  border: 1px solid #ffffff;
+}
+
+.delvoura-hero-header .delvoura-auth-wrap {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.delvoura-hero-header .delvoura-collection-panel {
+  background: var(--color-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.55);
+}
+
+.delvoura-hero-header .delvoura-collection-panel {
+  color: var(--color-text) !important;
+}
+
+.delvoura-hero-header .delvoura-collection-item {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.delvoura-hero-header .delvoura-collection-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.delvoura-collection-panel {
+  background: var(--color-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  transition: opacity 0.2s ease, transform 0.22s ease;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.delvoura-collection-panel-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.delvoura-collection-panel-closed {
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.delvoura-collection-item {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.delvoura-collection-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.delvoura-signature-box {
+  background: #2a2233;
+}
+
+.delvoura-signature-title {
+  color: #120d16 !important;
+}
+
+.delvoura-signature-sub {
+  color: #241a2c !important;
+}
+
+.delvoura-glow-pill {
+  background: linear-gradient(135deg, rgba(255, 122, 69, 0.18), rgba(212, 163, 115, 0.08));
+  border: 1px solid transparent;
+  box-shadow: 0 10px 25px -18px rgba(255, 122, 69, 0.7);
+  transition: transform 0.2s ease, border 0.2s ease, background 0.2s ease;
+}
+
+.delvoura-glow-pill:hover {
+  color: var(--color-text);
+  transform: translateY(-1px);
+  border-color: rgba(255, 214, 170, 0.6);
+  background: linear-gradient(135deg, rgba(255, 122, 69, 0.3), rgba(212, 163, 115, 0.12));
+}
+
+.delvoura-header-theme .delvoura-search-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #c3b6ad;
+}
+
+.delvoura-header-theme .delvoura-search-btn:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: transparent !important;
+}
+
+.delvoura-header-theme .delvoura-search-btn:focus,
+.delvoura-header-theme .delvoura-search-btn:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.35) !important;
+}
+
+
+.delvoura-collection-btn {
+  border: 1px solid var(--color-border);
+}
+
+.delvoura-collection-btn:hover {
+  border-color: rgba(255, 214, 170, 0.6);
+}
+
+.delvoura-cart-btn {
+  color: #ffffff !important;
+  background-color: #0f0a12 !important;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.delvoura-auth-wrap {
+  background: linear-gradient(135deg, rgba(255, 122, 69, 0.22), rgba(212, 163, 115, 0.12));
+  border: 1px solid transparent;
+  box-shadow: 0 14px 30px -22px rgba(255, 122, 69, 0.8);
+}
+
+.delvoura-auth-btn {
+  border: none;
+  color: var(--color-primary);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.delvoura-auth-btn:hover {
+  transform: translateY(-1px);
+  color: var(--color-text);
+}
+
+.delvoura-auth-cta {
+  background: linear-gradient(135deg, rgba(255, 122, 69, 0.85), rgba(255, 164, 94, 0.85));
+  color: #0d0a0f;
+  font-weight: 700;
+}
+
+/* 🔥 MAIN FIX START */
+.delvoura-search-modal .ant-modal-root,
+.delvoura-search-modal .ant-modal-wrap,
+.delvoura-search-modal .ant-modal,
+.delvoura-search-modal .ant-modal-container,
+.delvoura-search-modal .ant-modal-content,
+.delvoura-search-modal .ant-modal-body {
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.delvoura-search-modal .ant-modal {
+  margin: 0 auto !important;
+  max-width: 1200px !important;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.delvoura-search-modal .ant-modal-mask {
+  background: rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(6px);
+  transition: opacity 0.28s ease;
+}
+
+.delvoura-search-modal .ant-modal.ant-modal-zoom-enter,
+.delvoura-search-modal .ant-modal.ant-modal-zoom-appear {
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+}
+
+.delvoura-search-modal .ant-modal.ant-modal-zoom-enter-active,
+.delvoura-search-modal .ant-modal.ant-modal-zoom-appear-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.delvoura-search-modal .ant-modal.ant-modal-zoom-leave {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.delvoura-search-modal .ant-modal.ant-modal-zoom-leave-active {
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+}
+
+.delvoura-search-modal .ant-modal-mask.ant-fade-enter,
+.delvoura-search-modal .ant-modal-mask.ant-fade-appear {
+  opacity: 0;
+}
+
+.delvoura-search-modal .ant-modal-mask.ant-fade-enter-active,
+.delvoura-search-modal .ant-modal-mask.ant-fade-appear-active {
+  opacity: 1;
+}
+
+.delvoura-search-modal .ant-modal-mask.ant-fade-leave {
+  opacity: 1;
+}
+
+.delvoura-search-modal .ant-modal-mask.ant-fade-leave-active {
+  opacity: 0;
+}
+
+body.ant-modal-open {
+  overflow: hidden !important;
+}
+
+body.ant-modal-open::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.delvoura-modal-surface {
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(255, 122, 69, 0.12), transparent 55%),
+    linear-gradient(140deg, rgba(18, 13, 22, 0.98), rgba(24, 16, 28, 0.98));
+  border-radius: 28px;
+  box-shadow: 0 50px 120px -40px rgba(0, 0, 0, 0.75);
+  padding: 24px;
+  min-height: 100%;
+}
+
+.delvoura-modal-left,
+.delvoura-modal-right {
+  background: #1a1421;
+  color: #f7efe7;
+}
+
+.delvoura-modal-left .ant-typography,
+.delvoura-modal-left h5,
+.delvoura-modal-right .ant-typography,
+.delvoura-modal-right h5 {
+  color: #f7efe7;
+}
+
+.delvoura-modal-left .ant-typography-secondary,
+.delvoura-modal-right .ant-typography-secondary {
+  color: #c9c1b9;
+}
+
+.delvoura-modal-right {
+  scrollbar-width: none;
+}
+
+.delvoura-modal-right {
+  max-height: calc(80vh - 140px);
+  overflow: auto;
+}
+
+.delvoura-modal-right::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.delvoura-modal-right::-webkit-scrollbar-track,
+.delvoura-modal-right::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.delvoura-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  color: var(--color-text);
+  transition: border 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.delvoura-chip-strong {
+  background: #241a2c;
+  color: #f7efe7;
+}
+
+.delvoura-chip-lg {
+  padding: 10px 18px;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+}
+
+.delvoura-chip:hover {
+  border-color: rgba(255, 214, 170, 0.5);
+  background: rgba(255, 122, 69, 0.12);
+  transform: translateY(-1px);
+}
+
+.delvoura-product-card {
+  background: rgba(15, 10, 18, 0.7);
+  border: 1px solid transparent;
+  box-shadow: 0 12px 24px -18px rgba(0, 0, 0, 0.8);
+}
+
+.delvoura-input {
+  background: rgba(15, 10, 18, 0.85);
+  border: 1px solid rgba(255, 214, 170, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(18, 13, 22, 0.6);
+  color: var(--color-text);
+}
+
+.delvoura-input::placeholder {
+  color: rgba(243, 232, 221, 0.6);
+}
+
+.delvoura-input:hover {
+  border-color: rgba(255, 214, 170, 0.45);
+}
+
+.delvoura-input:focus,
+.delvoura-input:focus-within {
+  border-color: rgba(255, 214, 170, 0.75);
+  box-shadow:
+    0 0 0 2px rgba(255, 122, 69, 0.25),
+    inset 0 0 0 1px rgba(18, 13, 22, 0.6);
+}
+
+.delvoura-auth-content .ant-input:focus,
+.delvoura-auth-content .ant-input-focused,
+.delvoura-auth-content .ant-input-affix-wrapper:focus,
+.delvoura-auth-content .ant-input-affix-wrapper-focused {
+  border-color: rgba(212, 163, 115, 0.8) !important;
+  box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.25) !important;
+}
+
+.delvoura-auth-content .ant-input:hover,
+.delvoura-auth-content .ant-input-affix-wrapper:hover {
+  border-color: rgba(212, 163, 115, 0.6) !important;
+}
+
+.delvoura-auth-content .ant-btn-default {
+  border-color: rgba(212, 163, 115, 0.8) !important;
+  color: var(--color-accent) !important;
+}
+
+.delvoura-auth-content .ant-btn-default:hover,
+.delvoura-auth-content .ant-btn-default:focus,
+.delvoura-auth-content .ant-btn-default:focus-visible {
+  border-color: rgba(212, 163, 115, 1) !important;
+  color: var(--color-accent) !important;
+  box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.25) !important;
+}
+
+
+@media (max-width: 768px) {
+  .delvoura-search-modal .ant-modal-body {
+    height: 90vh !important;
+  }
+
+  .delvoura-modal-surface {
+    padding: 16px;
+  }
+
+  .delvoura-modal-right {
+    max-height: none;
+    overflow: visible;
+  }
+}

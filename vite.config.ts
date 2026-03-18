@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(({ mode }) => {
@@ -10,6 +11,7 @@ export default defineConfig(({ mode }) => {
   // https://vite.dev/config/
   return {
     plugins: [
+      tailwindcss(),
       react(),
       VitePWA({
         registerType: "prompt",
@@ -21,7 +23,7 @@ export default defineConfig(({ mode }) => {
         },
 
         manifest: {
-          name: "Delvoura",
+          name: "Delvoura ",
           short_name: "Delvoura",
           description: "Delvoura App",
           theme_color: "#sd3bff",

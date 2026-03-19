@@ -4,11 +4,11 @@ import Header from "../../Layout/Header/Index";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 import AppFooter from "../../Layout/AppFooter";
-import { InstagramScrollingSection } from "../../Components/common";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
 import { useAppSelector } from "../../Store/Hooks";
 import { Queries } from "../../Api";
+import { InstagramScrollingSection } from "../../Components/common";
 
 const Authencation = () => {
   const [tab, setTab] = useState("login");

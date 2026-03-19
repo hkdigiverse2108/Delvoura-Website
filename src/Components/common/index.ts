@@ -1,1 +1,1 @@
-export * from "./InstagramScrollingSection";
+export * from "./InstagramScrollingSection"

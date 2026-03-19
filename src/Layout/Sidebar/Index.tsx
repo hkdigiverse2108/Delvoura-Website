@@ -2,13 +2,19 @@ import { Drawer, Button } from "antd";
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import CollectionMenu from "../Header/CollectionMenu";
+import ProfileCard from "../Header/ProfileCard";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants/Routes";
+import { useAppSelector } from "../../Store/Hooks";
+import { Queries } from "../../Api";
 
 const MobileSidebar = () => {
   const [open, setOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { data: userData } = Queries.useGetSingleUser( (user as { _id?: string } | null)?._id);
+  const isLoggedIn = isAuthenticated || !!userData;
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 768px)");
@@ -36,9 +42,7 @@ const MobileSidebar = () => {
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between">
                 <img src="/assets/images/logo/logo-black.png" alt="Delvoura" className="h-6 w-auto"/>
-                <Button type="text" onClick={() => setOpen(false)}>
-                    <CloseOutlined />
-                </Button>
+                <Button type="text" onClick={() => setOpen(false)}><CloseOutlined /></Button>
               </div>
 
               <div>
@@ -47,18 +51,29 @@ const MobileSidebar = () => {
                   <CollectionMenu isMobile />
                 </div>
               </div>
+
+              {isLoggedIn && (
+                <div>
+                  <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">Profile</h3>
+                  <div className="rounded-xl bg-[var(--color-bg)] p-3">
+                    <ProfileCard variant="mobile" />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* BOTTOM */}
-            <div className="mt-6 flex flex-col gap-3">
-              <button className="rounded-full border border-[var(--color-border)] py-3" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
-                Login
-              </button>
+            {!isLoggedIn && (
+              <div className="mt-6 flex flex-col gap-3">
+                <button className="rounded-full border border-[var(--color-border)] py-3" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
+                  Login
+                </button>
 
-              <button className="rounded-full bg-[var(--color-primary)] py-3 text-white" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
-                <span className="text-white">Sign up</span>
-              </button>
-            </div>
+                <button className="rounded-full bg-[var(--color-primary)] py-3 text-white" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
+                  <span className="text-white">Sign up</span>
+                </button>
+              </div>
+            )}
           </div>
         </Drawer>
       )}

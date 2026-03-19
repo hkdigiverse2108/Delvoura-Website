@@ -3,7 +3,10 @@ import { Typography } from "antd";
 
 const { Title, Text } = Typography;
 
-const placeholderImages = Array.from({ length: 8 }).map((_, idx) => ({ id: idx, src: "https://placehold.co/320x420/png?text=Delvoura",}));
+const placeholderImages = Array.from({ length: 8 }).map((_, idx) => ({
+  id: idx,
+  src: "https://placehold.co/320x420/png?text=Delvoura",
+}));
 
 export const InstagramScrollingSection = () => {
   const items = [...placeholderImages, ...placeholderImages];
@@ -28,17 +31,24 @@ export const InstagramScrollingSection = () => {
       <div className="mx-auto mt-8 w-[95%] max-w-6xl overflow-x-hidden">
         <div className="instagram-marquee overflow-hidden rounded-3xl bg-[#120d16] px-[3px] py-3 shadow-[0_18px_28px_-20px_rgba(0,0,0,0.65)] sm:px-[4px]">
           <div className="instagram-track flex w-max items-center gap-[3px]">
-          {items.map((item, index) => (
-            <div key={`${item.id}-${index}`} className="group relative h-40 w-28 shrink-0 overflow-hidden rounded-[5px] bg-[#120d16] shadow-[0_24px_45px_-30px_rgba(0,0,0,0.75)] sm:h-52 sm:w-36 md:h-64 md:w-48 lg:h-[300px] lg:w-[220px]">
-              <img src={item.src} alt="Instagram placeholder" className="h-full w-full object-cover transition duration-300 group-hover:opacity-60 " />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.05),rgba(0,0,0,0.55))] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="absolute inset-0 grid place-items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span className="grid h-14 w-14 place-items-center rounded-full bg-white/15 text-white backdrop-blur">
-                  <PlayCircleFilled className="text-3xl" />
-                </span>
+            {items.map((item, index) => (
+              <div
+                key={`${item.id}-${index}`}
+                className="group relative h-40 w-28 shrink-0 overflow-hidden rounded-[5px] bg-[#120d16] shadow-[0_24px_45px_-30px_rgba(0,0,0,0.75)] sm:h-52 sm:w-36 md:h-64 md:w-48 lg:h-[300px] lg:w-[220px]"
+              >
+                <img
+                  src={item.src}
+                  alt="Instagram placeholder"
+                  className="h-full w-full object-cover transition duration-300 group-hover:opacity-60 "
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.05),rgba(0,0,0,0.55))] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute inset-0 grid place-items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="grid h-14 w-14 place-items-center rounded-full bg-white/15 text-white backdrop-blur">
+                    <PlayCircleFilled className="text-3xl" />
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
       </div>

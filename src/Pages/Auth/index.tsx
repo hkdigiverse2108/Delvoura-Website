@@ -1,13 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs } from "antd";
 import Header from "../../Layout/Header/Index";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 import AppFooter from "../../Layout/AppFooter";
 import { InstagramScrollingSection } from "../../Components/common";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../Constants";
+import { useAppSelector } from "../../Store/Hooks";
+import { Queries } from "../../Api";
 
 const Authencation = () => {
   const [tab, setTab] = useState("login");
+  const navigate = useNavigate();
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { data: userData } = Queries.useGetSingleUser( (user as { _id?: string } | null)?._id);
+  const isLoggedIn = isAuthenticated || !!userData;
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(ROUTES.HERO, { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div className="delvoura-auth-page min-h-screen bg-[#f5f1f2] text-[color:var(--color-text)]">

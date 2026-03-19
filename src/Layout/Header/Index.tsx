@@ -4,23 +4,19 @@ import CollectionMenu from "./CollectionMenu";
 import LoginAndSignupBtns from "./LoginAndSignupBtns";
 import SearchBarWithModel from "./SearchBarWithModel";
 import MobileSidebar from "../Sidebar/Index";
+import { Queries } from "../../Api";
+import { useAppSelector } from "../../Store/Hooks";
+import ProfileCard from "./ProfileCard";
 
 
 const Header = () => {
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { data: userData } = Queries.useGetSingleUser((user as { _id?: string } | null)?._id);
+  const isLoggedIn = isAuthenticated || !!userData;
+
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "var(--color-accent)",
-          colorBorder: "var(--color-border)",
-          colorText: "var(--color-text)",
-        },
-      }}
-    >
-      <header
-        className="delvoura-header-theme delvoura-header-shell  sticky top-0 z-50 border-b border-[var(--color-border)]"
-        style={{ background: "var(--color-card)" }}
-      >
+    <ConfigProvider theme={{ token: { colorPrimary: "var(--color-accent)", colorBorder: "var(--color-border)", colorText: "var(--color-text)",}, }}>
+      <header className="delvoura-header-theme delvoura-header-shell  sticky top-0 z-50 border-b border-[var(--color-border)]" style={{ background: "var(--color-card)" }}>
         <div className="mx-auto w-[90%] max-w-6xl px-4 py-4 md:px-6">
           <div className="flex items-center justify-between gap-3 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-3">
             <div className="flex items-center gap-3">
@@ -46,7 +42,7 @@ const Header = () => {
               {/* DESKTOP */}
               <div className="hidden md:flex items-center gap-4">
                 <SearchBarWithModel />
-                <LoginAndSignupBtns />
+                {!isLoggedIn ? <LoginAndSignupBtns /> : <ProfileCard user={user} userData={userData} />}
                 <Cart />
               </div>
             </div>

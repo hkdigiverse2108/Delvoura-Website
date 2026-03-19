@@ -88,13 +88,13 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
   return (
     <div ref={ref} className="relative inline-block">
       {/* BUTTON */}
-      <button onClick={() => setOpen(!open)} className="delvoura-glow-pill delvoura-collection-btn inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold"style={{ background: "var(--color-card)", color: "var(--color-text)" }}>
+      <button onClick={() => setOpen(!open)} className="delvoura-header-pill delvoura-collection-btn inline-flex items-center gap-2 text-sm font-semibold" style={{ background: "transparent", color: "var(--color-text)" }}>
         Collections
         <span className="text-xs">▾</span>
       </button>
 
       {/* DROPDOWN */}
-      <div className={`delvoura-collection-panel absolute top-full mt-3 w-80 rounded-3xl p-5 shadow-2xl ${ open ? "delvoura-collection-panel-open" : "delvoura-collection-panel-closed" }`} aria-hidden={!open}>
+      <div className={`delvoura-collection-panel absolute top-full left-1/2 -translate-x-1/2 mt-3 w-80 rounded-3xl p-5 shadow-2xl ${ open ? "delvoura-collection-panel-open" : "delvoura-collection-panel-closed" }`} aria-hidden={!open}>
         {menuData.map((section, i) => (
           <div key={i} className="mb-4">
             {section.title && (

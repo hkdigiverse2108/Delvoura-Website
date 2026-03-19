@@ -29,8 +29,8 @@ const SearchBarWithModal = () => {
 
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "var(--color-accent)", borderRadiusLG: 20,},}}>
-      {/* BUTTON */}
-      <Button onClick={() => setOpen(true)} icon={<SearchOutlined />} className="delvoura-search-btn hidden items-center rounded-full px-6 py-3 text-base md:inline-flex" style={{color: "var(--color-text-muted)",}}>
+        {/* BUTTON */}
+      <Button onClick={() => setOpen(true)} icon={<SearchOutlined />} className="delvoura-search-btn delvoura-header-pill hidden items-center text-base md:inline-flex" style={{color: "var(--color-text-muted)",}}>
         Search perfumes...
       </Button>
 

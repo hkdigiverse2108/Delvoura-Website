@@ -1,11 +1,15 @@
 import { Form, Input } from "antd";
 import type { CommonPasswordInputProps } from "../../Types";
 
-export const CommonPasswordInput = ({ name, label = "Password", placeholder = "••••••••", }: CommonPasswordInputProps) => {
+export const CommonPasswordInput = ({ name, label = "Password", placeholder = "*************", value, onChange, onBlur, error, touched }: CommonPasswordInputProps) => {
+  const hasError = touched && !!error;
   return (
-    <Form.Item name={name} label={label} className="mb-4">
-      <Input.Password placeholder={placeholder} size="large" />
-    </Form.Item>
+    <div>
+      <label className="mb-2 block text-sm text-[color:var(--color-text)]">{label}</label>
+      <Form.Item name={name} className="mb-0" validateStatus={hasError ? "error" : ""} help={hasError ? error : undefined}>
+        <Input.Password placeholder={placeholder} size="large" value={value} onChange={onChange} onBlur={onBlur} />
+      </Form.Item>
+    </div>
   );
 };
 

@@ -200,7 +200,7 @@
 /****product card css **********/
 .delvoura-home-products {
   padding: 36px 0 64px;
-  background: var(--color-bg-soft);
+  background:white;
 }
 
 .delvoura-home-products .delvoura-product-grid {
@@ -350,6 +350,7 @@
 .delvoura-home-products .delvoura-product-price {
   color: var(--color-accent);
   font-weight: 700;
+  font-size: 14px;
 }
 
 .delvoura-home-products .delvoura-product-cta-row {
@@ -399,6 +400,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+.delvoura-home-products .ant-rate {
+  font-size: 12px;
 }
 
 .delvoura-select-options-modal .ant-modal-content {

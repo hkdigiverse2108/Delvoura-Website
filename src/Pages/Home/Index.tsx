@@ -30,7 +30,7 @@ const MainHomePage = () => {
 
   return (
     <>
-      <section className="relative w-full bg-[color:var(--color-bg)]">
+      <section className="relative w-full bg-white">
         <div className="sticky top-0 z-[550] w-full">
           <Header />
         </div>

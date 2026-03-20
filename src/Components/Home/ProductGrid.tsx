@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Button, Modal, Rate, Tag, Typography } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -41,7 +42,7 @@ const products = [
     image:
       "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=900&auto=format&fit=crop",
   },
-    {
+  {
     name: "Aqua Prism",
     subtitle: "Inspired by Cool Water",
     price: "Rs. 299 - 799.0",
@@ -53,7 +54,7 @@ const products = [
     image:
       "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=900&auto=format&fit=crop",
   },
-    {
+  {
     name: "Aqua Prism",
     subtitle: "Inspired by Cool Water",
     price: "Rs. 299 - 799.0",
@@ -89,7 +90,7 @@ const products = [
     image:
       "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=900&auto=format&fit=crop",
   },
-    {
+  {
     name: "Aqua Prism",
     subtitle: "Inspired by Cool Water",
     price: "Rs. 299 - 799.0",
@@ -104,6 +105,7 @@ const products = [
 ];
 
 const ProductGrid = () => {
+  const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState<(typeof products)[number] | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>("50 ml");
   const isModalOpen = Boolean(selectedProduct);
@@ -116,8 +118,8 @@ const ProductGrid = () => {
     <section className="delvoura-home-products">
       <div className="mx-auto w-[95%] max-w-[1700px]">
         <div className="delvoura-product-grid grid gap-6">
-          {products.map((product) => (
-            <article key={product.name} className="delvoura-product-card">
+          {products.map((product, idx) => (
+            <article key={`${product.name}-${idx}`} className="delvoura-product-card cursor-pointer" onClick={() => navigate(`/products/${idx + 1}`)}>
               <div className="delvoura-product-media">
                 <img src={product.image} alt={product.name} loading="lazy" />
                 <div className="delvoura-product-media-shadow" />
@@ -129,7 +131,7 @@ const ProductGrid = () => {
                     </Tag>
                   ))}
                 </div>
-                <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={() => { setSelectedProduct(product); setSelectedSize(product.sizes[0]);}}>
+                <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={(event) => { event.stopPropagation(); setSelectedProduct(product); setSelectedSize(product.sizes[0]);}}>
                   Select Options
                 </Button>
               </div>
@@ -157,10 +159,10 @@ const ProductGrid = () => {
                 </div>
 
                 <div className="delvoura-product-tags">
-                  {product.tags.map((tag, idx) => (
-                    <span key={tag}>
+                  {product.tags.map((tag, tagIndex) => (
+                    <span key={`${tag}-${tagIndex}`}>
                       {tag}
-                      {idx < product.tags.length - 1 ? " |" : ""}
+                      {tagIndex < product.tags.length - 1 ? " |" : ""}
                     </span>
                   ))}
                 </div>
@@ -172,12 +174,12 @@ const ProductGrid = () => {
 
       <Modal open={isModalOpen} onCancel={() => setSelectedProduct(null)} footer={null} centered closable={false} width={1080} className="delvoura-select-options-modal" maskStyle={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }} bodyStyle={{ padding: 0 }}>
         {selectedProduct && (
-          <div className="delvoura-select-options-card " >
+          <div className="delvoura-select-options-card ">
             <button type="button" className="delvoura-select-options-close" onClick={() => setSelectedProduct(null)} aria-label="Close" >
               <CloseOutlined />
             </button>
 
-            <div className="delvoura-select-options-media" >
+            <div className="delvoura-select-options-media">
               <div className="delvoura-select-options-thumbs">
                 {modalImages.map((img, idx) => (
                   <button type="button" className="delvoura-select-options-thumb" key={`${img}-${idx}`} aria-label={`Preview ${idx + 1}`} >
@@ -221,8 +223,8 @@ const ProductGrid = () => {
                 </Button>
               </div>
 
-              <button type="button" className="delvoura-select-options-link">
-                View full details →
+              <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(`/products/1`);}}>
+                View full details ?
               </button>
             </div>
           </div>

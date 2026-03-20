@@ -2,6 +2,7 @@ export const ROUTES = {
     HERO: "/",
     
     COLLECTIONS_ALL: "/collections/all",
+    PRODUCT_DETAILS: "/products/:id",
 
     AUTH : {
         AUTHETICATION : "/authentication",

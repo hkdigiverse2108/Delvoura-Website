@@ -68,16 +68,7 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
 
   return (
     <>
-      <Dropdown
-        trigger={["click"]}
-        placement="bottom"
-        overlayClassName="delvoura-profile-dropdown"
-        getPopupContainer={() => document.body}
-        overlayStyle={{ marginTop: 12 }}
-        autoAdjustOverflow={false}
-        open={dropdownOpen}
-        onOpenChange={setDropdownOpen}
-        dropdownRender={() => (
+      <Dropdown trigger={["click"]} placement="bottom" overlayClassName="delvoura-profile-dropdown" getPopupContainer={() => document.body} overlayStyle={{ marginTop: 12 }} autoAdjustOverflow={false} open={dropdownOpen} onOpenChange={setDropdownOpen} dropdownRender={() => (
           <div className="delvoura-profile-menu">
             <div className="delvoura-profile-menu-header">
               <Avatar className="delvoura-profile-avatar delvoura-profile-avatar-lg">

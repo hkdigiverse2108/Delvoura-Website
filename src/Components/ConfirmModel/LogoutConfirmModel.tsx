@@ -40,6 +40,16 @@ export const LogoutConfirmModel = ({ open, onConfirm, onCancel, confirmLoading =
             border-radius: 28px !important;
             overflow: hidden !important;
           }
+          .delvoura-logout-confirm-modal.ant-modal,
+          .delvoura-logout-confirm-modal {
+            padding: 0 !important;
+            background: transparent !important;
+          }
+          .delvoura-logout-confirm-modal.ant-modal .ant-modal-container,
+          .delvoura-logout-confirm-modal .ant-modal-container {
+            padding: 0 !important;
+            background: transparent !important;
+          }
           .delvoura-logout-confirm-modal.ant-modal .ant-modal-body,
           .delvoura-logout-confirm-modal .ant-modal-body {
             padding: 0 !important;

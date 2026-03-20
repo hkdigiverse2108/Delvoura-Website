@@ -2,11 +2,7 @@ import { useQuery, type QueryKey, type UseQueryOptions } from "@tanstack/react-q
 
 export type AppQueryOptions<T> = Omit<UseQueryOptions<T, Error, T, QueryKey>, "queryKey" | "queryFn">;
 
-export function useQueries<T>(
-  queryKey: QueryKey,
-  callback: () => Promise<T>,
-  options?: AppQueryOptions<T>,
-) {
+export function useQueries<T>( queryKey: QueryKey, callback: () => Promise<T>, options?: AppQueryOptions<T>,) {
   return useQuery<T, Error, T, QueryKey>({
     queryKey,
     queryFn: async () => await callback(),

@@ -4,11 +4,7 @@ export type AppMutationOptions<TResponse, TInput> = UseMutationOptions<TResponse
   invalidateQueryKeys?: QueryKey[];
 };
 
-export function useMutations<TInput, TResponse>(
-  mutationKey: QueryKey,
-  callback: (input: TInput) => Promise<TResponse>,
-  options?: AppMutationOptions<TResponse, TInput>,
-) {
+export function useMutations<TInput, TResponse>( mutationKey: QueryKey, callback: (input: TInput) => Promise<TResponse>, options?: AppMutationOptions<TResponse, TInput>,) {
   const q = useQueryClient();
 
   return useMutation<TResponse, Error, TInput>({

@@ -1,12 +1,4 @@
-import {
-  FacebookOutlined,
-  InstagramOutlined,
-  TwitterOutlined,
-  YoutubeOutlined,
-  PhoneOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
-} from "@ant-design/icons";
+import { FacebookOutlined, InstagramOutlined, TwitterOutlined, YoutubeOutlined, PhoneOutlined, MailOutlined, EnvironmentOutlined,} from "@ant-design/icons";
 
 const AppFooter = () => {
   return (

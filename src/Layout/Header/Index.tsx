@@ -7,12 +7,23 @@ import MobileSidebar from "../Sidebar/Index";
 import { Queries } from "../../Api";
 import { useAppSelector } from "../../Store/Hooks";
 import ProfileCard from "./ProfileCard";
+import { useEffect, useState } from "react";
 
 
 const Header = () => {
+  const [hideAuth, setHideAuth] = useState(false);
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const { data: userData } = Queries.useGetSingleUser((user as { _id?: string } | null)?._id);
   const isLoggedIn = isAuthenticated || !!userData;
+
+  useEffect(() => {
+  const handleScroll = () => {
+    if (window.scrollY > 80) return setHideAuth(true);
+      else return setHideAuth(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "var(--color-accent)", colorBorder: "var(--color-border)", colorText: "var(--color-text)",}, }}>
@@ -34,7 +45,7 @@ const Header = () => {
             </div>
 
             <div className="flex items-center justify-end gap-4">
-              <div className="flex items-center gap-3 md:hidden">
+              <div className="flex items-center gap-3 md:hidden ">
                 <SearchBarWithModel />
                 <Cart />
               </div>
@@ -42,7 +53,9 @@ const Header = () => {
               {/* DESKTOP */}
               <div className="hidden md:flex items-center gap-4">
                 <SearchBarWithModel />
-                {!isLoggedIn ? <LoginAndSignupBtns /> : <ProfileCard user={user} userData={userData} />}
+                {!isLoggedIn 
+                ? ( !hideAuth ? <LoginAndSignupBtns /> : null) 
+                : ( <ProfileCard user={user} userData={userData} /> )}
                 <Cart />
               </div>
             </div>

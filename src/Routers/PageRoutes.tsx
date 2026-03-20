@@ -1,10 +1,14 @@
 import Hero from "../Pages/Hero/Index";
+import MainHomePage from "../Pages/Home/Index";
 import Authencation from "../Pages/Auth";
 import ResetForgetPassword from "../Pages/Auth/ResetForgetPassword";
 import OtpVerification from "../Pages/Auth/OtpVerification";
 import { ROUTES } from "../Constants";
 
-export const PageRoutes = [{ path: ROUTES.HERO, element: <Hero /> }];
+export const PageRoutes = [
+  { path: ROUTES.HERO, element: <Hero /> },
+  { path: ROUTES.COLLECTIONS_ALL, element: <MainHomePage /> },
+];
 
 export const AuthRoutes = [
   { path: ROUTES.AUTH.AUTHETICATION, element: <Authencation /> },

@@ -4,7 +4,7 @@ import type { LogoutConfirmModelProps } from "../../Types";
 
 const { Title, Text } = Typography;
 
-export const LogoutConfirmModel = ({ open, onConfirm, onCancel, confirmLoading = false,}: LogoutConfirmModelProps) => {
+ const LogoutConfirmModel = ({ open, onConfirm, onCancel, confirmLoading = false,}: LogoutConfirmModelProps) => {
   return (
     <Modal open={open} onCancel={onCancel} footer={null} centered closable={false} width={520} maskClosable={!confirmLoading} maskStyle={{ backdropFilter: "blur(6px)", backgroundColor: "rgba(10,10,10,0.45)",}} bodyStyle={{ padding: 0, background: "transparent" }} style={{ background: "transparent" }} className="delvoura-logout-confirm-modal">
       <div className="relative flex flex-col items-center rounded-[28px] border border-[rgba(214,176,118,0.45)] bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.08),rgba(18,13,22,0.98)),linear-gradient(180deg,#1b1423,#120d16)] px-8 py-9 text-center shadow-[0_28px_70px_-30px_rgba(0,0,0,0.9)]">
@@ -30,33 +30,8 @@ export const LogoutConfirmModel = ({ open, onConfirm, onCancel, confirmLoading =
           </Button>
         </div>
       </div>
-      <style>
-        {`
-          .delvoura-logout-confirm-modal.ant-modal .ant-modal-content,
-          .delvoura-logout-confirm-modal .ant-modal-content {
-            background: transparent !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-            border-radius: 28px !important;
-            overflow: hidden !important;
-          }
-          .delvoura-logout-confirm-modal.ant-modal,
-          .delvoura-logout-confirm-modal {
-            padding: 0 !important;
-            background: transparent !important;
-          }
-          .delvoura-logout-confirm-modal.ant-modal .ant-modal-container,
-          .delvoura-logout-confirm-modal .ant-modal-container {
-            padding: 0 !important;
-            background: transparent !important;
-          }
-          .delvoura-logout-confirm-modal.ant-modal .ant-modal-body,
-          .delvoura-logout-confirm-modal .ant-modal-body {
-            padding: 0 !important;
-            background: transparent !important;
-          }
-        `}
-      </style>
     </Modal>
   );
 };
+
+export default LogoutConfirmModel

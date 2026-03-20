@@ -1,5 +1,8 @@
 export const ROUTES = {
     HERO: "/",
+    
+    COLLECTIONS_ALL: "/collections/all",
+
     AUTH : {
         AUTHETICATION : "/authentication",
         VERIFY_OTP : "/auth/verify-otp",

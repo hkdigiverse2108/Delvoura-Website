@@ -98,6 +98,7 @@
   color: var(--color-text);
   border: 1px solid var(--color-border);
   box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.55);
+  z-index: 600;
   opacity: 0;
   transform: translateY(10px) scale(0.98);
   transition: opacity 0.2s ease, transform 0.22s ease;
@@ -144,6 +145,11 @@
   border: 1px solid transparent;
   box-shadow: 0 10px 25px -18px rgba(255, 122, 69, 0.7);
   transition: transform 0.2s ease, border 0.2s ease, background 0.2s ease;
+}
+
+.delvoura-search-modal .delvoura-glow-pill,
+.delvoura-search-modal .delvoura-glow-pill svg {
+  color: #f7efe7 !important;
 }
 
 .delvoura-glow-pill:hover {
@@ -330,6 +336,7 @@
 .delvoura-profile-dropdown {
   padding-top: 8px;
   transform-origin: center top;
+  z-index: 1200;
 }
 
 .delvoura-profile-menu {
@@ -398,6 +405,16 @@
 
 .delvoura-profile-menu-logout svg {
   color: #ffd6aa !important;
+}
+
+.delvoura-cart-drawer {
+  z-index: 2000 !important;
+}
+
+.delvoura-cart-drawer .ant-drawer,
+.delvoura-cart-drawer .ant-drawer-mask,
+.delvoura-cart-drawer .ant-drawer-content-wrapper {
+  z-index: 2000 !important;
 }
 
 /* 🔥 MAIN FIX START */

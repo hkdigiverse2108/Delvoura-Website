@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../Store/Hooks";
 import { setSignOut } from "../../Store/Slices/AuthSlice";
 import { Queries } from "../../Api";
 import type { ProfileCardProps } from "../../Types";
-import { LogoutConfirmModel } from "../../Components/ConfirmModel/LogoutConfirmModel";
+import LogoutConfirmModel from "../../Components/ConfirmModel/LogoutConfirmModel";
 
 
 const getInitials = (fullName: string) => {
@@ -105,9 +105,7 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
           <DownOutlined className="delvoura-profile-chevron" />
         </button>
       </Dropdown>
-      <LogoutConfirmModel
-        open={logoutOpen}
-        onCancel={() => setLogoutOpen(false)}
+      <LogoutConfirmModel open={logoutOpen} onCancel={() => setLogoutOpen(false)} 
         onConfirm={() => {
           dispatch(setSignOut());
           setLogoutOpen(false);

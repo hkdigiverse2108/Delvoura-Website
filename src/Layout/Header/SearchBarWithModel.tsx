@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Card, ConfigProvider, Flex, Input, Modal, Tag, Typography,} from "antd";
+import { Button, Card, ConfigProvider, Flex, Input, Modal, Tag, Typography } from "antd";
 import { CloseOutlined, SearchOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
@@ -24,14 +24,25 @@ const productTone: Record<string, string> = {
   ink: "linear-gradient(135deg,#0f111a,#1f2a3d,#384662)",
 };
 
-const SearchBarWithModal = () => {
+type SearchBarWithModalProps = {
+  buttonClassName?: string;
+  showOnMobile?: boolean;
+  buttonText?: string;
+};
+
+const SearchBarWithModal = ({
+  buttonClassName = "",
+  showOnMobile = false,
+  buttonText = "Search perfumes...",
+}: SearchBarWithModalProps) => {
   const [open, setOpen] = useState(false);
+  const visibilityClass = showOnMobile ? "inline-flex" : "hidden md:inline-flex";
 
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "var(--color-accent)", borderRadiusLG: 20,},}}>
         {/* BUTTON */}
-      <Button onClick={() => setOpen(true)} icon={<SearchOutlined />} className="delvoura-search-btn delvoura-header-pill hidden items-center text-base md:inline-flex" style={{color: "var(--color-text-muted)",}}>
-        Search perfumes...
+      <Button onClick={() => setOpen(true)} icon={<SearchOutlined />} className={`delvoura-search-btn delvoura-header-pill ${visibilityClass} items-center text-base ${buttonClassName}`} style={{color: "var(--color-text-muted)",}}>
+        {buttonText}
       </Button>
 
       {/* MODAL */}

@@ -8,7 +8,7 @@ const placeholderImages = Array.from({ length: 8 }).map((_, idx) => ({
   src: "https://placehold.co/320x420/png?text=Delvoura",
 }));
 
-export const InstagramScrollingSection = () => {
+const InstagramScrollingSection = () => {
   const items = [...placeholderImages, ...placeholderImages];
 
   return (
@@ -76,3 +76,5 @@ export const InstagramScrollingSection = () => {
     </section>
   );
 };
+
+export default InstagramScrollingSection

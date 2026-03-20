@@ -35,7 +35,7 @@ const MobileSidebar = () => {
 
       {/* DRAWER */}
       {!isDesktop && (
-        <Drawer placement="left" open={open} onClose={() => setOpen(false)} width={300} headerStyle={{ display: "none" }} bodyStyle={{ padding: "20px", background: "var(--color-card)",}}>
+        <Drawer placement="left" open={open} onClose={() => setOpen(false)} width={300} headerStyle={{ display: "none" }} bodyStyle={{ padding: "20px", background: "var(--color-card)",}} rootClassName="delvoura-light-surface delvoura-sidebar-drawer">
           <div className="flex h-full flex-col justify-between">
             
             {/* TOP */}
@@ -46,16 +46,16 @@ const MobileSidebar = () => {
               </div>
 
               <div>
-                <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">Collections</h3>
-                <div className="rounded-xl bg-[var(--color-bg)] p-3">
+                <h3 className="mb-2 text-xs uppercase tracking-wider text-[color:var(--color-text-muted)]">Collections</h3>
+                <div className="rounded-xl bg-[color:var(--color-bg)] p-3">
                   <CollectionMenu isMobile />
                 </div>
               </div>
 
               {isLoggedIn && (
                 <div>
-                  <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">Profile</h3>
-                  <div className="rounded-xl bg-[var(--color-bg)] p-3">
+                  <h3 className="mb-2 text-xs uppercase tracking-wider text-[color:var(--color-text-muted)]">Profile</h3>
+                  <div className="rounded-xl bg-[color:var(--color-bg)] p-3">
                     <ProfileCard variant="mobile" />
                   </div>
                 </div>
@@ -69,8 +69,8 @@ const MobileSidebar = () => {
                   Login
                 </button>
 
-                <button className="rounded-full bg-[var(--color-primary)] py-3 text-white" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
-                  <span className="text-white">Sign up</span>
+                <button className="rounded-full bg-[color:var(--color-primary)] py-3 text-[color:var(--color-text-on-dark)]" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
+                  <span className="text-[color:var(--color-text-on-dark)]">Sign up</span>
                 </button>
               </div>
             )}

@@ -7,121 +7,152 @@
 
 .delvoura-home-filter-bar {
   background:
-    radial-gradient(120% 140% at 0% 0%, rgba(255, 122, 69, 0.16) 0%, rgba(18, 13, 22, 0.96) 55%),
-    linear-gradient(135deg, rgba(16, 12, 18, 0.96), rgba(24, 16, 28, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.12);
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--color-accent) 18%, transparent) 0%, color-mix(in srgb, var(--color-surface-dark) 96%, transparent) 55%),
+    linear-gradient(135deg, var(--color-surface-dark), var(--color-surface-darker));
+  border: 1px solid var(--color-border-dark);
   border-radius: 18px;
-  padding: 14px;
-  box-shadow: 0 22px 50px -30px rgba(0, 0, 0, 0.75);
+  padding: 10px;
+  box-shadow: 0 22px 50px -30px color-mix(in srgb, var(--color-primary) 75%, transparent);
 }
 
 .delvoura-home-search-btn {
-  height: 52px;
+  height: 46px;
   border-radius: 14px;
   justify-content: flex-start;
-  background: #ffffff;
-  border: 1px solid #f0d7c6;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   padding: 0 18px;
   width: 100%;
-  color: #6b5b63 !important;
+  color: var(--color-text-muted) !important;
 }
 
 .delvoura-home-search-btn:hover {
-  border-color: #f1c8ad !important;
-  background: #ffffff !important;
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border)) !important;
+  background: var(--color-card) !important;
 }
 
 .delvoura-filter-btn {
-  height: 52px;
+  height: 46px;
   border-radius: 14px;
   padding: 0 20px;
-  background: linear-gradient(135deg, #f3532f, #d73d26);
-  border: 1px solid rgba(255, 122, 69, 0.6);
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-soft-accent));
+  border: 1px solid color-mix(in srgb, var(--color-accent) 70%, transparent);
+  color: var(--color-text-on-dark) !important;
   font-weight: 600;
-  box-shadow: 0 16px 30px -20px rgba(243, 83, 47, 0.7);
+  box-shadow: 0 16px 30px -20px color-mix(in srgb, var(--color-accent) 70%, transparent);
 }
 
 .delvoura-filter-btn:hover,
 .delvoura-filter-btn:focus,
 .delvoura-filter-btn:focus-visible {
-  border-color: rgba(255, 214, 170, 0.7) !important;
-  background: linear-gradient(135deg, #ff623a, #e3432a) !important;
-  color: #ffffff !important;
+  border-color: color-mix(in srgb, var(--color-accent) 85%, transparent) !important;
+  background: linear-gradient(135deg, var(--color-soft-accent), var(--color-accent)) !important;
+  color: var(--color-text-on-dark) !important;
 }
 
 .delvoura-sort-select {
   min-width: 220px;
+  height: 46px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.delvoura-sort-select.ant-select-single {
+  height: 46px !important;
+}
+
+.delvoura-sort-select.ant-select-single .ant-select-selector {
+  height: 46px !important;
+  line-height: 46px !important;
 }
 
 .delvoura-sort-select .ant-select-selector {
-  height: 52px !important;
+  height: 46px !important;
+  min-height: 46px !important;
   border-radius: 14px !important;
-  background: rgba(20, 16, 24, 0.95) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: #f7efe7 !important;
+  background: var(--color-card) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
   box-shadow: none !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 16px !important;
 }
 
 .delvoura-sort-select .ant-select-selection-item {
-  color: #f7efe7 !important;
+  color: var(--color-text) !important;
   font-weight: 600;
+  line-height: 46px !important;
+  height: 46px !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .delvoura-sort-select .ant-select-selection-placeholder {
-  color: #f7efe7 !important;
+  color: var(--color-text-muted) !important;
   opacity: 0.9;
+  line-height: 46px !important;
+  height: 46px !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .delvoura-sort-select.ant-select-single .ant-select-selector .ant-select-selection-item {
-  color: #f7efe7 !important;
+  color: var(--color-text) !important;
 }
 
 .delvoura-sort-select .ant-select-selector * {
-  color: #f7efe7 !important;
+  color: var(--color-text) !important;
 }
 
 .delvoura-sort-select .ant-select-selection-search-input {
-  color: #f7efe7 !important;
-  -webkit-text-fill-color: #f7efe7 !important;
-  caret-color: #f7efe7 !important;
+  color: var(--color-text) !important;
+  -webkit-text-fill-color: var(--color-text) !important;
+  caret-color: var(--color-text) !important;
+  height: 46px !important;
+}
+
+.delvoura-sort-select .ant-select-selection-search {
+  height: 46px !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .delvoura-sort-select .ant-select-arrow {
-  color: #ffd6aa !important;
+  color: var(--color-accent) !important;
 }
 
 .delvoura-sort-dropdown {
-  background: #1a1421 !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 22px 40px -28px rgba(0, 0, 0, 0.8);
+  background: var(--color-card) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 22px 40px -28px color-mix(in srgb, var(--color-primary) 45%, transparent);
   padding: 8px;
   z-index: 3000 !important;
 }
 
 .delvoura-sort-dropdown .ant-select-item {
   border-radius: 12px;
-  color: #f7efe7;
+  color: var(--color-text);
   font-weight: 600;
 }
 
 .delvoura-sort-dropdown .ant-select-item-option-active {
-  background: rgba(255, 122, 69, 0.18) !important;
+  background: color-mix(in srgb, var(--color-accent) 18%, transparent) !important;
 }
 
 .delvoura-sort-dropdown .ant-select-item-option-selected {
-  background: rgba(255, 122, 69, 0.28) !important;
-  color: #ffffff !important;
+  background: color-mix(in srgb, var(--color-accent) 28%, transparent) !important;
+  color: var(--color-text) !important;
 }
 
 .delvoura-filter-panel {
   background:
-    radial-gradient(120% 120% at 0% 0%, rgba(255, 122, 69, 0.08), transparent 60%),
-    linear-gradient(140deg, rgba(18, 13, 22, 0.98), rgba(26, 20, 33, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 60%),
+    linear-gradient(140deg, var(--color-card), var(--color-bg-soft));
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 18px 22px;
-  box-shadow: 0 26px 60px -32px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 26px 60px -32px color-mix(in srgb, var(--color-primary) 45%, transparent);
 }
 
 .delvoura-filter-row {
@@ -129,7 +160,7 @@
   grid-template-columns: 160px 1fr;
   gap: 12px;
   padding: 16px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .delvoura-filter-row:last-child {
@@ -137,7 +168,7 @@
 }
 
 .delvoura-filter-title {
-  color: #ffffff;
+  color: var(--color-text);
   font-weight: 600;
   font-size: 16px;
   display: flex;
@@ -151,9 +182,9 @@
 }
 
 .delvoura-filter-chip {
-  background: #2a2233;
-  color: #ffffff;
-  border: 1px solid transparent;
+  background: var(--color-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 8px 14px;
   font-size: 14px;
@@ -161,15 +192,15 @@
 }
 
 .delvoura-filter-chip:hover {
-  border-color: rgba(255, 214, 170, 0.45);
-  background: rgba(255, 122, 69, 0.18);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
   transform: translateY(-1px);
 }
 
 /****product card css **********/
 .delvoura-home-products {
   padding: 36px 0 64px;
-  background: #f7f3f2;
+  background: var(--color-bg-soft);
 }
 
 .delvoura-home-products .delvoura-product-grid {
@@ -182,12 +213,22 @@
   max-width: 340px;
 }
 
+@media (min-width: 1280px) {
+  .delvoura-home-products .delvoura-product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .delvoura-home-products .delvoura-product-grid > * {
+    max-width: none;
+  }
+}
+
 .delvoura-home-products .delvoura-product-card {
-  background: #ffffff;
-  border: 1px solid #efe6e2;
-  border-radius: 26px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 18px 45px -32px rgba(22, 17, 18, 0.35);
+  box-shadow: var(--shadow-soft);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   display: flex;
   flex-direction: column;
@@ -196,14 +237,14 @@
 
 .delvoura-home-products .delvoura-product-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 28px 60px -32px rgba(22, 17, 18, 0.45);
+  box-shadow: 0 28px 60px -32px color-mix(in srgb, var(--color-primary) 45%, transparent);
 }
 
 .delvoura-home-products .delvoura-product-media {
   position: relative;
-  height: 280px;
+  height: 300px;
   overflow: hidden;
-  background: #f5efec;
+  background: var(--color-bg-soft);
 }
 
 .delvoura-home-products .delvoura-product-media img {
@@ -222,7 +263,18 @@
   position: absolute;
   inset: auto 0 0 0;
   height: 55%;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 70%, rgba(0, 0, 0, 0.35) 100%);
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-primary) 25%, transparent) 70%, color-mix(in srgb, var(--color-primary) 35%, transparent) 100%);
+  pointer-events: none;
+}
+
+.delvoura-home-products .delvoura-product-media-shadow-bottom {
+  position: absolute;
+  inset: auto 12px 8px 12px;
+  height: 46px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  filter: blur(12px);
+  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -238,8 +290,8 @@
 }
 
 .delvoura-home-products .delvoura-product-badge {
-  background: #1c181d;
-  color: #fff !important;
+  background: var(--color-surface-darker);
+  color: var(--color-text-on-dark) !important;
   border: none;
   border-radius: 999px;
   padding: 6px 12px;
@@ -258,12 +310,12 @@
 .delvoura-home-products .delvoura-product-title {
   font-size: 18px;
   font-weight: 700;
-  color: #1d1a1e;
+  color: var(--color-text);
   margin: 0;
 }
 
 .delvoura-home-products .delvoura-product-subtitle {
-  color: #a0563e;
+  color: var(--color-text-muted);
   font-size: 13px;
   font-style: italic;
 }
@@ -278,7 +330,7 @@
 
 .delvoura-home-products .delvoura-product-reviews {
   font-size: 12px;
-  color: #9b7b72;
+  color: var(--color-text-muted);
 }
 
 .delvoura-home-products .delvoura-product-sizes {
@@ -287,16 +339,16 @@
 }
 
 .delvoura-home-products .delvoura-size-pill {
-  border: 1px solid #ead7cf;
+  border: 1px solid var(--color-border);
   border-radius: 999px;
   padding: 4px 10px;
   font-size: 12px;
-  color: #2c2024;
-  background: #fff;
+  color: var(--color-text);
+  background: var(--color-card);
 }
 
 .delvoura-home-products .delvoura-product-price {
-  color: #e4572e;
+  color: var(--color-accent);
   font-weight: 700;
 }
 
@@ -307,7 +359,7 @@
 }
 
 .delvoura-home-products .delvoura-product-cta {
-  border-radius: 999px !important;
+  border-radius: 10px;
   border: 1px solid var(--color-accent) !important;
   color: var(--color-accent) !important;
   font-weight: 700;
@@ -322,18 +374,302 @@
   display: block;
 }
 
+.delvoura-home-products .delvoura-product-cta-overlay {
+  position: absolute;
+  left: 50%;
+  bottom: 1px;
+  transform: translateX(-50%);
+  z-index: 2;
+  height: 44px;
+  width: min(74%, 240px);
+  background: var(--color-card) !important;
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 14px 30px -18px color-mix(in srgb, var(--color-primary) 45%, transparent);
+}
+
 .delvoura-home-products .delvoura-product-cta:hover {
   background: var(--color-accent) !important;
-  color: #fff !important;
-  box-shadow: 0 8px 22px -12px rgba(90, 30, 46, 0.45);
+  color: var(--color-text-on-dark) !important;
+  box-shadow: 0 8px 22px -12px color-mix(in srgb, var(--color-accent) 45%, transparent);
 }
 
 .delvoura-home-products .delvoura-product-tags {
-  color: #d15a42;
+  color: var(--color-soft-accent);
   font-size: 12px;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+.delvoura-select-options-modal .ant-modal-content {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+
+.delvoura-select-options-modal .ant-modal-body {
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+
+.delvoura-select-options-modal .ant-modal {
+  max-width: none !important;
+  padding-bottom: 0 !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  background: var(--color-card) !important;
+}
+
+.delvoura-select-options-modal .ant-modal-container {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.delvoura-select-options-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+  gap: 32px;
+  align-items: start;
+  padding: 32px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, var(--color-card), var(--color-bg));
+  border: 1px solid var(--color-border);
+  box-shadow: 0 30px 80px -48px color-mix(in srgb, var(--color-primary) 40%, transparent);
+  width: 100%;
+  max-width: 1080px;
+  min-height: 550px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.delvoura-select-options-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  display: grid;
+  place-items: center;
+  transition: border 0.2s ease, color 0.2s ease;
+}
+
+.delvoura-select-options-close:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.delvoura-select-options-media {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.delvoura-select-options-thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.delvoura-select-options-thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  padding: 6px;
+  display: grid;
+  place-items: center;
+  transition: border 0.2s ease, transform 0.2s ease;
+  overflow: hidden;
+}
+
+.delvoura-select-options-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.delvoura-select-options-thumb:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, var(--color-border));
+  transform: translateY(-2px);
+}
+
+.delvoura-select-options-hero {
+  border-radius: 22px;
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 440px;
+  width: 100%;
+}
+
+.delvoura-select-options-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.delvoura-select-options-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.delvoura-select-options-info h3 {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.delvoura-select-options-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.delvoura-select-options-price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delvoura-select-options-price {
+  color: var(--color-accent);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.delvoura-select-options-price-old {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  font-size: 14px;
+}
+
+.delvoura-select-options-tax {
+  color: var(--color-text-muted) !important;
+  font-size: 13px;
+}
+
+.delvoura-select-options-sizes {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.delvoura-select-options-size {
+  min-width: 90px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  color: var(--color-text);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.delvoura-select-options-size.is-active {
+  background: var(--color-text);
+  color: var(--color-card);
+  border-color: var(--color-text);
+  box-shadow: 0 16px 26px -18px color-mix(in srgb, var(--color-text) 35%, transparent);
+}
+
+.delvoura-select-options-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 56px) 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.delvoura-qty-btn {
+  height: 48px;
+  width: 56px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-card) !important;
+  color: var(--color-text) !important;
+  font-weight: 700;
+}
+
+.delvoura-qty-value {
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.delvoura-add-to-cart {
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-soft-accent)) !important;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 70%, transparent) !important;
+  color: var(--color-text-on-dark) !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.delvoura-add-to-cart:hover {
+  background: linear-gradient(135deg, var(--color-soft-accent), var(--color-accent)) !important;
+}
+
+.delvoura-select-options-link {
+  margin-top: 8px;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+@media (max-width: 960px) {
+  .delvoura-select-options-card {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .delvoura-select-options-media {
+    grid-template-columns: 70px 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .delvoura-select-options-card {
+    padding: 20px;
+  }
+
+  .delvoura-select-options-media {
+    grid-template-columns: 1fr;
+  }
+
+  .delvoura-select-options-thumbs {
+    flex-direction: row;
+    order: 2;
+  }
+
+  .delvoura-select-options-actions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .delvoura-add-to-cart {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 640px) {

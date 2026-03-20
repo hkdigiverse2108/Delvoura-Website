@@ -15,7 +15,19 @@
   --color-text: #1a1a1a;
   --color-text-muted: #6b5b63;
   --color-border: #e8dde2;
+  --color-bg-light: #f8f4f6;
+  --color-card-light: #ffffff;
+  --color-text-dark: #1a1a1a;
+  --color-text-muted-dark: #6b5b63;
+  --color-border-light: #e8dde2;
   --color-hover-dark: #2a0a13;
+  --color-bg-soft: color-mix(in srgb, var(--color-bg) 85%, var(--color-card));
+  --color-surface-dark: var(--color-primary);
+  --color-surface-darker: var(--color-hover-dark);
+  --color-text-on-dark: var(--color-card);
+  --color-text-on-dark-muted: color-mix(in srgb, var(--color-card) 70%, transparent);
+  --color-border-dark: color-mix(in srgb, var(--color-card) 18%, transparent);
+  --shadow-soft: 0 18px 45px -32px color-mix(in srgb, var(--color-primary) 35%, transparent);
 }
 
 body {
@@ -46,7 +58,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(248, 244, 246, 0.75);
+  background: color-mix(in srgb, var(--color-bg) 75%, transparent);
   backdrop-filter: blur(2px);
 }
 
@@ -56,11 +68,11 @@ textarea {
   border: 10px solid transparent;
   box-sizing: border-box;
   background:
-    radial-gradient(farthest-side, #000 98%, #0000) top,
-    radial-gradient(farthest-side, #000 98%, #0000) top,
-    radial-gradient(farthest-side, #000 98%, #0000) left,
-    radial-gradient(farthest-side, #000 98%, #0000) right,
-    radial-gradient(farthest-side, #000 98%, #0000) bottom;
+    radial-gradient(farthest-side, var(--color-primary) 98%, transparent) top,
+    radial-gradient(farthest-side, var(--color-primary) 98%, transparent) top,
+    radial-gradient(farthest-side, var(--color-primary) 98%, transparent) left,
+    radial-gradient(farthest-side, var(--color-primary) 98%, transparent) right,
+    radial-gradient(farthest-side, var(--color-primary) 98%, transparent) bottom;
   background-size: 20px 20px;
   background-repeat: no-repeat;
   animation: l19 2s infinite;

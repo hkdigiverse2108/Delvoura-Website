@@ -24,7 +24,7 @@ const Authencation = () => {
   }, [isLoggedIn, navigate]);
 
   return (
-    <div className="delvoura-auth-page min-h-screen bg-[#f5f1f2] text-[color:var(--color-text)]">
+    <div className="delvoura-auth-page min-h-screen bg-[color:var(--color-bg)] text-[color:var(--color-text)]">
       <div className="sticky top-0 z-999 ">
           <Header />
       </div>
@@ -35,7 +35,13 @@ const Authencation = () => {
         }}
       />
       <div className="mx-auto w-[90%] max-w-6xl py-10">
-        <div className="delvoura-auth-content mx-auto max-w-xl rounded-3xl border border-[#e9e0e3] bg-white p-6 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.35)] md:p-8">
+        <div
+          className="delvoura-auth-content mx-auto max-w-xl rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-6 md:p-8"
+          style={{
+            boxShadow:
+              "0 20px 60px -40px color-mix(in srgb, var(--color-primary) 35%, transparent)",
+          }}
+        >
           <Tabs activeKey={tab} onChange={(key) => setTab(key)} centered
             items={[
               {

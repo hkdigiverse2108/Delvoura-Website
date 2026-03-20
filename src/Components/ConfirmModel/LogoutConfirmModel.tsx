@@ -6,26 +6,26 @@ const { Title, Text } = Typography;
 
  const LogoutConfirmModel = ({ open, onConfirm, onCancel, confirmLoading = false,}: LogoutConfirmModelProps) => {
   return (
-    <Modal open={open} onCancel={onCancel} footer={null} centered closable={false} width={520} maskClosable={!confirmLoading} maskStyle={{ backdropFilter: "blur(6px)", backgroundColor: "rgba(10,10,10,0.45)",}} bodyStyle={{ padding: 0, background: "transparent" }} style={{ background: "transparent" }} className="delvoura-logout-confirm-modal">
-      <div className="relative flex flex-col items-center rounded-[28px] border border-[rgba(214,176,118,0.45)] bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.08),rgba(18,13,22,0.98)),linear-gradient(180deg,#1b1423,#120d16)] px-8 py-9 text-center shadow-[0_28px_70px_-30px_rgba(0,0,0,0.9)]">
-        <button type="button" onClick={onCancel} className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full border border-[rgba(214,176,118,0.5)] bg-[#1a1322] text-[#ffffff] transition hover:border-[rgba(214,176,118,0.75)] hover:text-white" aria-label="Close">
-          <CloseOutlined className="text-lg leading-none text-white" style={{ color: "#ffffff" }} />
+    <Modal open={open} onCancel={onCancel} footer={null} centered closable={false} width={520} maskClosable={!confirmLoading} maskStyle={{ backdropFilter: "blur(6px)", backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)",}} bodyStyle={{ padding: 0, background: "var(--color-card)" }} style={{ background: "var(--color-card)" }} className="delvoura-logout-confirm-modal">
+      <div className="relative flex flex-col items-center rounded-[28px] border border-[color:var(--color-border)] px-8 py-9 text-center" style={{ background: "linear-gradient(180deg, var(--color-card), var(--color-bg))", boxShadow: "var(--shadow-soft)",}}>
+        <button type="button" onClick={onCancel} className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-bg)] text-[color:var(--color-text)] transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]" aria-label="Close">
+          <CloseOutlined className="text-lg leading-none" style={{ color: "var(--color-text)" }} />
         </button>
-        <span className="mb-4 grid h-16 w-16 place-items-center rounded-2xl border border-[rgba(214,176,118,0.55)] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.12),rgba(15,10,20,0.9))] text-[#d6b076] shadow-[0_18px_40px_-20px_rgba(214,176,118,0.8)]">
+        <span className="mb-4 grid h-16 w-16 place-items-center rounded-2xl border border-[color:var(--color-border)] text-[color:var(--color-accent)]" style={{ background: "radial-gradient(circle_at_30%_30%, color-mix(in srgb, var(--color-accent) 12%, transparent), var(--color-bg))", boxShadow: "0 16px 36px -26px color-mix(in srgb, var(--color-accent) 65%, transparent)",}}>
           <LogoutOutlined className="text-3xl" />
         </span>
-        <Title level={4} className="!mb-2 !mt-0 !text-[#f9f2e9]">
+        <Title level={4} className="!mb-2 !mt-0 !text-[color:var(--color-text)]">
           Confirm logout
         </Title>
-        <Text style={{ color: "rgba(247,239,231,0.95)", textShadow: "0 1px 10px rgba(0,0,0,0.35)", }}>
+        <Text style={{ color: "var(--color-text-muted)" }}>
           Are you sure you want to sign out? You can sign back in anytime.
         </Text>
 
         <div className="mt-6 flex w-full items-center justify-center gap-3">
-          <Button onClick={onCancel} className="h-11 rounded-xl border border-[rgba(214,176,118,0.35)] bg-transparent px-7 text-[#f7efe7] hover:!border-[rgba(214,176,118,0.6)] hover:!text-[#f7efe7]" disabled={confirmLoading}>
+          <Button onClick={onCancel} className="h-11 rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-7 text-[color:var(--color-text)] hover:!border-[color:var(--color-accent)] hover:!text-[color:var(--color-accent)]" disabled={confirmLoading}>
             Cancel
           </Button>
-          <Button type="primary" danger onClick={onConfirm} loading={confirmLoading} className="h-11 rounded-xl border border-[rgba(214,176,118,0.45)] bg-[linear-gradient(135deg,#c99555,#a66a2c)] px-7 text-[#1a121f] hover:!bg-[linear-gradient(135deg,#d8a665,#b67935)]">
+          <Button type="primary" danger onClick={onConfirm} loading={confirmLoading} className="h-11 rounded-xl border border-[color:var(--color-accent)] bg-[linear-gradient(135deg,var(--color-accent),var(--color-soft-accent))] px-7 text-[color:var(--color-text-on-dark)] hover:!bg-[linear-gradient(135deg,var(--color-soft-accent),var(--color-accent))]">
             Logout
           </Button>
         </div>

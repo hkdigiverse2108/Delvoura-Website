@@ -9,7 +9,7 @@
 .delvoura-auth-content .ant-tabs-nav-list {
   display: flex;
   gap: 12px;
-  background: #f1ecee;
+  background: var(--color-bg-soft);
   padding: 8px;
   border-radius: 999px;
   width: 100%;
@@ -38,12 +38,12 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #6b5b63;
+  color: var(--color-text-muted);
 }
 
 .delvoura-auth-content .ant-tabs-tab-active {
-  background: #ffffff;
-  box-shadow: 0 10px 25px -18px rgba(0, 0, 0, 0.35);
+  background: var(--color-card);
+  box-shadow: var(--shadow-soft);
 }
 
 .delvoura-auth-content .ant-tabs-tab-active .tab-label {
@@ -53,5 +53,4 @@
 .delvoura-auth-content .ant-tabs-ink-bar {
   display: none !important;
 }
-
 

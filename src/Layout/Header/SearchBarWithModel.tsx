@@ -19,9 +19,9 @@ const products = [
 ];
 
 const productTone: Record<string, string> = {
-  rose: "linear-gradient(135deg,#3b0f1b,#6a2436,#b14c63)",
-  gold: "linear-gradient(135deg,#3b2916,#6a4a23,#c99652)",
-  ink: "linear-gradient(135deg,#0f111a,#1f2a3d,#384662)",
+  rose: "linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-soft-accent))",
+  gold: "linear-gradient(135deg, var(--color-accent), var(--color-soft-accent), var(--color-primary))",
+  ink: "linear-gradient(135deg, var(--color-primary), var(--color-soft-accent), var(--color-accent))",
 };
 
 type SearchBarWithModalProps = {
@@ -46,15 +46,15 @@ const SearchBarWithModal = ({
       </Button>
 
       {/* MODAL */}
-      <Modal open={open} onCancel={() => setOpen(false)} footer={null} closable={false} centered width="95vw" rootClassName="delvoura-header-theme delvoura-search-modal" style={{ maxWidth: 1400 }}
+      <Modal open={open} onCancel={() => setOpen(false)} footer={null} closable={false} centered width="95vw" rootClassName="delvoura-search-modal delvoura-light-surface" style={{ maxWidth: 1400 }}
         styles={{ body: { padding: 0, height: "80vh", width: "100%", overflow: "auto", background: "transparent",},
-          mask: { backdropFilter: "blur(6px)", background: "rgba(0,0,0,0.45)",},
+          mask: { backdropFilter: "blur(6px)", background: "color-mix(in srgb, var(--color-primary) 45%, transparent)",},
         }}
       >
         <div className="delvoura-modal-surface">
           <Flex align="center" gap={12}>
             <Input autoFocus size="large" placeholder="Search perfumes, notes..." prefix={ <SearchOutlined style={{ color: "var(--color-accent)" }} /> }
-              style={{ borderRadius: 16, height: 54, background: "var(--color-bg)",}} className="delvoura-input" />
+              style={{ borderRadius: 16, height: 54, background: "var(--color-surface-darker)",}} className="delvoura-input" />
             <Button shape="circle" icon={<CloseOutlined />} onClick={() => setOpen(false)} className="delvoura-glow-pill" />
           </Flex>
 
@@ -94,7 +94,7 @@ const SearchBarWithModal = ({
 
             <div className="mt-4 grid gap-5 sm:grid-cols-2">
               {products.map((product) => (
-                <Card key={product.name} hoverable styles={{ body: { padding: 12 } }} className="delvoura-product-card" style={{ borderRadius: 20,}}>
+                <Card key={product.name} hoverable styles={{ body: { padding: 12 } }} className="delvoura-product-card" style={{ borderRadius: 16,}}>
                   <div style={{ height: 140, borderRadius: 14, background: productTone[product.tone],}}/>
                   <Title level={5} style={{ marginTop: 12 }}> {product.name} </Title>
                   <Text type="secondary">Eau De Parfum</Text>

@@ -25,13 +25,13 @@ const menuData = [
 ];
 
 const toneClass = {
-  rose: "from-[#3b0f1b] via-[#5a1f2d] to-[#a2475a]",
-  peach: "from-[#3c1e16] via-[#6a2f23] to-[#b2644e]",
-  charcoal: "from-[#17151a] via-[#2a2831] to-[#4b4756]",
-  slate: "from-[#3a4452] via-[#566274] to-[#8894a8]",
-  ruby: "from-[#4b1423] via-[#7a2238] to-[#c14760]",
-  ink: "from-[#0e0f16] via-[#1a1d28] to-[#323949]",
-  sand: "from-[#3b2e24] via-[#6a5342] to-[#b08a6b]",
+  rose: "from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]",
+  peach: "from-[color:var(--color-accent)] via-[color:var(--color-soft-accent)] to-[color:var(--color-primary)]",
+  charcoal: "from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]",
+  slate: "from-[color:var(--color-accent)] via-[color:var(--color-soft-accent)] to-[color:var(--color-primary)]",
+  ruby: "from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]",
+  ink: "from-[color:var(--color-accent)] via-[color:var(--color-soft-accent)] to-[color:var(--color-primary)]",
+  sand: "from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]",
 };
 
 
@@ -66,12 +66,12 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
             {menuData.map((section, i) => (
               <div key={i}>
                 {section.title && (
-                  <h3 className="mb-2 text-xs text-gray-400"> {section.title}</h3>
+                  <h3 className="mb-2 text-xs text-[color:var(--color-text-muted)]"> {section.title}</h3>
                 )}
 
                 <div className="flex flex-col gap-3">
                   {section.items.map((item) => (
-                    <button key={item.label} className="flex items-center gap-3 rounded-xl bg-gray-100 px-3 py-3">
+                    <button key={item.label} className="flex items-center gap-3 rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-3 py-3">
                       <div className={`h-10 w-10 rounded-lg bg-gradient-to-br ${toneClass[item.tone as keyof typeof toneClass]}`}/>
                       <span className="text-sm">{item.label}</span>
                     </button>
@@ -94,11 +94,11 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
       </button>
 
       {/* DROPDOWN */}
-      <div className={`delvoura-collection-panel absolute top-full left-1/2 -translate-x-1/2 mt-3 w-80 rounded-3xl p-5 shadow-2xl ${ open ? "delvoura-collection-panel-open" : "delvoura-collection-panel-closed" }`} aria-hidden={!open}>
+      <div className={`delvoura-collection-panel delvoura-light-surface absolute top-full left-1/2 -translate-x-1/2 mt-3 w-80 rounded-3xl p-5 shadow-2xl ${ open ? "delvoura-collection-panel-open" : "delvoura-collection-panel-closed" }`} aria-hidden={!open}>
         {menuData.map((section, i) => (
           <div key={i} className="mb-4">
             {section.title && (
-              <h3 className="mb-2 text-xs uppercase tracking-[0.25em] text-white">{section.title}</h3>
+              <h3 className="mb-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-on-dark)]">{section.title}</h3>
             )}
 
               <div className="flex flex-col gap-2">

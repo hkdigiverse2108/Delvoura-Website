@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, ConfigProvider, Select } from "antd";
-import { CloseOutlined, DownOutlined, SlidersOutlined } from "@ant-design/icons";
+import { CloseOutlined, DownOutlined, FilterOutlined } from "@ant-design/icons";
 import SearchBarWithModal from "../../Layout/Header/SearchBarWithModel";
 
 const sortOptions = [
@@ -50,14 +50,14 @@ const SearchFilterBar = () => {
               <div className="w-full flex-1 md:max-w-[620px]">
                 <SearchBarWithModal showOnMobile buttonText="Search" buttonClassName="delvoura-home-search-btn w-full"/>
               </div>
-              <Button type="default" icon={showFilters ? <CloseOutlined /> : <SlidersOutlined />} className="delvoura-filter-btn" ref={filterBtnRef} onClick={() => setShowFilters((prev) => !prev)}>
+              <Button type="default" icon={showFilters ? <CloseOutlined /> : <FilterOutlined />} className="delvoura-filter-btn" ref={filterBtnRef} onClick={() => setShowFilters((prev) => !prev)}>
                 Filter
               </Button>
             </div>
 
             <div className="lg:ml-auto">
-              <ConfigProvider theme={{token: {colorPrimary: "var(--color-accent)",colorBorder: "rgba(255,255,255,0.25)",colorText: "var(--color-text)",colorTextPlaceholder: "var(--color-text-muted)",colorBgContainer: "rgba(16,12,18,0.9)",},}}>
-                <Select value={sortValue} onChange={setSortValue} options={sortOptions} size="large" suffixIcon={<DownOutlined />} className="delvoura-sort-select" popupClassName="delvoura-sort-dropdown" style={{color:"white"}} getPopupContainer={() => document.body} />
+              <ConfigProvider theme={{token: {colorPrimary: "var(--color-accent)",colorBorder: "var(--color-border)",colorText: "var(--color-text)",colorTextPlaceholder: "var(--color-text-muted)",colorBgContainer: "var(--color-card)",},}}>
+                <Select value={sortValue} onChange={setSortValue} options={sortOptions} size="large" suffixIcon={<DownOutlined />} className="delvoura-sort-select" popupClassName="delvoura-sort-dropdown" getPopupContainer={() => document.body} />
               </ConfigProvider>
             </div>
           </div>

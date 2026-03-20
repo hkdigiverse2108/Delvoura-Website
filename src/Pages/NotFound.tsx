@@ -7,12 +7,32 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative h-screen overflow-hidden bg-[#f6f2ee] text-[#1a141b]">
-      <div className="pointer-events-none absolute -left-24 top-12 h-80 w-80 rounded-full bg-[radial-gradient(circle,_rgba(255,122,69,0.25),_transparent_60%)] blur-2xl" />
-      <div className="pointer-events-none absolute -right-20 bottom-20 h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(18,13,22,0.25),_transparent_60%)] blur-3xl" />
+    <section className="relative h-screen overflow-hidden bg-[color:var(--color-bg)] text-[color:var(--color-text)]">
+      <div
+        className="pointer-events-none absolute -left-24 top-12 h-80 w-80 rounded-full blur-2xl"
+        style={{
+          background:
+            "radial-gradient(circle, color-mix(in srgb, var(--color-accent) 25%, transparent), transparent 60%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute -right-20 bottom-20 h-96 w-96 rounded-full blur-3xl"
+        style={{
+          background:
+            "radial-gradient(circle, color-mix(in srgb, var(--color-primary) 25%, transparent), transparent 60%)",
+        }}
+      />
 
       <div className="mx-auto flex h-full w-[90%] max-w-5xl flex-col items-center justify-center">
-        <div className="w-full rounded-[32px] border border-white/70 bg-white/80 p-8 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.35)] backdrop-blur md:p-12">
+        <div
+          className="w-full rounded-[32px] border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-8 backdrop-blur md:p-12"
+          style={{
+            background:
+              "color-mix(in srgb, var(--color-card) 90%, transparent)",
+            boxShadow:
+              "0 30px 80px -40px color-mix(in srgb, var(--color-primary) 20%, transparent)",
+          }}
+        >
           <Result
             status="404"
             title={
@@ -25,10 +45,10 @@ const NotFound = () => {
             }
             subTitle={
               <div className="mx-auto max-w-2xl">
-                <Text className="block text-base text-[#3a2f38] md:text-lg">
+                <Text className="block text-base text-[color:var(--color-text-muted)] md:text-lg">
                   The page you are trying to reach does not exist or was moved.
                 </Text>
-                <Text className="block text-base text-[#3a2f38] md:text-lg">
+                <Text className="block text-base text-[color:var(--color-text-muted)] md:text-lg">
                   Let’s get you back to Delvoura’s main store.
                 </Text>
               </div>
@@ -41,9 +61,11 @@ const NotFound = () => {
                   className="h-12 rounded-full px-8 text-base font-semibold tracking-[0.2em]"
                   onClick={() => navigate("/")}
                   style={{
-                    background: "linear-gradient(135deg,#ff7a45,#ffb067)",
+                    background:
+                      "linear-gradient(135deg, var(--color-accent), var(--color-soft-accent))",
                     border: "none",
-                    boxShadow: "0 16px 40px -20px rgba(255,122,69,0.8)",
+                    boxShadow:
+                      "0 16px 40px -20px color-mix(in srgb, var(--color-accent) 80%, transparent)",
                   }}
                 >
                   GO TO HOME

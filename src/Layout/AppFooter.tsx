@@ -2,7 +2,7 @@ import { FacebookOutlined, InstagramOutlined, TwitterOutlined, YoutubeOutlined, 
 
 const AppFooter = () => {
   return (
-    <footer className="delvoura-header-theme delvoura-header-shell border-t border-[var(--color-border)] text-[color:var(--color-text)]">
+    <footer className="delvoura-header-theme delvoura-header-shell delvoura-footer-shell border-t border-[var(--color-border)] text-[color:var(--color-text)]">
       <div className="mx-auto w-[96%] max-w-6xl py-14">
         <div className="hidden gap-16 md:grid md:grid-cols-[1.3fr_1fr_1.1fr]">
           <div className="space-y-5">
@@ -69,7 +69,7 @@ const AppFooter = () => {
           </div>
         </div>
 
-        <div className="mt-12 hidden border-t border-[rgba(255,255,255,0.08)] pt-6 text-center text-sm text-[color:var(--color-text-muted)] md:block">
+        <div className="mt-12 hidden border-t border-[color:var(--color-border-dark)] pt-6 text-center text-sm text-[color:var(--color-text-muted)] md:block">
           © 2025–26 All Rights Reserved By Delvoura
         </div>
       </div>
@@ -102,7 +102,7 @@ const AppFooter = () => {
             </div>
           </div>
 
-          <details className="border-b border-[rgba(255,255,255,0.08)] pb-4">
+          <details className="border-b border-[color:var(--color-border-dark)] pb-4">
             <summary className="cursor-pointer text-sm font-semibold uppercase tracking-[0.25em] text-[color:var(--color-text)]">
               Useful Links
             </summary>
@@ -117,7 +117,7 @@ const AppFooter = () => {
             </div>
           </details>
 
-          <details className="border-b border-[rgba(255,255,255,0.08)] pb-4">
+          <details className="border-b border-[color:var(--color-border-dark)] pb-4">
             <summary className="cursor-pointer text-sm font-semibold uppercase tracking-[0.25em] text-[color:var(--color-text)]">
               Store Info
             </summary>
@@ -159,7 +159,7 @@ const AppFooter = () => {
             bottom: -4px;
             width: 0;
             height: 2px;
-            background: #d4a373;
+            background: var(--color-accent);
             transition: width 0.25s ease;
           }
           .footer-link:hover::after {
@@ -172,3 +172,4 @@ const AppFooter = () => {
 };
 
 export default AppFooter;
+

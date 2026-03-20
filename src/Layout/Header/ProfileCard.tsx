@@ -42,20 +42,20 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
   if (variant === "mobile") {
     return (
       <div>
-        <button onClick={() => setOpen(!open)} className="flex w-full items-center justify-between rounded-xl bg-white px-4 py-3 text-sm font-semibold" style={{ color: "#161616", border: "1px solid #efe6df" }}>
+        <button onClick={() => setOpen(!open)} className="flex w-full items-center justify-between rounded-xl bg-[color:var(--color-card)] px-4 py-3 text-sm font-semibold" style={{ color: "var(--color-text)", border: "1px solid var(--color-border)" }}>
           <span className="flex items-center gap-3">
-            <Avatar className="!bg-[#f2d4c2] !text-[#1a1421]">{initials}</Avatar>
+            <Avatar className="!bg-[color:var(--color-accent)] !text-[color:var(--color-text-on-dark)]">{initials}</Avatar>
             {fullName}
           </span>
           <span className={`transition-transform ${open ? "rotate-180" : ""}`}>▾</span>
         </button>
 
         {open && (
-          <div className="mt-3 flex flex-col gap-2 rounded-xl bg-white p-3" style={{ border: "1px solid #efe6df" }}>
-            <button className="rounded-xl border border-[#efe6df] bg-[#faf7f5] px-4 py-3 text-left text-sm font-semibold">
+          <div className="mt-3 flex flex-col gap-2 rounded-xl bg-[color:var(--color-card)] p-3" style={{ border: "1px solid var(--color-border)" }}>
+            <button className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold">
               Profile
             </button>
-            <button className="rounded-xl border border-[#efe6df] bg-[#faf7f5] px-4 py-3 text-left text-sm font-semibold text-[#b36a3c]" onClick={() => setLogoutOpen(true)}>
+            <button className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold text-[color:var(--color-accent)]" onClick={() => setLogoutOpen(true)}>
               Logout
             </button>
           </div>
@@ -68,7 +68,7 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
 
   return (
     <>
-      <Dropdown trigger={["click"]} placement="bottom" overlayClassName="delvoura-profile-dropdown" getPopupContainer={() => document.body} overlayStyle={{ marginTop: 12 }} autoAdjustOverflow={false} open={dropdownOpen} onOpenChange={setDropdownOpen} dropdownRender={() => (
+      <Dropdown trigger={["click"]} placement="bottom" overlayClassName="delvoura-profile-dropdown delvoura-light-surface" getPopupContainer={() => document.body} overlayStyle={{ marginTop: 12 }} autoAdjustOverflow={false} open={dropdownOpen} onOpenChange={setDropdownOpen} dropdownRender={() => (
           <div className="delvoura-profile-menu">
             <div className="delvoura-profile-menu-header">
               <Avatar className="delvoura-profile-avatar delvoura-profile-avatar-lg">

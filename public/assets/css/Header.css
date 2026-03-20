@@ -15,25 +15,41 @@
 }
 
 .delvoura-header-theme {
-  --color-primary: #f6eadf;
-  --color-accent: #ff7a45;
-  --color-soft-accent: #d4a373;
-  --color-bg: #120d16;
-  --color-card: #1a1421;
-  --color-text: #f7efe7;
-  --color-text-muted: #c3b6ad;
-  --color-border: rgba(255, 255, 255, 0.12);
-  --color-hover-dark: #0f0a12;
+  --color-bg: var(--color-surface-dark);
+  --color-card: var(--color-surface-darker);
+  --color-text: var(--color-text-on-dark);
+  --color-text-muted: var(--color-text-on-dark-muted);
+  --color-border: var(--color-border-dark);
+}
+
+.delvoura-light-surface {
+  --color-bg: var(--color-bg-light);
+  --color-card: var(--color-card-light);
+  --color-text: var(--color-text-dark);
+  --color-text-muted: var(--color-text-muted-dark);
+  --color-border: var(--color-border-light);
+  --color-surface-dark: var(--color-card);
+  --color-surface-darker: var(--color-bg-soft);
+  --color-text-on-dark: var(--color-text);
+  --color-text-on-dark-muted: var(--color-text-muted);
+  --color-border-dark: var(--color-border);
 }
 
 .delvoura-header-shell {
   position: relative;
   background:
-    radial-gradient(120% 140% at 0% 0%, rgba(255, 122, 69, 0.16) 0%, rgba(18, 13, 22, 0.96) 55%),
-    linear-gradient(135deg, rgba(16, 12, 18, 0.96), rgba(24, 16, 28, 0.98));
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--color-accent) 18%, transparent) 0%, color-mix(in srgb, var(--color-surface-dark) 96%, transparent) 55%),
+    linear-gradient(135deg, var(--color-surface-dark), var(--color-surface-darker));
   backdrop-filter: blur(18px);
   border-bottom: none;
-  box-shadow: 0 24px 50px -35px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 24px 50px -35px color-mix(in srgb, var(--color-primary) 85%, transparent);
+}
+
+.delvoura-footer-shell {
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--color-accent) 14%, transparent) 0%, color-mix(in srgb, #12030a 85%, transparent) 55%),
+    linear-gradient(140deg, var(--color-surface-darker), #12030a);
+  box-shadow: 0 -28px 60px -40px color-mix(in srgb, var(--color-primary) 90%, transparent);
 }
 
 .delvoura-header-shell::after {
@@ -41,44 +57,40 @@
   position: absolute;
   inset: 0 20% auto 20%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 214, 170, 0.35), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent) 35%, transparent), transparent);
 }
 
 .delvoura-hero-header {
-  --color-primary: #141414;
-  --color-accent: #e15b2f;
-  --color-soft-accent: #b64826;
-  --color-bg: rgba(255, 255, 255, 0.85);
-  --color-card: rgba(255, 255, 255, 0.92);
-  --color-text: #161616;
-  --color-text-muted: #4a4a4a;
-  --color-border: transparent;
-  --color-hover-dark: #111111;
+  --color-bg: var(--color-bg);
+  --color-card: var(--color-card);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-border: var(--color-border);
 }
 
 .delvoura-hero-header .delvoura-header-shell {
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--color-card);
   border-radius: 28px;
-  box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow-soft);
   backdrop-filter: blur(18px);
 }
 
 .delvoura-hero-header .delvoura-glow-pill {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.35);
-  color: #141414;
-  border: 1px solid #ffffff;
+  background: var(--color-card);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
 .delvoura-hero-header .delvoura-auth-wrap {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-card);
 }
 
 .delvoura-hero-header .delvoura-collection-panel {
   background: var(--color-card);
   color: var(--color-text);
-  border: 0.5px solid var(--color-red-50);
-  box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
 }
 
 .delvoura-hero-header .delvoura-collection-panel {
@@ -86,18 +98,20 @@
 }
 
 .delvoura-hero-header .delvoura-collection-item {
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--color-bg) 70%, var(--color-card));
 }
 
 .delvoura-hero-header .delvoura-collection-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: color-mix(in srgb, var(--color-bg) 55%, var(--color-card));
 }
 
 .delvoura-collection-panel {
-  background: var(--color-card);
+  background: var(--color-card) !important;
+  background-color: var(--color-card) !important;
+  background-image: none !important;
   color: var(--color-text);
   border: 1px solid var(--color-border);
-  box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 24px 50px -30px color-mix(in srgb, var(--color-primary) 55%, transparent);
   z-index: 600;
   opacity: 0;
   transform: translateY(10px) scale(0.98);
@@ -107,7 +121,7 @@
 }
 
 .delvoura-collection-panel-open {
-  opacity: 1;
+  opacity: 1 !important;
   transform: translateY(0) scale(1);
   pointer-events: auto;
   visibility: visible;
@@ -121,59 +135,59 @@
 }
 
 .delvoura-collection-item {
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--color-card) 6%, transparent);
 }
 
 .delvoura-collection-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: color-mix(in srgb, var(--color-card) 12%, transparent);
 }
 
 .delvoura-signature-box {
-  background: #2a2233;
+  background: var(--color-surface-darker);
 }
 
 .delvoura-signature-title {
-  color: #120d16 !important;
+  color: var(--color-text) !important;
 }
 
 .delvoura-signature-sub {
-  color: #241a2c !important;
+  color: var(--color-text-muted) !important;
 }
 
 .delvoura-glow-pill {
-  background: linear-gradient(135deg, rgba(255, 122, 69, 0.18), rgba(212, 163, 115, 0.08));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 18%, transparent), color-mix(in srgb, var(--color-soft-accent) 12%, transparent));
   border: 1px solid transparent;
-  box-shadow: 0 10px 25px -18px rgba(255, 122, 69, 0.7);
+  box-shadow: 0 10px 25px -18px color-mix(in srgb, var(--color-accent) 70%, transparent);
   transition: transform 0.2s ease, border 0.2s ease, background 0.2s ease;
 }
 
 .delvoura-search-modal .delvoura-glow-pill,
 .delvoura-search-modal .delvoura-glow-pill svg {
-  color: #f7efe7 !important;
+  color: var(--color-text-on-dark) !important;
 }
 
 .delvoura-glow-pill:hover {
   color: var(--color-text);
   transform: translateY(-1px);
-  border-color: rgba(255, 214, 170, 0.6);
-  background: linear-gradient(135deg, rgba(255, 122, 69, 0.3), rgba(212, 163, 115, 0.12));
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 30%, transparent), color-mix(in srgb, var(--color-soft-accent) 16%, transparent));
 }
 
 .delvoura-header-theme .delvoura-search-btn {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #c3b6ad;
+  border: 1px solid var(--color-border-dark);
+  color: var(--color-text-muted);
 }
 
 .delvoura-header-theme .delvoura-search-btn:hover {
-  border-color: rgba(255, 255, 255, 0.35);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
   background: transparent !important;
 }
 
 .delvoura-header-theme .delvoura-search-btn:focus,
 .delvoura-header-theme .delvoura-search-btn:focus-visible {
   outline: none !important;
-  box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.35) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 35%, transparent) !important;
 }
 
 
@@ -182,20 +196,20 @@
 }
 
 .delvoura-collection-btn:hover {
-  border-color: rgba(255, 214, 170, 0.6);
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
 }
 
 .delvoura-cart-btn {
-  color: #ffffff !important;
-  background-color: #0f0a12 !important;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--color-text-on-dark) !important;
+  background-color: var(--color-surface-darker) !important;
+  background: color-mix(in srgb, var(--color-card) 8%, transparent);
+  border: 1px solid var(--color-border-dark);
 }
 
 .delvoura-auth-wrap {
   height: 44px;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid var(--color-border-dark);
   box-shadow: none;
   display: inline-flex;
   align-items: center;
@@ -206,7 +220,7 @@
 .delvoura-auth-btn {
   border: none;
   outline: none;
-  color: #f7efe7 !important;
+  color: var(--color-text-on-dark) !important;
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
   height: 36px;
   min-width: 86px;
@@ -227,8 +241,8 @@
 
 .delvoura-auth-btn:hover {
   outline: none;
-  background: rgba(255, 255, 255, 0.06);
-  color: #f7efe7;
+  background: color-mix(in srgb, var(--color-card) 6%, transparent);
+  color: var(--color-text-on-dark);
   border: none !important;
   box-shadow: none !important;
   transform: none !important;
@@ -244,8 +258,8 @@
 }
 
 .delvoura-auth-cta {
-  background: linear-gradient(135deg, rgba(255, 122, 69, 0.75), rgba(255, 164, 94, 0.75));
-  color: #0d0a0f;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-soft-accent));
+  color: var(--color-text-on-dark);
   font-weight: 700;
   box-shadow: none;
 }
@@ -261,7 +275,7 @@
   height: 44px;
   padding: 0 18px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid var(--color-border);
   background: transparent;
   display: inline-flex;
   align-items: center;
@@ -272,14 +286,14 @@
 
 .delvoura-header-pill:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 214, 170, 0.5);
-  background: linear-gradient(135deg, rgba(255, 122, 69, 0.3), rgba(18, 13, 22, 0.95));
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 30%, transparent), var(--color-surface-darker));
 }
 
 .delvoura-search-btn:hover,
 .delvoura-search-btn:focus,
 .delvoura-search-btn:focus-visible {
-  border-color: rgba(255, 214, 170, 0.5) !important;
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent) !important;
   box-shadow: none !important;
 }
 
@@ -297,7 +311,7 @@
   gap: 10px;
   padding: 8px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid var(--color-border);
   background: transparent;
   color: var(--color-text);
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
@@ -305,13 +319,13 @@
 
 .delvoura-profile-card:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 214, 170, 0.5);
-  background: linear-gradient(135deg, rgba(255, 122, 69, 0.3), rgba(18, 13, 22, 0.95));
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 30%, transparent), var(--color-surface-darker));
 }
 
 .delvoura-profile-avatar {
-  background: linear-gradient(135deg, rgba(255, 122, 69, 0.9), rgba(212, 163, 115, 0.8));
-  color: #120d16;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-soft-accent));
+  color: var(--color-text-on-dark);
   font-weight: 700;
 }
 
@@ -343,15 +357,74 @@
   min-width: 240px;
   padding: 16px;
   border-radius: 18px;
-  border: 1px solid var(--color-border);
-  background: linear-gradient(150deg, rgba(18, 13, 22, 0.98), rgba(26, 20, 33, 0.98));
-  box-shadow: 0 18px 40px -26px rgba(0, 0, 0, 0.8);
-  color: var(--color-text);
+  border: 1px solid var(--color-border-dark);
+  background: linear-gradient(150deg, var(--color-surface-dark), var(--color-surface-darker));
+  box-shadow: 0 18px 40px -26px color-mix(in srgb, var(--color-primary) 80%, transparent);
+  color: var(--color-text-on-dark);
+}
+
+.delvoura-light-surface .delvoura-collection-panel {
+  background-color: var(--color-card) !important;
+  background-image: none !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+  opacity: 1 !important;
+}
+
+.delvoura-light-surface .delvoura-profile-menu {
+  background-color: var(--color-card) !important;
+  background-image: none !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+  opacity: 1 !important;
+}
+
+.delvoura-light-surface .delvoura-profile-menu,
+.delvoura-light-surface .delvoura-profile-menu * {
+  color: var(--color-text) !important;
+}
+
+.delvoura-light-surface .delvoura-profile-subtitle {
+  color: var(--color-text-muted) !important;
+}
+
+.delvoura-light-surface .delvoura-profile-menu-item {
+  background: var(--color-bg-soft) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+.delvoura-light-surface .delvoura-profile-menu-item svg {
+  color: var(--color-text-muted) !important;
+}
+
+.delvoura-light-surface .delvoura-profile-avatar,
+.delvoura-light-surface .delvoura-profile-avatar * ,
+.delvoura-light-surface .ant-avatar,
+.delvoura-light-surface .ant-avatar-string {
+  color: #ffffff !important;
+}
+
+.delvoura-cart-drawer .delvoura-checkout-btn {
+  color: #ffffff !important;
+}
+
+.delvoura-cart-drawer .delvoura-add-to-cart-btn:hover {
+  color: #ffffff !important;
+}
+
+.delvoura-light-surface .delvoura-collection-item {
+  background: var(--color-bg-soft) !important;
+  color: var(--color-text) !important;
+}
+
+.delvoura-light-surface .delvoura-collection-panel h3 {
+  color: var(--color-text) !important;
 }
 
 .delvoura-profile-menu,
 .delvoura-profile-menu * {
-  color: #f7efe7;
+  color: var(--color-text-on-dark);
 }
 
 .delvoura-profile-menu-header {
@@ -360,7 +433,7 @@
   gap: 12px;
   padding-bottom: 12px;
   margin-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--color-border-dark);
 }
 
 .delvoura-profile-menu-name {
@@ -371,7 +444,7 @@
 
 .delvoura-profile-subtitle {
   font-size: 12px;
-  color: #cdbfb5;
+  color: var(--color-text-on-dark-muted);
 }
 
 .delvoura-profile-menu-item {
@@ -382,29 +455,29 @@
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.04);
-  color: #f7efe7 !important;
+  background: color-mix(in srgb, var(--color-card) 6%, transparent);
+  color: var(--color-text-on-dark) !important;
   font-weight: 600;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
 .delvoura-profile-menu-item:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 214, 170, 0.35);
-  background: rgba(255, 122, 69, 0.12);
+  border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
 }
 
 .delvoura-profile-menu-item svg {
-  color: #cdbfb5;
+  color: var(--color-text-on-dark-muted);
 }
 
 .delvoura-profile-menu-logout {
   margin-top: 10px;
-  color: #ffd6aa !important;
+  color: var(--color-accent) !important;
 }
 
 .delvoura-profile-menu-logout svg {
-  color: #ffd6aa !important;
+  color: var(--color-accent) !important;
 }
 
 .delvoura-cart-drawer {
@@ -437,7 +510,7 @@
 }
 
 .delvoura-search-modal .ant-modal-mask {
-  background: rgba(0, 0, 0, 0.45) !important;
+  background: color-mix(in srgb, var(--color-primary) 45%, transparent) !important;
   backdrop-filter: blur(6px);
   transition: opacity 0.28s ease;
 }
@@ -493,30 +566,30 @@ body.ant-modal-open::-webkit-scrollbar {
 
 .delvoura-modal-surface {
   background:
-    radial-gradient(120% 120% at 0% 0%, rgba(255, 122, 69, 0.12), transparent 55%),
-    linear-gradient(140deg, rgba(18, 13, 22, 0.98), rgba(24, 16, 28, 0.98));
+    radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent 55%),
+    linear-gradient(140deg, var(--color-surface-dark), var(--color-surface-darker));
   border-radius: 28px;
-  box-shadow: 0 50px 120px -40px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 50px 120px -40px color-mix(in srgb, var(--color-primary) 75%, transparent);
   padding: 24px;
   min-height: 100%;
 }
 
 .delvoura-modal-left,
 .delvoura-modal-right {
-  background: #1a1421;
-  color: #f7efe7;
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
 }
 
 .delvoura-modal-left .ant-typography,
 .delvoura-modal-left h5,
 .delvoura-modal-right .ant-typography,
 .delvoura-modal-right h5 {
-  color: #f7efe7;
+  color: var(--color-text-on-dark);
 }
 
 .delvoura-modal-left .ant-typography-secondary,
 .delvoura-modal-right .ant-typography-secondary {
-  color: #c9c1b9;
+  color: var(--color-text-on-dark-muted);
 }
 
 .delvoura-modal-right {
@@ -539,15 +612,16 @@ body.ant-modal-open::-webkit-scrollbar {
 }
 
 .delvoura-chip {
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--color-card) 6%, transparent);
   border: 1px solid transparent;
   color: var(--color-text);
   transition: border 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  border-radius: 12px;
 }
 
 .delvoura-chip-strong {
-  background: #241a2c;
-  color: #f7efe7;
+  background: var(--color-surface-darker);
+  color: var(--color-text-on-dark);
 }
 
 .delvoura-chip-lg {
@@ -557,64 +631,78 @@ body.ant-modal-open::-webkit-scrollbar {
 }
 
 .delvoura-chip:hover {
-  border-color: rgba(255, 214, 170, 0.5);
-  background: rgba(255, 122, 69, 0.12);
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
   transform: translateY(-1px);
 }
 
 .delvoura-product-card {
-  background: rgba(15, 10, 18, 0.7);
+  background: color-mix(in srgb, var(--color-card) 6%, transparent);
   border: 1px solid transparent;
-  box-shadow: 0 12px 24px -18px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 12px 24px -18px color-mix(in srgb, var(--color-primary) 80%, transparent);
 }
 
 .delvoura-input {
-  background: rgba(15, 10, 18, 0.85);
-  border: 1px solid rgba(255, 214, 170, 0.28);
-  box-shadow: inset 0 0 0 1px rgba(18, 13, 22, 0.6);
+  background: var(--color-surface-darker);
+  border: 1px solid var(--color-border-dark);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-surface-dark) 60%, transparent);
   color: var(--color-text);
 }
 
 .delvoura-input::placeholder {
-  color: rgba(243, 232, 221, 0.6);
+  color: var(--color-text-on-dark-muted);
 }
 
 .delvoura-input:hover {
-  border-color: rgba(255, 214, 170, 0.45);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
 }
 
 .delvoura-input:focus,
 .delvoura-input:focus-within {
-  border-color: rgba(255, 214, 170, 0.75);
+  border-color: color-mix(in srgb, var(--color-accent) 75%, transparent);
   box-shadow:
-    0 0 0 2px rgba(255, 122, 69, 0.25),
-    inset 0 0 0 1px rgba(18, 13, 22, 0.6);
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--color-surface-dark) 60%, transparent);
 }
 
 .delvoura-auth-content .ant-input:focus,
 .delvoura-auth-content .ant-input-focused,
 .delvoura-auth-content .ant-input-affix-wrapper:focus,
 .delvoura-auth-content .ant-input-affix-wrapper-focused {
-  border-color: rgba(212, 163, 115, 0.8) !important;
-  box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.25) !important;
+  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
 }
 
 .delvoura-auth-content .ant-input:hover,
 .delvoura-auth-content .ant-input-affix-wrapper:hover {
-  border-color: rgba(212, 163, 115, 0.6) !important;
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent) !important;
 }
 
 .delvoura-auth-content .ant-btn-default {
-  border-color: rgba(212, 163, 115, 0.8) !important;
+  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent) !important;
   color: var(--color-accent) !important;
 }
 
 .delvoura-auth-content .ant-btn-default:hover,
 .delvoura-auth-content .ant-btn-default:focus,
 .delvoura-auth-content .ant-btn-default:focus-visible {
-  border-color: rgba(212, 163, 115, 1) !important;
+  border-color: var(--color-accent) !important;
   color: var(--color-accent) !important;
-  box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.25) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
+}
+ .delvoura-cart-drawer .ant-drawer-content {
+ background: transparent;
+}
+.delvoura-cart-drawer .ant-drawer-body {
+  background: transparent;
+}
+.delvoura-cart-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.delvoura-cart-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 

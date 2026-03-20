@@ -59,7 +59,7 @@ const SignUpForm = () => {
             <CommonPasswordInput name="password" placeholder="Create password" value={values.password} onChange={handleChange} onBlur={handleBlur} error={passwordError} touched={!!touched.password} />
             </div>
 
-            <Button type="primary" size="large" loading={isSignupPending} htmlType="submit" className="w-full rounded-full tracking-[0.22em] text-white" style={{ background: "var(--color-primary)", borderColor: "transparent" }}>
+            <Button type="primary" size="large" loading={isSignupPending} htmlType="submit" className="w-full rounded-full tracking-[0.22em] text-[color:var(--color-text-on-dark)]" style={{ background: "var(--color-primary)", borderColor: "transparent" }}>
               Create Account
             </Button>
           </Form>

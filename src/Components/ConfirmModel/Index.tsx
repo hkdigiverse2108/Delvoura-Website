@@ -1,3 +1,4 @@
 import LogoutConfirmModel from "./LogoutConfirmModel"
+import NewsletterModal from "./NewsletterModal"
 
-export {LogoutConfirmModel}
+export { LogoutConfirmModel, NewsletterModal }

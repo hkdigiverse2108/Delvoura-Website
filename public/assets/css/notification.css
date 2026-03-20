@@ -106,3 +106,27 @@
   padding: 0 !important;
   background: transparent !important;
 }
+
+.delvoura-newsletter-modal.ant-modal .ant-modal-content,
+.delvoura-newsletter-modal .ant-modal-content {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+.delvoura-newsletter-modal.ant-modal,
+.delvoura-newsletter-modal {
+  padding: 0 !important;
+  background: transparent !important;
+}
+.delvoura-newsletter-modal.ant-modal .ant-modal-container,
+.delvoura-newsletter-modal .ant-modal-container {
+  padding: 0 !important;
+  background: transparent !important;
+}
+.delvoura-newsletter-modal.ant-modal .ant-modal-body,
+.delvoura-newsletter-modal .ant-modal-body {
+  padding: 0 !important;
+  background: transparent !important;
+}

@@ -1,44 +1,25 @@
 import { useState, useRef, useEffect } from "react";
+import { Queries } from "../../Api";
 import type { CollectionMenuProps } from "../../Types";
 
-const menuData = [
+const staticSections = [
   {
     title: null,
-    items: [{ label: "Shop All Perfumes", tone: "rose" }],
+    items: [{ label: "Shop All Perfumes" }],
   },
   {
     title: "Shop By Gender",
-    items: [
-      { label: "Women's", tone: "peach" },
-      { label: "Men's", tone: "charcoal" },
-      { label: "Unisex", tone: "slate" },
-    ],
-  },
-  {
-    title: "Collections",
-    items: [
-      { label: "Perfume Spray", tone: "ruby" },
-      { label: "Private Blends", tone: "ink" },
-      { label: "Perfume Roll-Ons", tone: "sand" },
-    ],
+    items: [{ label: "Women's" }, { label: "Men's" }, { label: "Unisex" }],
   },
 ];
-
-const toneClass = {
-  rose: "from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]",
-  peach: "from-[color:var(--color-accent)] via-[color:var(--color-soft-accent)] to-[color:var(--color-primary)]",
-  charcoal: "from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]",
-  slate: "from-[color:var(--color-accent)] via-[color:var(--color-soft-accent)] to-[color:var(--color-primary)]",
-  ruby: "from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]",
-  ink: "from-[color:var(--color-accent)] via-[color:var(--color-soft-accent)] to-[color:var(--color-primary)]",
-  sand: "from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]",
-};
-
-
 
 const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+  const { data, isLoading } = Queries.useGetCollections();
+  const collections = (data?.data?.collection_data || []).filter( (item) => item && item.isDeleted !== true && item.isActive !== false);
+
+  const getImageSrc = (item: { image?: string; imageUrl?: string }) => item.image || item.imageUrl || "";
 
   useEffect(() => {
     if (isMobile) return;
@@ -63,22 +44,59 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
 
         {open && (
           <div className="flex flex-col gap-5">
-            {menuData.map((section, i) => (
+            {staticSections.map((section, i) => (
               <div key={i}>
                 {section.title && (
-                  <h3 className="mb-2 text-xs text-[color:var(--color-text-muted)]"> {section.title}</h3>
+                  <h3 className="mb-2 text-xs text-[color:var(--color-text-muted)]">
+                    {section.title}
+                  </h3>
                 )}
 
                 <div className="flex flex-col gap-3">
                   {section.items.map((item) => (
                     <button key={item.label} className="flex items-center gap-3 rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-3 py-3">
-                      <div className={`h-10 w-10 rounded-lg bg-gradient-to-br ${toneClass[item.tone as keyof typeof toneClass]}`}/>
+                      <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]"/>
                       <span className="text-sm">{item.label}</span>
                     </button>
                   ))}
                 </div>
               </div>
             ))}
+
+            <div>
+              <h3 className="mb-2 text-xs text-[color:var(--color-text-muted)]">
+                Collections
+              </h3>
+
+              <div className="flex flex-col gap-3">
+                {isLoading && (
+                  <span className="text-sm text-[color:var(--color-text-muted)]">
+                    Loading collections...
+                  </span>
+                )}
+
+                {!isLoading && collections.length === 0 && (
+                  <span className="text-sm text-[color:var(--color-text-muted)]">
+                    No collections found.
+                  </span>
+                )}
+
+                {!isLoading &&
+                  collections.map((item) => {
+                    const imageSrc = getImageSrc(item);
+                    return (
+                      <button key={item._id || item.name} className="flex items-center gap-3 rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-3 py-3">
+                        {imageSrc ? (
+                          <img src={imageSrc} alt={item.name || "Collection"} className="h-10 w-10 rounded-lg object-cover" />
+                        ) : (
+                          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]" />
+                        )}
+                        <span className="text-sm">{item.name || "Untitled"}</span>
+                      </button>
+                    );
+                  })}
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -95,22 +113,56 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
 
       {/* DROPDOWN */}
       <div className={`delvoura-collection-panel delvoura-light-surface absolute top-full left-1/2 -translate-x-1/2 mt-3 w-80 rounded-3xl p-5 shadow-2xl ${ open ? "delvoura-collection-panel-open" : "delvoura-collection-panel-closed" }`} aria-hidden={!open}>
-        {menuData.map((section, i) => (
+        {staticSections.map((section, i) => (
           <div key={i} className="mb-4">
             {section.title && (
-              <h3 className="mb-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-on-dark)]">{section.title}</h3>
+              <h3 className="mb-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-on-dark)]">
+                {section.title}
+              </h3>
             )}
 
-              <div className="flex flex-col gap-2">
-                {section.items.map((item) => (
-                  <button key={item.label} className="delvoura-collection-item flex items-center gap-3 rounded-2xl px-3 py-3 text-left">
-                    <div className={`h-9 w-9 rounded-xl bg-gradient-to-br ${ toneClass[item.tone as keyof typeof toneClass]}`}/>
-                    <span className="text-sm font-medium">{item.label}</span>
-                  </button>
-                ))}
-              </div>
+            <div className="flex flex-col gap-2">
+              {section.items.map((item) => (
+                <button key={item.label} className="delvoura-collection-item flex items-center gap-3 rounded-2xl px-3 py-3 text-left">
+                  <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]"/>
+                  <span className="text-sm font-medium">{item.label}</span>
+                </button>
+              ))}
             </div>
-          ))}
+          </div>
+        ))}
+
+        <div className="mb-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-on-dark)]">
+          Collections
+        </div>
+        <div className="flex flex-col gap-2">
+          {isLoading && (
+            <span className="text-sm text-[color:var(--color-text-muted)]">
+              Loading collections...
+            </span>
+          )}
+
+          {!isLoading && collections.length === 0 && (
+            <span className="text-sm text-[color:var(--color-text-muted)]">
+              No collections found.
+            </span>
+          )}
+
+          {!isLoading &&
+            collections.map((item) => {
+              const imageSrc = getImageSrc(item);
+              return (
+                <button key={item._id || item.name} className="delvoura-collection-item flex items-center gap-3 rounded-2xl px-3 py-3 text-left">
+                  {imageSrc ? (
+                    <img src={imageSrc} alt={item.name || "Collection"} className="h-9 w-9 rounded-xl object-cover" />
+                  ) : (
+                    <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]" />
+                  )}
+                  <span className="text-sm font-medium">{item.name || "Untitled"}</span>
+                </button>
+              );
+            })}
+        </div>
       </div>
     </div>
   );

@@ -11,5 +11,16 @@ export const URL_KEYS = {
     //==============USER===============
     USER : {
         GET_SINGLE_USER_BY_ID : "/user"
-    }
+    },
+
+    //==============COLLECTION===============
+    COLLECTION: {
+        GET_COLLECTIONS: "/collection"
+    },
+
+    //==============PRODUCT===============
+    PRODUCT: {
+        GET_PRODUCTS: "/product",
+        GET_PRODUCT_BY_ID: "/product"
+    },
 } as const

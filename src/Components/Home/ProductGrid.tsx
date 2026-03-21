@@ -1,168 +1,98 @@
 import { useMemo, useState } from "react";
 import { Button, Modal, Rate, Tag, Typography } from "antd";
-import { ArrowRightOutlined, CloseOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, CloseOutlined, LeftOutlined, MinusOutlined, PlusOutlined, RightOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { Queries } from "../../Api";
+import type { ProductItem } from "../../Types";
 
 const { Title, Text } = Typography;
 
-const products = [
-  {
-    name: "Aqua Prism",
-    subtitle: "Inspired by Cool Water",
-    price: "Rs. 299 - 799.0",
-    rating: 5,
-    reviews: 100,
-    sizes: ["50 ml", "100 ml"],
-    tags: ["Aquatic", "Green", "Aromatic", "Spicy"],
-    badges: ["Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Citrus Drift",
-    subtitle: "Inspired by Aqua di Gio",
-    price: "Rs. 299 - 799.0",
-    rating: 4,
-    reviews: 23,
-    sizes: ["50 ml", "100 ml"],
-    tags: ["Aromatic", "Aquatic", "Spicy", "Amber"],
-    badges: ["Men"],
-    image:
-      "https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Amber Veil",
-    subtitle: "Inspired by Invite Only Amber",
-    price: "Rs. 299 - 799.0",
-    rating: 5,
-    reviews: 14,
-    sizes: ["50 ml", "100 ml"],
-    tags: ["Woody", "Amber", "Spicy", "Earthy"],
-    badges: ["Unisex", "Women"],
-    image:
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Aqua Prism",
-    subtitle: "Inspired by Cool Water",
-    price: "Rs. 299 - 799.0",
-    rating: 5,
-    reviews: 100,
-    sizes: ["50 ml", "100 ml"],
-    tags: ["Aquatic", "Green", "Aromatic", "Spicy"],
-    badges: ["Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Aqua Prism",
-    subtitle: "Inspired by Cool Water",
-    price: "Rs. 299 - 799.0",
-    rating: 5,
-    reviews: 100,
-    sizes: ["50 ml", "100 ml"],
-    tags: ["Aquatic", "Green", "Aromatic", "Spicy"],
-    badges: ["Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Citrus Drift",
-    subtitle: "Inspired by Aqua di Gio",
-    price: "Rs. 299 - 799.0",
-    rating: 4,
-    reviews: 23,
-    sizes: ["50 ml", "100 ml"],
-    tags: ["Aromatic", "Aquatic", "Spicy", "Amber"],
-    badges: ["Men"],
-    image:
-      "https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Amber Veil",
-    subtitle: "Inspired by Invite Only Amber",
-    price: "Rs. 299 - 799.0",
-    rating: 5,
-    reviews: 14,
-    sizes: ["50 ml", "100 ml"],
-    tags: ["Woody", "Amber", "Spicy", "Earthy"],
-    badges: ["Unisex", "Women"],
-    image:
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Aqua Prism",
-    subtitle: "Inspired by Cool Water",
-    price: "Rs. 299 - 799.0",
-    rating: 5,
-    reviews: 100,
-    sizes: ["50 ml", "100 ml"],
-    tags: ["Aquatic", "Green", "Aromatic", "Spicy"],
-    badges: ["Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=900&auto=format&fit=crop",
-  },
-];
-
 const ProductGrid = () => {
   const navigate = useNavigate();
-  const [selectedProduct, setSelectedProduct] = useState<(typeof products)[number] | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string>("50 ml");
+  const { data, isLoading } = Queries.useGetProducts();
+  const products = data?.data?.product_data || [];
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
+  const [selectedVariant, setSelectedVariant] = useState<string>("");
+  const [quantity, setQuantity] = useState<number>(1);
+  const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
   const isModalOpen = Boolean(selectedProduct);
   const modalImages = useMemo(() => {
     if (!selectedProduct) return [];
-    return Array.from({ length: 4 }, () => selectedProduct.image);
+    const cover = selectedProduct.coverimage || "";
+    const imgs = selectedProduct.images?.length ? selectedProduct.images : [];
+    const merged = cover ? [cover, ...imgs] : imgs;
+    return merged.length ? Array.from(new Set(merged)) : [];
   }, [selectedProduct]);
+  
+  const activeImage = modalImages[activeImageIndex] || "";
+  const handlePrevImage = () => setActiveImageIndex((prev) => (prev <= 0 ? Math.max(0, modalImages.length - 1) : prev - 1));
+  const handleNextImage = () => setActiveImageIndex((prev) => (prev >= modalImages.length - 1 ? 0 : prev + 1));
+
+  console.log(products)
 
   return (
     <section className="delvoura-home-products">
       <div className="mx-auto w-[90%] max-w-[1700px]">
         <div className="delvoura-product-grid grid gap-6">
+          {!isLoading && products.length === 0 && (
+            <div className="text-sm text-[color:var(--color-text-muted)]">
+              No products found.
+            </div>
+          )}
           {products.map((product, idx) => (
-            <article key={`${product.name}-${idx}`} className="delvoura-product-card cursor-pointer" onClick={() => navigate(`/products/${idx + 1}`)}>
+            <article key={product._id || `${product.name}-${idx}`} className="delvoura-product-card cursor-pointer" onClick={() => navigate(`/products/${product._id}`)}>
               <div className="delvoura-product-media">
-                <img src={product.image} alt={product.name} loading="lazy" />
+                <img src={product.coverimage || product.images?.[0] || ""} alt={product.name || "Product"} loading="lazy" />
                 <div className="delvoura-product-media-shadow" />
                 <div className="delvoura-product-media-shadow-bottom" />
                 <div className="delvoura-product-badges">
-                  {product.badges.map((badge) => (
-                    <Tag key={badge} className="delvoura-product-badge">
-                      {badge}
+                  {product.gender ? (
+                    <Tag key={product.gender} className="delvoura-product-badge">
+                      {product.gender}
                     </Tag>
-                  ))}
+                  ) : null}
                 </div>
-                <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={(event) => { event.stopPropagation(); setSelectedProduct(product); setSelectedSize(product.sizes[0]);}}>
+                <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={(event) => { event.stopPropagation(); const firstVariant = (product.variants?.[0] as any)?.size || (product.variants?.[0] as any) || "50 ml"; setSelectedProduct(product); setSelectedVariant(firstVariant); setQuantity(1); setActiveImageIndex(0);}}>
                   Select Options
                 </Button>
               </div>
 
               <div className="delvoura-product-content ">
-                <h3 className="delvoura-product-title">{product.name}</h3>
-                <div className="delvoura-product-subtitle">{product.subtitle}</div>
+                <h3 className="delvoura-product-title">{product.name || "Untitled"}</h3>
+                <div className="delvoura-product-subtitle">{product.title || "Eau De Parfum"}</div>
 
                 <div className="delvoura-product-row">
                   <div className="flex items-center gap-2">
-                    <Rate disabled defaultValue={product.rating} />
-                    <span className="delvoura-product-reviews">({product.reviews})</span>
+                    <Rate disabled value={Number(product.ratingSummary?.avgRating || 0)} />
+                    <span className="delvoura-product-reviews">({product.ratingSummary?.ratingCount || 0})</span>
                   </div>
                   <div className="delvoura-product-sizes">
-                    {product.sizes.map((size) => (
-                      <span key={size} className="delvoura-size-pill">
-                        {size}
-                      </span>
-                    ))}
+                    {(product.variants?.length ? product.variants : ["50 ml"]).map((variant: any) => {
+                      const label = typeof variant === "string" ? variant : variant?.size;
+                      return (
+                        <span key={label} className="delvoura-size-pill">
+                          {label}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
 
                 <div className="delvoura-product-row">
-                  <span className="delvoura-product-price">{product.price}</span>
+                  <span className="delvoura-product-price">
+                    {(() => {
+                      const firstVariant = (product.variants?.[0] as any);
+                      const price = typeof firstVariant === "object" ? firstVariant?.price ?? 0 : product.price ?? product.mrp ?? 0;
+                      return `Rs. ${price}`;
+                    })()}
+                  </span>
                 </div>
 
                 <div className="delvoura-product-tags">
-                  {product.tags.map((tag, tagIndex) => (
+                  {(product.ingredients || []).map((tag, tagIndex) => (
                     <span key={`${tag}-${tagIndex}`}>
                       {tag}
-                      {tagIndex < product.tags.length - 1 ? " |" : ""}
+                      {tagIndex < (product.ingredients?.length || 0) - 1 ? " |" : ""}
                     </span>
                   ))}
                 </div>
@@ -182,13 +112,19 @@ const ProductGrid = () => {
             <div className="delvoura-select-options-media">
               <div className="delvoura-select-options-thumbs">
                 {modalImages.map((img, idx) => (
-                  <button type="button" className="delvoura-select-options-thumb" key={`${img}-${idx}`} aria-label={`Preview ${idx + 1}`} >
+                  <button type="button" className={`delvoura-select-options-thumb ${idx === activeImageIndex ? "is-active" : ""}`} key={`${img}-${idx}`} aria-label={`Preview ${idx + 1}`} onClick={() => setActiveImageIndex(idx)}>
                     <img src={img} alt={`${selectedProduct.name} preview ${idx + 1}`} />
                   </button>
                 ))}
               </div>
-              <div className="delvoura-select-options-hero overflow-hidden">
-                <img src={selectedProduct.image} alt={selectedProduct.name} />
+              <div className="delvoura-select-options-hero delvoura-product-main overflow-hidden">
+                <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-left" aria-label="Previous image" onClick={handlePrevImage}>
+                  <LeftOutlined />
+                </button>
+                <img src={activeImage || selectedProduct.coverimage || selectedProduct.images?.[0] || ""} alt={selectedProduct.name || "Product"} />
+                <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-right" aria-label="Next image" onClick={handleNextImage}>
+                  <RightOutlined />
+                </button>
               </div>
             </div>
 
@@ -197,33 +133,51 @@ const ProductGrid = () => {
                 {selectedProduct.name} | Eau De Parfum
               </Title>
               <div className="delvoura-select-options-rating">
-                <Rate disabled defaultValue={selectedProduct.rating} />
-                <span>({selectedProduct.reviews})</span>
+                <Rate disabled value={Number(selectedProduct.ratingSummary?.avgRating || 0)} />
+                <span>({selectedProduct.ratingSummary?.ratingCount || 0})</span>
               </div>
               <div className="delvoura-select-options-price-row">
-                <span className="delvoura-select-options-price">Rs. 799</span>
-                <span className="delvoura-select-options-price-old">Rs. 1,499</span>
+                {(() => {
+                  const variants = selectedProduct.variants as any[] | undefined;
+                  const selected = variants?.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant);
+                  const price = typeof selected === "object" ? selected?.price ?? 0 : selectedProduct.price ?? 0;
+                  return (
+                    <span className="delvoura-select-options-price">Rs. {price}</span>
+                  );
+                })()}
+                {selectedProduct.mrp && (
+                  <span className="delvoura-select-options-price-old">Rs. {selectedProduct.mrp}</span>
+                )}
               </div>
               <Text className="delvoura-select-options-tax">Inclusive of all taxes</Text>
 
               <div className="delvoura-select-options-sizes">
-                {selectedProduct.sizes.map((size) => (
-                  <button key={size} type="button" className={`delvoura-select-options-size ${selectedSize === size ? "is-active" : ""}`} onClick={() => setSelectedSize(size)} >
-                    {size}
+                {(selectedProduct.variants?.length ? selectedProduct.variants : ["50 ml"]).map((variant: any) => {
+                  const label = typeof variant === "string" ? variant : variant?.size;
+                  return (
+                    <button key={label} type="button" className={`delvoura-select-options-size ${selectedVariant === label ? "is-active" : ""}`} onClick={() => setSelectedVariant(label)} >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="delvoura-product-actions">
+                <div className="delvoura-qty-control">
+                  <button type="button" className="delvoura-qty-btn" onClick={() => setQuantity((q) => Math.max(1, q - 1))}>
+                    <MinusOutlined />
                   </button>
-                ))}
-              </div>
-
-              <div className="delvoura-select-options-actions">
-                <Button className="delvoura-qty-btn">-</Button>
-                <span className="delvoura-qty-value">1</span>
-                <Button className="delvoura-qty-btn">+</Button>
-                <Button className="delvoura-add-to-cart" type="primary">
+                  <span className="delvoura-qty-value">{quantity}</span>
+                  <button type="button" className="delvoura-qty-btn" onClick={() => setQuantity((q) => q + 1)}>
+                    <PlusOutlined />
+                  </button>
+                </div>
+                <button type="button" className="delvoura-add-to-cart">
                   Add To Cart
-                </Button>
+                </button>
               </div>
 
-              <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(`/products/1`);}}>
+              <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(`/products/${selectedProduct._id}`);}}>
                 View full details <ArrowRightOutlined />
               </button>
             </div>

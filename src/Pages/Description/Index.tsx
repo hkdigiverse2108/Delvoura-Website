@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { OfferBar } from "../../Components/common";
-import { ProductAccordions, ProductGallery, ProductInfo, ProductReviews } from "../../Components/Description";
+import { InstagramScrollingSection, OfferBar } from "../../Components/common";
+import { ProductAccordions, ProductGallery, ProductInfo, ProductReviews, RelatedProductsSlider } from "../../Components/Description";
 import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
 
@@ -32,8 +32,10 @@ const ProductDescription = () => {
                 <ProductInfo />
                 <ProductAccordions />
               </div>
-            </div>
-            <ProductReviews />
+            </div> <br /><br /><br />
+            <RelatedProductsSlider /> <br /><br />
+            <ProductReviews /> <br /><br />
+            <InstagramScrollingSection containerClassName="w-full max-w-none" />
           </div>
         </div>
       </section>

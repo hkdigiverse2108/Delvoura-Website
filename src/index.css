@@ -7,6 +7,10 @@
 @import "../public/assets/css/notification.css";
 @import "../public/assets/css/description.css";
 
+* {
+  font-family: "Jost", sans-serif;
+}
+
 :root {
   --color-primary: #3a0f1b;
   --color-accent: #5a1e2e;

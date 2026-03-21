@@ -24,13 +24,6 @@ const ProductReviews = () => {
         text:
           "Good quality and fragrance. Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nesciunt, voluptates vel aliquid reprehenderit illum! Quisquam sequi repudiandae laborum vel iusto corrupti maxime, ad laboriosam distinctio explicabo iste vero veniam.",
       },
-      {
-        name: "Nitish P.",
-        verified: true,
-        date: "3/17/2026",
-        rating: 5,
-        text: "Good quality and fragrance. Lorem ipsum  dolor sit amet consectetur adipisicing elit. Placeat nesciunt, voluptates vel aliquid reprehenderit illum! Quisquam sequi repudiandae laborum vel iusto corrupti maxime, ad laboriosam distinctio explicabo iste vero veniam.",
-      },
     ],
     []
   );

@@ -61,14 +61,7 @@ const BannerSlider = () => {
       >
         <LeftOutlined className="text-2xl transition group-hover:-translate-x-0.5" />
       </button>
-      <button
-        type="button"
-        aria-label="Next slide"
-        onClick={() => carouselRef.current?.next()}
-        className="pointer-events-none absolute right-4 top-1/2 z-20 translate-x-8 -translate-y-1/2 rounded-full opacity-0 backdrop-blur transition duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100 hover:bg-[color:var(--color-surface-darker)] h-12 w-12 sm:h-14 sm:w-14"
-        style={{
-          border: "1px solid var(--color-border-dark)",
-          background:
+      <button type="button" aria-label="Next slide" onClick={() => carouselRef.current?.next()} className="pointer-events-none absolute right-4 top-1/2 z-20 translate-x-8 -translate-y-1/2 rounded-full opacity-0 backdrop-blur transition duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100 hover:bg-[color:var(--color-surface-darker)] h-12 w-12 sm:h-14 sm:w-14" style={{ border: "1px solid var(--color-border-dark)", background:
             "color-mix(in srgb, var(--color-surface-dark) 65%, transparent)",
           color: "var(--color-text-on-dark)",
           boxShadow:

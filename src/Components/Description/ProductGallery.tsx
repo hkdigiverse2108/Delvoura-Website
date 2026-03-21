@@ -25,34 +25,18 @@ const ProductGallery = () => {
     <div className="delvoura-product-gallery">
       <div className="delvoura-product-thumbs">
         {images.map((img, idx) => (
-          <button
-            type="button"
-            key={`${img}-${idx}`}
-            className={`delvoura-product-thumb ${idx === activeIndex ? "is-active" : ""}`}
-            onClick={() => setActiveIndex(idx)}
-            aria-label={`View image ${idx + 1}`}
-          >
+          <button type="button" key={`${img}-${idx}`} className={`delvoura-product-thumb ${idx === activeIndex ? "is-active" : ""}`} onClick={() => setActiveIndex(idx)} aria-label={`View image ${idx + 1}`} >
             <img src={img} alt={`Promise thumbnail ${idx + 1}`} loading="lazy" />
           </button>
         ))}
       </div>
 
       <div className="delvoura-product-main">
-        <button
-          type="button"
-          className="delvoura-gallery-nav delvoura-gallery-nav-left"
-          aria-label="Previous image"
-          onClick={handlePrev}
-        >
+        <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-left" aria-label="Previous image" onClick={handlePrev} >
           <LeftOutlined />
         </button>
         <img src={activeImage} alt="Promise Eau De Parfum" />
-        <button
-          type="button"
-          className="delvoura-gallery-nav delvoura-gallery-nav-right"
-          aria-label="Next image"
-          onClick={handleNext}
-        >
+        <button  type="button"  className="delvoura-gallery-nav delvoura-gallery-nav-right"  aria-label="Next image"  onClick={handleNext}>
           <RightOutlined />
         </button>
       </div>

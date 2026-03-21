@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Button, Modal, Rate, Tag, Typography } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, CloseOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
@@ -116,7 +116,7 @@ const ProductGrid = () => {
 
   return (
     <section className="delvoura-home-products">
-      <div className="mx-auto w-[95%] max-w-[1700px]">
+      <div className="mx-auto w-[90%] max-w-[1700px]">
         <div className="delvoura-product-grid grid gap-6">
           {products.map((product, idx) => (
             <article key={`${product.name}-${idx}`} className="delvoura-product-card cursor-pointer" onClick={() => navigate(`/products/${idx + 1}`)}>
@@ -224,7 +224,7 @@ const ProductGrid = () => {
               </div>
 
               <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(`/products/1`);}}>
-                View full details ?
+                View full details <ArrowRightOutlined />
               </button>
             </div>
           </div>

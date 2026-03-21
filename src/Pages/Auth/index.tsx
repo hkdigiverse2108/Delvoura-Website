@@ -8,9 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
 import { useAppSelector } from "../../Store/Hooks";
 import { Queries } from "../../Api";
-import { InstagramScrollingSection } from "../../Components/common";
+import { InstagramScrollingSection, OfferBar } from "../../Components/common";
 
 const Authencation = () => {
+  const [hideOfferBar, setHideOfferBar] = useState(false);
   const [tab, setTab] = useState("login");
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
@@ -23,11 +24,23 @@ const Authencation = () => {
     }
   }, [isLoggedIn, navigate]);
 
+
+  //hide offerbar
+  useEffect(() => {
+    const handleScroll = () => {
+        if (window.scrollY > 70) return setHideOfferBar(true);
+        return setHideOfferBar(false);
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
   return (
     <div className="delvoura-auth-page min-h-screen bg-[color:var(--color-bg)] text-[color:var(--color-text)]">
       <div className="sticky top-0 z-999 ">
           <Header />
       </div>
+      {!hideOfferBar && <OfferBar className="top-20" />}
 
       <div className="h-[55vh] w-full bg-center bg-cover" style={{
           backgroundImage:

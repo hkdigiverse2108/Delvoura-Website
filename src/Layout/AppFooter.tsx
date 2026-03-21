@@ -1,4 +1,6 @@
 import { FacebookOutlined, InstagramOutlined, TwitterOutlined, YoutubeOutlined, PhoneOutlined, MailOutlined, EnvironmentOutlined,} from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../Constants";
 
 const AppFooter = () => {
   return (
@@ -42,7 +44,9 @@ const AppFooter = () => {
               <span className="footer-link">Terms and Conditions</span>
               <span className="footer-link">Refund Policy</span>
               <span className="footer-link">Terms of Service</span>
-              <span className="footer-link">Contact Us</span>
+              <Link to={ROUTES.CONTACT} className="footer-link">
+                Contact Us
+              </Link>
             </div>
           </div>
 
@@ -113,7 +117,9 @@ const AppFooter = () => {
               <span className="footer-link">Terms and Conditions</span>
               <span className="footer-link">Refund Policy</span>
               <span className="footer-link">Terms of Service</span>
-              <span className="footer-link">Contact Us</span>
+              <Link to={ROUTES.CONTACT} className="footer-link">
+                Contact Us
+              </Link>
             </div>
           </details>
 

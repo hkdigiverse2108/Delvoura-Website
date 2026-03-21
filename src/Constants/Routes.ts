@@ -3,6 +3,7 @@ export const ROUTES = {
     
     COLLECTIONS_ALL: "/collections/all",
     PRODUCT_DETAILS: "/products/:id",
+    CONTACT: "/contact",
 
     AUTH : {
         AUTHETICATION : "/authentication",

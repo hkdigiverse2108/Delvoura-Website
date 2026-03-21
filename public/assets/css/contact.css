@@ -1,0 +1,100 @@
+.delvoura-contact-content .ant-input,
+.delvoura-contact-content .ant-input-affix-wrapper {
+  border-radius: 5px !important;
+  border-color: var(--color-border) !important;
+  background: var(--color-card) !important;
+  color: var(--color-text) !important;
+}
+
+.delvoura-contact-content .ant-input:not(textarea) {
+  height: 44px !important;
+}
+
+.delvoura-contact-content label {
+  margin-bottom: 6px !important;
+}
+
+.delvoura-contact-content .ant-form-item {
+  margin-bottom: 0 !important;
+}
+
+.delvoura-contact-content .ant-input-group .ant-input {
+  border-radius: 0 5px 5px 0 !important;
+  border-color: var(--color-border) !important;
+  background: var(--color-card) !important;
+  color: var(--color-text) !important;
+  border-left: 0 !important;
+}
+
+.delvoura-contact-content .ant-input:focus,
+.delvoura-contact-content .ant-input-focused,
+.delvoura-contact-content .ant-input-affix-wrapper:focus,
+.delvoura-contact-content .ant-input-affix-wrapper-focused,
+.delvoura-contact-content .ant-input-group .ant-input:focus,
+.delvoura-contact-content .ant-input-group .ant-input-focused {
+  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
+}
+
+.delvoura-contact-content .ant-input:hover,
+.delvoura-contact-content .ant-input-affix-wrapper:hover,
+.delvoura-contact-content .ant-input-group .ant-input:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent) !important;
+}
+
+.delvoura-contact-content .ant-input-group-addon {
+  border-color: var(--color-border) !important;
+  background: var(--color-card) !important;
+  border-radius: 5px 0 0 5px !important;
+  border-right: 0 !important;
+  padding: 0 !important;
+}
+
+.delvoura-contact-select .ant-select-selector {
+  height: 42px !important;
+  border-radius: 5px 0 0 5px !important;
+  border: 0 !important;
+  background: var(--color-card) !important;
+  color: var(--color-text) !important;
+  padding: 0 12px !important;
+}
+
+.delvoura-contact-select .ant-select-selection-item {
+  line-height: 42px !important;
+  color: var(--color-text) !important;
+}
+
+.delvoura-contact-select .ant-select-arrow {
+  color: var(--color-text-muted) !important;
+}
+
+.delvoura-contact-select.ant-select-focused .ant-select-selector,
+.delvoura-contact-select:hover .ant-select-selector,
+.delvoura-contact-select .ant-select-selector:focus,
+.delvoura-contact-select .ant-select-selector:focus-visible,
+.delvoura-contact-select .ant-select-selector:focus-within {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.delvoura-contact-select .ant-select-selection-search-input:focus,
+.delvoura-contact-select .ant-select-selection-search-input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.delvoura-contact-dropdown {
+  border-radius: 10px !important;
+  background: var(--color-card) !important;
+  box-shadow: 0 16px 36px -24px color-mix(in srgb, var(--color-primary) 45%, transparent) !important;
+}
+
+.delvoura-contact-dropdown .ant-select-item {
+  color: var(--color-text) !important;
+}
+
+.delvoura-contact-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled),
+.delvoura-contact-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-card)) !important;
+  color: var(--color-primary) !important;
+}

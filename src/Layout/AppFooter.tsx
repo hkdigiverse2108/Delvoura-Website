@@ -38,12 +38,24 @@ const AppFooter = () => {
               Useful Links
             </h4>
             <div className="grid gap-3 text-base text-[color:var(--color-text-muted)]">
-              <span className="footer-link">Shipping</span>
-              <span className="footer-link">Returns and Exchanges</span>
-              <span className="footer-link">Privacy Policy</span>
-              <span className="footer-link">Terms and Conditions</span>
-              <span className="footer-link">Refund Policy</span>
-              <span className="footer-link">Terms of Service</span>
+              <Link to={ROUTES.SHIPPING} className="footer-link">
+                Shipping
+              </Link>
+              <Link to={ROUTES.RETURNS_EXCHANGES} className="footer-link">
+                Returns and Exchanges
+              </Link>
+              <Link to={ROUTES.PRIVACY_POLICY} className="footer-link">
+                Privacy Policy
+              </Link>
+              <Link to={ROUTES.TERMS_CONDITIONS} className="footer-link">
+                Terms and Conditions
+              </Link>
+              <Link to={ROUTES.REFUND_POLICY} className="footer-link">
+                Refund Policy
+              </Link>
+              <Link to={ROUTES.TERMS_OF_SERVICE} className="footer-link">
+                Terms of Service
+              </Link>
               <Link to={ROUTES.CONTACT} className="footer-link">
                 Contact Us
               </Link>
@@ -111,12 +123,24 @@ const AppFooter = () => {
               Useful Links
             </summary>
             <div className="mt-4 grid gap-3 text-base">
-              <span className="footer-link">Shipping</span>
-              <span className="footer-link">Returns and Exchanges</span>
-              <span className="footer-link">Privacy Policy</span>
-              <span className="footer-link">Terms and Conditions</span>
-              <span className="footer-link">Refund Policy</span>
-              <span className="footer-link">Terms of Service</span>
+              <Link to={ROUTES.SHIPPING} className="footer-link">
+                Shipping
+              </Link>
+              <Link to={ROUTES.RETURNS_EXCHANGES} className="footer-link">
+                Returns and Exchanges
+              </Link>
+              <Link to={ROUTES.PRIVACY_POLICY} className="footer-link">
+                Privacy Policy
+              </Link>
+              <Link to={ROUTES.TERMS_CONDITIONS} className="footer-link">
+                Terms and Conditions
+              </Link>
+              <Link to={ROUTES.REFUND_POLICY} className="footer-link">
+                Refund Policy
+              </Link>
+              <Link to={ROUTES.TERMS_OF_SERVICE} className="footer-link">
+                Terms of Service
+              </Link>
               <Link to={ROUTES.CONTACT} className="footer-link">
                 Contact Us
               </Link>

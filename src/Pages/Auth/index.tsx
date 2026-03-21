@@ -36,7 +36,7 @@ const Authencation = () => {
     }, []);
 
   return (
-    <div className="delvoura-auth-page min-h-screen bg-[color:var(--color-bg)] text-[color:var(--color-text)]">
+    <div className="delvoura-auth-page min-h-screen text-[color:var(--color-text)]">
       <div className="sticky top-0 z-999 ">
           <Header />
       </div>

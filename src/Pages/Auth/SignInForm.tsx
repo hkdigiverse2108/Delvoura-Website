@@ -11,7 +11,11 @@ import { CommonEmailInput, CommonPasswordInput, notifyError, notifySuccess } fro
 
 const { Text } = Typography;
 
-const SignInForm = () => {
+type SignInFormProps = {
+  onForgotPassword?: () => void;
+};
+
+const SignInForm = ({ onForgotPassword }: SignInFormProps) => {
   const { mutate: Signin, isPending: isSigninPending } = Mutations.useSignin();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -49,7 +53,7 @@ const SignInForm = () => {
 
             <div className="mb-2 flex items-center justify-between text-xs text-[color:var(--color-text-muted)]">
               <Text>Remember me</Text>
-              <button type="button" className="font-semibold text-[color:var(--color-accent)]">Forgot password?</button>
+              <button type="button" className="font-semibold text-[color:var(--color-accent)]" onClick={onForgotPassword}>Forgot password?</button>
             </div>
 
             <Button type="primary" size="large" loading={isSigninPending} htmlType="submit" className="w-full rounded-full tracking-[0.22em] text-[color:var(--color-text-on-dark)]" style={{ background: "var(--color-accent)", borderColor: "transparent" }}>

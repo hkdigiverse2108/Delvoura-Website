@@ -12,9 +12,6 @@ export const ROUTES = {
     TERMS_OF_SERVICE: "/terms-of-service",
 
     AUTH : {
-        AUTHETICATION : "/authentication",
-        VERIFY_OTP : "/auth/verify-otp",
-        FORGET_PASSWORD : "/auth/forget-password",
-        RESET_FORGET_PASSWORD : "/auth/reset-password"
+        AUTHETICATION : "/authentication"
     }
 }

@@ -4,7 +4,7 @@ export const URL_KEYS = {
         SIGNIN : "/auth/login",
         SIGNUP : "/auth/signup",
         VERIFY_OTP : "/auth/verify-otp",
-        FORGET_PASSWORD : "/auth/forget-password",
+        FORGET_PASSWORD : "/auth/forgot-password",
         RESET_FORGET_PASSWORD : "/auth/reset-password"
     },
 

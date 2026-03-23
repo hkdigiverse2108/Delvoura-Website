@@ -17,4 +17,21 @@ export const SignupSchema = Yup.object({
   }),
 });
 
+export const ForgetPasswordSchema = Yup.object({
+  email: Validation("string", "Email", { extraRules: (s) => s.email("Invalid email address") }),
+});
+
+export const VerifyOtpSchema = Yup.object({
+  otp: Validation("string", "OTP", { extraRules: (s) => s.matches(/^\d{4}$/, "OTP must be 4 digits") }),
+});
+
+export const ResetForgetPasswordSchema = Yup.object({
+  password: Validation("string", "Password", {
+    extraRules: (s) => s.matches(/[!@#$%^&*()_+={}:;"'<>,.?/-]/, "Password must include at least one special character"),
+  }),
+  confirmPassword: Validation("string", "Confirm password", {
+    extraRules: (s) => s.oneOf([Yup.ref("password")], "Passwords do not match"),
+  }),
+});
+
 export { Validation };

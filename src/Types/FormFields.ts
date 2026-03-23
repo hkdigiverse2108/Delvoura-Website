@@ -59,6 +59,17 @@ export type CommonTextAreaProps = {
   rows?: number;
 };
 
+export type CommonOtpInputProps = {
+  name: string;
+  label?: string;
+  length?: number;
+  value?: string;
+  onChange?: (value: string) => void;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  error?: string;
+  touched?: boolean;
+};
+
 export type CollectionMenuProps = {
   isMobile?: boolean;
 };

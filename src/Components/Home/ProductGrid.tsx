@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button, Modal, Rate, Tag, Typography } from "antd";
-import { ArrowRightOutlined, CloseOutlined, LeftOutlined, MinusOutlined, PlusOutlined, RightOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, MinusOutlined, PlusOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { Queries } from "../../Api";
 import type { ProductItem } from "../../Types";
@@ -15,6 +15,7 @@ const ProductGrid = () => {
   const [selectedVariant, setSelectedVariant] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const thumbsRef = useRef<HTMLDivElement | null>(null);
   const isModalOpen = Boolean(selectedProduct);
   const modalImages = useMemo(() => {
     if (!selectedProduct) return [];
@@ -27,6 +28,12 @@ const ProductGrid = () => {
   const activeImage = modalImages[activeImageIndex] || "";
   const handlePrevImage = () => setActiveImageIndex((prev) => (prev <= 0 ? Math.max(0, modalImages.length - 1) : prev - 1));
   const handleNextImage = () => setActiveImageIndex((prev) => (prev >= modalImages.length - 1 ? 0 : prev + 1));
+  const scrollThumbs = (direction: "prev" | "next") => {
+    const node = thumbsRef.current;
+    if (!node) return;
+    const delta = direction === "next" ? 140 : -140;
+    node.scrollBy({ top: delta, behavior: "smooth" });
+  };
 
   console.log(products)
 
@@ -110,12 +117,20 @@ const ProductGrid = () => {
             </button>
 
             <div className="delvoura-select-options-media">
-              <div className="delvoura-select-options-thumbs">
-                {modalImages.map((img, idx) => (
-                  <button type="button" className={`delvoura-select-options-thumb ${idx === activeImageIndex ? "is-active" : ""}`} key={`${img}-${idx}`} aria-label={`Preview ${idx + 1}`} onClick={() => setActiveImageIndex(idx)}>
-                    <img src={img} alt={`${selectedProduct.name} preview ${idx + 1}`} />
-                  </button>
-                ))}
+              <div className="delvoura-select-options-thumbs-wrap">
+                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll up" onClick={() => scrollThumbs("prev")}>
+                  <UpOutlined />
+                </button>
+                <div ref={thumbsRef} className="delvoura-select-options-thumbs">
+                  {modalImages.map((img, idx) => (
+                    <button type="button" className={`delvoura-select-options-thumb ${idx === activeImageIndex ? "is-active" : ""}`} key={`${img}-${idx}`} aria-label={`Preview ${idx + 1}`} onClick={() => setActiveImageIndex(idx)}>
+                      <img src={img} alt={`${selectedProduct.name} preview ${idx + 1}`} />
+                    </button>
+                  ))}
+                </div>
+                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll down" onClick={() => scrollThumbs("next")}>
+                  <DownOutlined />
+                </button>
               </div>
               <div className="delvoura-select-options-hero delvoura-product-main overflow-hidden">
                 <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-left" aria-label="Previous image" onClick={handlePrevImage}>

@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button, Modal, Rate, Tag, Typography } from "antd";
-import { ArrowRightOutlined, CloseOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
@@ -72,8 +72,11 @@ const RelatedProductsSlider = () => {
   const navigate = useNavigate();
   const trackRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const thumbsRef = useRef<HTMLDivElement | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<(typeof products)[number] | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>("50 ml");
+  const [slidesPerView, setSlidesPerView] = useState(4);
+  const [activePage, setActivePage] = useState(0);
   const isModalOpen = Boolean(selectedProduct);
   const modalImages = useMemo(() => {
     if (!selectedProduct) return [];
@@ -86,8 +89,58 @@ const RelatedProductsSlider = () => {
     if (!track || !card) return;
     const gap = 16;
     const cardWidth = card.getBoundingClientRect().width + gap;
-    const delta = direction === "next" ? cardWidth : -cardWidth;
+    const delta = direction === "next" ? cardWidth * slidesPerView : -cardWidth * slidesPerView;
     track.scrollBy({ left: delta, behavior: "smooth" });
+  };
+  const scrollThumbs = (direction: "prev" | "next") => {
+    const node = thumbsRef.current;
+    if (!node) return;
+    const delta = direction === "next" ? 140 : -140;
+    node.scrollBy({ top: delta, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const updateSlides = () => {
+      const width = window.innerWidth;
+      if (width <= 640) {
+        setSlidesPerView(1);
+      } else if (width <= 900) {
+        setSlidesPerView(2);
+      } else if (width <= 1200) {
+        setSlidesPerView(3);
+      } else {
+        setSlidesPerView(4);
+      }
+    };
+    updateSlides();
+    window.addEventListener("resize", updateSlides);
+    return () => window.removeEventListener("resize", updateSlides);
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const card = cardRef.current;
+    if (!track || !card) return;
+    const gap = 16;
+    const cardWidth = card.getBoundingClientRect().width + gap;
+    const onScroll = () => {
+      const pageWidth = cardWidth * slidesPerView;
+      const current = pageWidth > 0 ? Math.round(track.scrollLeft / pageWidth) : 0;
+      setActivePage(current);
+    };
+    onScroll();
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => track.removeEventListener("scroll", onScroll);
+  }, [slidesPerView]);
+
+  const totalPages = Math.max(1, Math.ceil(products.length / slidesPerView));
+  const goToPage = (page: number) => {
+    const track = trackRef.current;
+    const card = cardRef.current;
+    if (!track || !card) return;
+    const gap = 16;
+    const cardWidth = card.getBoundingClientRect().width + gap;
+    track.scrollTo({ left: page * cardWidth * slidesPerView, behavior: "smooth" });
   };
 
   return (
@@ -183,6 +236,19 @@ const RelatedProductsSlider = () => {
             <RightOutlined />
           </button>
         </div>
+        <div className="delvoura-related-dots" role="tablist" aria-label="Related products pages">
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <button
+              key={`related-dot-${idx}`}
+              type="button"
+              role="tab"
+              aria-selected={activePage === idx}
+              aria-label={`Go to slide set ${idx + 1}`}
+              className={`delvoura-related-dot ${activePage === idx ? "is-active" : ""}`}
+              onClick={() => goToPage(idx)}
+            />
+          ))}
+        </div>
       </div>
 
       <Modal
@@ -208,17 +274,25 @@ const RelatedProductsSlider = () => {
             </button>
 
             <div className="delvoura-select-options-media">
-              <div className="delvoura-select-options-thumbs">
-                {modalImages.map((img, idx) => (
-                  <button
-                    type="button"
-                    className="delvoura-select-options-thumb"
-                    key={`${img}-${idx}`}
-                    aria-label={`Preview ${idx + 1}`}
-                  >
-                    <img src={img} alt={`${selectedProduct.name} preview ${idx + 1}`} />
-                  </button>
-                ))}
+              <div className="delvoura-select-options-thumbs-wrap">
+                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll up" onClick={() => scrollThumbs("prev")}>
+                  <UpOutlined />
+                </button>
+                <div ref={thumbsRef} className="delvoura-select-options-thumbs">
+                  {modalImages.map((img, idx) => (
+                    <button
+                      type="button"
+                      className="delvoura-select-options-thumb"
+                      key={`${img}-${idx}`}
+                      aria-label={`Preview ${idx + 1}`}
+                    >
+                      <img src={img} alt={`${selectedProduct.name} preview ${idx + 1}`} />
+                    </button>
+                  ))}
+                </div>
+                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll down" onClick={() => scrollThumbs("next")}>
+                  <DownOutlined />
+                </button>
               </div>
               <div className="delvoura-select-options-hero overflow-hidden">
                 <img src={selectedProduct.image} alt={selectedProduct.name} />

@@ -112,7 +112,7 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
       </button>
 
       {/* DROPDOWN */}
-      <div className={`delvoura-collection-panel delvoura-light-surface absolute top-full left-1/2 -translate-x-1/2 mt-3 w-80 rounded-3xl p-5 shadow-2xl ${ open ? "delvoura-collection-panel-open" : "delvoura-collection-panel-closed" }`} aria-hidden={!open}>
+      <div className={`delvoura-collection-panel delvoura-light-surface absolute top-full left-0 mt-3 w-80 max-w-[92vw] rounded-3xl p-5 shadow-2xl ${ open ? "delvoura-collection-panel-open" : "delvoura-collection-panel-closed" }`} aria-hidden={!open}>
         {staticSections.map((section, i) => (
           <div key={i} className="mb-4">
             {section.title && (

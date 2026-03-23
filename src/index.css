@@ -66,6 +66,9 @@
   --color-secondary-bg: #fff3f3;
   --color-secondary-text: #111111;
   --shadow-soft: 0 18px 45px -32px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  --color-success: #16a34a;
+  --color-error: #dc2626;
+  --color-warning: #f59e0b;
 }
 
 body {

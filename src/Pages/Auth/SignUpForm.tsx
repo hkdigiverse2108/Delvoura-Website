@@ -1,48 +1,37 @@
 import { Button } from "antd";
 import { Form, Formik, type FormikHelpers } from "formik";
-import { useNavigate } from "react-router-dom";
 import { Mutations } from "../../Api";
 import { CommonEmailInput, CommonPasswordInput, CommonTextInput, notifyError, notifySuccess } from "../../Attribute";
-import { ROUTES } from "../../Constants";
-import { setSignin } from "../../Store/Slices/AuthSlice";
-import { useAppDispatch } from "../../Store/Hooks";
 import type { SignupPayload } from "../../Types";
 import { SignupSchema } from "../../Utils/ValidationSchemas";
 
-const SignUpForm = () => {
+type SignUpFormProps = {
+  onSignupSuccess?: () => void;
+};
+
+const SignUpForm = ({ onSignupSuccess }: SignUpFormProps) => {
   const { mutate: Signup, isPending: isSignupPending } = Mutations.useSignup();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   type SignupFormValues = Omit<SignupPayload, "loginSource">;
 
   const handleSubmit = async (values: SignupFormValues, { resetForm }: FormikHelpers<SignupFormValues>) => {
     Signup( { ...values, email: values.email.toLowerCase() },
       {
-        onSuccess: (response) => {
-          if (response?.data?.token) {
-            dispatch(setSignin(response.data));
-            navigate(ROUTES.HERO);
-          }
+        onSuccess: () => {
           notifySuccess("Account created successfully");
+          resetForm();
+          onSignupSuccess?.();
         },
         onError: (err) => {
           const message = err instanceof Error ? err.message : "Something went wrong";
           notifyError(message);
-        },
-        onSettled: () => {
-          resetForm();
         },
       },
     );
   };
 
   return (
-    <Formik<SignupFormValues>
-      initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
-      validationSchema={SignupSchema}
-      onSubmit={handleSubmit}
-    >
+    <Formik<SignupFormValues> initialValues={{ firstName: "", lastName: "", email: "", password: "" }} validationSchema={SignupSchema} onSubmit={handleSubmit}>
       {({ values, errors, touched, handleChange, handleBlur }) => {
         const firstNameError = touched.firstName && typeof errors.firstName === "string" ? errors.firstName : undefined;
         const lastNameError = touched.lastName && typeof errors.lastName === "string" ? errors.lastName : undefined;

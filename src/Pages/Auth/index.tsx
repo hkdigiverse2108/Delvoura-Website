@@ -7,16 +7,14 @@ import AppFooter from "../../Layout/AppFooter";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
 import { useAppSelector } from "../../Store/Hooks";
-import { Queries } from "../../Api";
 import { InstagramScrollingSection, OfferBar } from "../../Components/common";
 
 const Authencation = () => {
   const [hideOfferBar, setHideOfferBar] = useState(false);
   const [tab, setTab] = useState("login");
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
-  const { data: userData } = Queries.useGetSingleUser( (user as { _id?: string } | null)?._id);
-  const isLoggedIn = isAuthenticated || !!userData;
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const isLoggedIn = isAuthenticated;
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -65,7 +63,7 @@ const Authencation = () => {
               {
                 key: "signup",
                 label: <span className="tab-label">Create Account</span>,
-                children: <SignUpForm />,
+                children: <SignUpForm onSignupSuccess={() => setTab("login")} />,
               },
             ]}
           />

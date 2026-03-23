@@ -26,13 +26,11 @@ const SignInForm = () => {
             navigate(ROUTES.HERO);
           }
           notifySuccess("Signed in successfully");
+          resetForm();
         },
         onError: (err) => {
           const message = err instanceof Error ? err.message : "Something went wrong";
           notifyError(message);
-        },
-        onSettled: () => {
-          resetForm();
         },
       },
     );
@@ -51,7 +49,7 @@ const SignInForm = () => {
 
             <div className="mb-2 flex items-center justify-between text-xs text-[color:var(--color-text-muted)]">
               <Text>Remember me</Text>
-              <button className="font-semibold text-[color:var(--color-accent)]">Forgot password?</button>
+              <button type="button" className="font-semibold text-[color:var(--color-accent)]">Forgot password?</button>
             </div>
 
             <Button type="primary" size="large" loading={isSigninPending} htmlType="submit" className="w-full rounded-full tracking-[0.22em] text-[color:var(--color-text-on-dark)]" style={{ background: "var(--color-accent)", borderColor: "transparent" }}>

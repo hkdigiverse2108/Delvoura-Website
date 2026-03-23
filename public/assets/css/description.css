@@ -138,11 +138,7 @@
   gap: 18px;
   padding-left: 28px;
   border-left: 1px solid var(--color-border);
-  max-height: calc(100vh - var(--product-sticky-top));
-  overflow-y: auto;
   padding-right: 10px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
 }
 
 .delvoura-product-right::-webkit-scrollbar {
@@ -163,18 +159,20 @@
 .delvoura-slider-nav {
   position: absolute;
   top: 50%;
-  border: 2px solid transparent;
-  background: #000;
-  color: #fff;
+  border: none;
+  background: color-mix(in srgb, var(--color-text) 10%, var(--color-card));
+  color: var(--color-text);
   height: 46px;
   width: 46px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.25s ease, color 0.25s ease;
   opacity: 0;
   pointer-events: none;
-  box-shadow: none !important;
+  box-shadow: 0 14px 30px -22px color-mix(in srgb, var(--color-text) 35%, transparent);
+  backdrop-filter: blur(8px);
+  outline: none;
 }
 
 .delvoura-slider-nav-left,
@@ -205,8 +203,8 @@
 .group:hover .delvoura-gallery-nav,
 .group:hover .delvoura-related-nav,
 .group:hover .delvoura-slider-nav {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent);
+  background: color-mix(in srgb, var(--color-text) 16%, var(--color-card));
+  color: var(--color-text);
   transform: translateX(0) translateY(-50%) scale(1.06);
 }
 
@@ -708,22 +706,23 @@
   height: 44px;
   width: 44px;
   border-radius: 999px;
-  border: 2px solid transparent;
-  background: #000;
-  color: #fff;
+  border: none;
+  background: color-mix(in srgb, var(--color-text) 10%, var(--color-card));
+  color: var(--color-text);
   display: grid;
   place-items: center;
-  box-shadow: none;
-  transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 14px 30px -22px color-mix(in srgb, var(--color-text) 35%, transparent);
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.25s ease, color 0.25s ease;
   z-index: 3;
   opacity: 0;
   pointer-events: none;
+  backdrop-filter: blur(8px);
+  outline: none;
 }
 
 .delvoura-related-nav:hover,
 .delvoura-related-carousel:hover .delvoura-related-nav {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent);
+  background: color-mix(in srgb, var(--color-text) 16%, var(--color-card));
   transform: translateY(-50%) scale(1.04);
   opacity: 1;
   pointer-events: auto;
@@ -745,6 +744,28 @@
 
 .delvoura-related-carousel:hover .delvoura-related-nav-right {
   transform: translate(0, -50%);
+}
+
+.delvoura-related-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.delvoura-related-dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 999px;
+  border: none;
+  background: color-mix(in srgb, var(--color-text) 18%, transparent);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.delvoura-related-dot.is-active {
+  background: color-mix(in srgb, var(--color-text) 40%, transparent);
+  transform: scale(1.15);
 }
 
 @media (max-width: 1200px) {

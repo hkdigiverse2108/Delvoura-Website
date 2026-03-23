@@ -20,7 +20,7 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
   const { user: storeUser, isAuthenticated } = useAppSelector((state) => state.auth);
   const { data: fetchedUserData } = Queries.useGetSingleUser(((userProp ?? storeUser) as { _id?: string } | null)?._id);
   const userData = userDataProp ?? fetchedUserData;
-  const isLoggedIn = isAuthenticated || !!userData;
+  const isLoggedIn = isAuthenticated;
   const [open, setOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);

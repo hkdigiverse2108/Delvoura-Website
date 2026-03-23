@@ -14,7 +14,7 @@ const Header = () => {
   const [hideAuth, setHideAuth] = useState(false);
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const { data: userData } = Queries.useGetSingleUser((user as { _id?: string } | null)?._id);
-  const isLoggedIn = isAuthenticated || !!userData;
+  const isLoggedIn = isAuthenticated;
 
   useEffect(() => {
   const handleScroll = () => {

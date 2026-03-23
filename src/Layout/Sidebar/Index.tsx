@@ -6,15 +6,13 @@ import ProfileCard from "../Header/ProfileCard";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants/Routes";
 import { useAppSelector } from "../../Store/Hooks";
-import { Queries } from "../../Api";
 
 const MobileSidebar = () => {
   const [open, setOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
-  const { data: userData } = Queries.useGetSingleUser( (user as { _id?: string } | null)?._id);
-  const isLoggedIn = isAuthenticated || !!userData;
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const isLoggedIn = isAuthenticated;
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 768px)");

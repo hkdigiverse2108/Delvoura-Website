@@ -34,23 +34,33 @@
 }
 
 .app-notification-success .ant-notification-notice {
-  border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
-  box-shadow: 0 18px 50px color-mix(in srgb, var(--color-accent) 25%, transparent);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 14%, transparent), var(--color-surface-darker));
+  border: 1px solid color-mix(in srgb, var(--color-success) 45%, transparent);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--color-success) 25%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-success) 14%, transparent), var(--color-surface-darker));
 }
 
 .app-notification-error .ant-notification-notice {
-  border: 1px solid color-mix(in srgb, var(--color-soft-accent) 55%, transparent);
-  box-shadow: 0 18px 50px color-mix(in srgb, var(--color-soft-accent) 30%, transparent);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--color-soft-accent) 18%, transparent), var(--color-surface-darker));
+  border: 1px solid color-mix(in srgb, var(--color-error) 55%, transparent);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--color-error) 30%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-error) 18%, transparent), var(--color-surface-darker));
 }
 
 .app-notification-success .ant-notification-notice-icon {
-  color: var(--color-accent);
+  color: var(--color-success);
 }
 
 .app-notification-error .ant-notification-notice-icon {
-  color: var(--color-soft-accent);
+  color: var(--color-error);
+}
+
+.app-notification-warning .ant-notification-notice {
+  border: 1px solid color-mix(in srgb, var(--color-warning) 55%, transparent);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--color-warning) 30%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-warning) 18%, transparent), var(--color-surface-darker));
+}
+
+.app-notification-warning .ant-notification-notice-icon {
+  color: var(--color-warning);
 }
 
 /* 🔥 SLOW + SMOOTH ENTRY */

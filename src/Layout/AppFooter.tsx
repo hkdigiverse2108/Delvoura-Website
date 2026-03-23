@@ -6,8 +6,8 @@ const AppFooter = () => {
   return (
     <footer className="delvoura-header-theme delvoura-header-shell delvoura-footer-shell border-t border-[var(--color-border)] text-[color:var(--color-text)]">
       <div className="delvoura-container py-14">
-        <div className="hidden gap-16 md:grid md:grid-cols-[1.3fr_1fr_1.1fr]">
-          <div className="space-y-5">
+        <div className="hidden gap-20 md:grid md:grid-cols-[1fr_1.2fr_1fr]">
+          <div className="space-y-5 max-w-[320px]">
             <img
               src="/assets/images/logo/logo-white.png"
               alt="Delvoura"
@@ -33,32 +33,41 @@ const AppFooter = () => {
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-[0.25em] text-[color:var(--color-text)]">
-              Useful Links
-            </h4>
-            <div className="grid gap-3 text-base text-[color:var(--color-text-muted)]">
-              <Link to={ROUTES.SHIPPING} className="footer-link">
-                Shipping
-              </Link>
-              <Link to={ROUTES.RETURNS_EXCHANGES} className="footer-link">
-                Returns and Exchanges
-              </Link>
-              <Link to={ROUTES.PRIVACY_POLICY} className="footer-link">
-                Privacy Policy
-              </Link>
-              <Link to={ROUTES.TERMS_CONDITIONS} className="footer-link">
-                Terms and Conditions
-              </Link>
-              <Link to={ROUTES.REFUND_POLICY} className="footer-link">
-                Refund Policy
-              </Link>
-              <Link to={ROUTES.TERMS_OF_SERVICE} className="footer-link">
-                Terms of Service
-              </Link>
-              <Link to={ROUTES.CONTACT} className="footer-link">
-                Contact Us
-              </Link>
+          <div className="grid gap-10 md:grid-cols-2">
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold uppercase tracking-[0.25em] text-[color:var(--color-text)]">
+                Help
+              </h4>
+              <div className="grid gap-3 text-base text-[color:var(--color-text-muted)]">
+                <Link to={ROUTES.SHIPPING} className="footer-link">
+                  Shipping
+                </Link>
+                <Link to={ROUTES.RETURNS_EXCHANGES} className="footer-link">
+                  Returns and Exchanges
+                </Link>
+                <Link to={ROUTES.CONTACT} className="footer-link">
+                  Contact Us
+                </Link>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold uppercase tracking-[0.25em] text-[color:var(--color-text)]">
+                Policies
+              </h4>
+              <div className="grid gap-3 text-base text-[color:var(--color-text-muted)]">
+                <Link to={ROUTES.PRIVACY_POLICY} className="footer-link">
+                  Privacy Policy
+                </Link>
+                <Link to={ROUTES.TERMS_CONDITIONS} className="footer-link">
+                  Terms and Conditions
+                </Link>
+                <Link to={ROUTES.REFUND_POLICY} className="footer-link">
+                  Refund Policy
+                </Link>
+                <Link to={ROUTES.TERMS_OF_SERVICE} className="footer-link">
+                  Terms of Service
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -120,7 +129,7 @@ const AppFooter = () => {
 
           <details className="border-b border-[color:var(--color-border-dark)] pb-4">
             <summary className="cursor-pointer text-sm font-semibold uppercase tracking-[0.25em] text-[color:var(--color-text)]">
-              Useful Links
+              Help
             </summary>
             <div className="mt-4 grid gap-3 text-base">
               <Link to={ROUTES.SHIPPING} className="footer-link">
@@ -129,6 +138,17 @@ const AppFooter = () => {
               <Link to={ROUTES.RETURNS_EXCHANGES} className="footer-link">
                 Returns and Exchanges
               </Link>
+              <Link to={ROUTES.CONTACT} className="footer-link">
+                Contact Us
+              </Link>
+            </div>
+          </details>
+
+          <details className="border-b border-[color:var(--color-border-dark)] pb-4">
+            <summary className="cursor-pointer text-sm font-semibold uppercase tracking-[0.25em] text-[color:var(--color-text)]">
+              Policies
+            </summary>
+            <div className="mt-4 grid gap-3 text-base">
               <Link to={ROUTES.PRIVACY_POLICY} className="footer-link">
                 Privacy Policy
               </Link>
@@ -140,9 +160,6 @@ const AppFooter = () => {
               </Link>
               <Link to={ROUTES.TERMS_OF_SERVICE} className="footer-link">
                 Terms of Service
-              </Link>
-              <Link to={ROUTES.CONTACT} className="footer-link">
-                Contact Us
               </Link>
             </div>
           </details>
@@ -189,7 +206,7 @@ const AppFooter = () => {
             bottom: -4px;
             width: 0;
             height: 2px;
-            background: var(--color-accent);
+            background: var(--color-border);
             transition: width 0.25s ease;
           }
           .footer-link:hover::after {

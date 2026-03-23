@@ -50,7 +50,14 @@ export type ProductItem = {
   seasonIds?: { _id?: string; name?: string }[];
   gender?: string;
   collectionIds?: { _id?: string; name?: string }[];
-  variants?: string[];
+  variants?: Array<
+    | string
+    | {
+        size?: string;
+        price?: number;
+        mrp?: number;
+      }
+  >;
   ingredients?: string[];
   description?: string;
   scentIds?: { _id?: string; name?: string }[];

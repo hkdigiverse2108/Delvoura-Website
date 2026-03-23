@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Queries } from "../../Api";
 import { InstagramScrollingSection, OfferBar } from "../../Components/common";
 import { ProductAccordions, ProductGallery, ProductInfo, ProductReviews, RelatedProductsSlider } from "../../Components/Description";
 import Header from "../../Layout/Header/Index";
@@ -6,6 +8,9 @@ import AppFooter from "../../Layout/AppFooter";
 
 const ProductDescription = () => {
   const [hideOfferBar, setHideOfferBar] = useState(false);
+  const { id } = useParams();
+  const { data } = Queries.useGetProductById(id);
+  const product = data?.data || null;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,10 +32,10 @@ const ProductDescription = () => {
         <div className="delvoura-product-page">
           <div className="delvoura-product-shell">
             <div className="delvoura-product-hero">
-              <ProductGallery />
+              <ProductGallery product={product} />
               <div className="delvoura-product-right">
-                <ProductInfo />
-                <ProductAccordions />
+                <ProductInfo product={product} />
+                <ProductAccordions product={product} />
               </div>
             </div> <br /><br /><br />
             <RelatedProductsSlider /> <br /><br />

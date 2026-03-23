@@ -23,7 +23,7 @@ const ProductDescription = () => {
 
   return (
     <>
-      <section className="relative w-full bg-white">
+      <section className="relative w-full bg-[color:var(--color-bg)]">
         <div className="sticky top-0 z-[550] w-full">
           <Header />
         </div>
@@ -40,7 +40,7 @@ const ProductDescription = () => {
             </div> <br /><br /><br />
             <RelatedProductsSlider /> <br /><br />
             <ProductReviews /> <br /><br />
-            <InstagramScrollingSection containerClassName="w-full max-w-none" />
+            <InstagramScrollingSection containerClassName="w-full" />
           </div>
         </div>
       </section>

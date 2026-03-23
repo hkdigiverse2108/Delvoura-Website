@@ -47,10 +47,9 @@
 }
 
 .delvoura-auth-content .ant-tabs-tab-active .tab-label {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 .delvoura-auth-content .ant-tabs-ink-bar {
   display: none !important;
 }
-

@@ -26,7 +26,7 @@ const RefundPolicy = () => {
 
       <div className="h-[55vh] w-full bg-center bg-cover" style={{ backgroundImage: "url('https://cdn.shopify.com/s/files/1/0175/6875/9862/files/homepage_banner.png')", }}/>
 
-      <section className="mx-auto w-[92%] max-w-8xl py-12">
+      <section className="delvoura-container py-12">
         <div className="rounded-2xl border border-[color:var(--color-border-dark)] bg-[color:var(--color-card)] p-8 shadow-sm">
           <h2 className="text-2xl font-semibold tracking-wide">
             Refund Policy

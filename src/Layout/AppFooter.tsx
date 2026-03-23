@@ -1,11 +1,11 @@
-import { FacebookOutlined, InstagramOutlined, TwitterOutlined, YoutubeOutlined, PhoneOutlined, MailOutlined, EnvironmentOutlined,} from "@ant-design/icons";
+import {InstagramOutlined, TwitterOutlined, YoutubeOutlined, PhoneOutlined, MailOutlined, EnvironmentOutlined, FacebookFilled,} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../Constants";
 
 const AppFooter = () => {
   return (
     <footer className="delvoura-header-theme delvoura-header-shell delvoura-footer-shell border-t border-[var(--color-border)] text-[color:var(--color-text)]">
-      <div className="mx-auto w-[96%] max-w-6xl py-14">
+      <div className="delvoura-container py-14">
         <div className="hidden gap-16 md:grid md:grid-cols-[1.3fr_1fr_1.1fr]">
           <div className="space-y-5">
             <img
@@ -19,7 +19,7 @@ const AppFooter = () => {
             </p>
             <div className="flex items-center gap-4 text-xl">
               <span className="cursor-pointer text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-text)]">
-                <FacebookOutlined />
+                <FacebookFilled />
               </span>
               <span className="cursor-pointer text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-text)]">
                 <InstagramOutlined />
@@ -90,7 +90,7 @@ const AppFooter = () => {
         </div>
       </div>
 
-      <div className="mx-auto w-[92%] max-w-6xl pb-10 md:hidden">
+      <div className="delvoura-container pb-10 md:hidden">
         <div className="space-y-6 text-[color:var(--color-text-muted)]">
           <div className="space-y-4">
             <img
@@ -104,7 +104,7 @@ const AppFooter = () => {
             </p>
             <div className="flex items-center gap-4 text-xl">
               <span className="cursor-pointer text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-text)]">
-                <FacebookOutlined />
+                <FacebookFilled />
               </span>
               <span className="cursor-pointer text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-text)]">
                 <InstagramOutlined />
@@ -202,4 +202,3 @@ const AppFooter = () => {
 };
 
 export default AppFooter;
-

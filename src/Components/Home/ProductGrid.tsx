@@ -32,7 +32,7 @@ const ProductGrid = () => {
 
   return (
     <section className="delvoura-home-products">
-      <div className="mx-auto w-[90%] max-w-[1700px]">
+      <div className="delvoura-container">
         <div className="delvoura-product-grid grid gap-6">
           {!isLoading && products.length === 0 && (
             <div className="text-sm text-[color:var(--color-text-muted)]">

@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "var(--color-accent)", colorBorder: "var(--color-border)", colorText: "var(--color-text)",}, }}>
       <header className="delvoura-header-theme delvoura-header-shell  sticky top-0 z-50 border-b border-[var(--color-border)]" style={{ background: "var(--color-card)" }}>
-        <div className="mx-auto w-[90%] max-w-6xl px-4 py-4 md:px-6">
+        <div className="delvoura-container py-4">
           <div className="flex items-center justify-between gap-3 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-3">
             <div className="flex items-center gap-3">
               <div className="md:hidden">

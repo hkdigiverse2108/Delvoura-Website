@@ -47,7 +47,7 @@ const MobileSidebar = () => {
 
               <div>
                 <h3 className="mb-2 text-xs uppercase tracking-wider text-[color:var(--color-text-muted)]">Collections</h3>
-                <div className="rounded-xl bg-[color:var(--color-bg)] p-3">
+                <div className="rounded-xl bg-[color:var(--color-card)] p-3">
                   <CollectionMenu isMobile />
                 </div>
               </div>
@@ -55,7 +55,7 @@ const MobileSidebar = () => {
               {isLoggedIn && (
                 <div>
                   <h3 className="mb-2 text-xs uppercase tracking-wider text-[color:var(--color-text-muted)]">Profile</h3>
-                  <div className="rounded-xl bg-[color:var(--color-bg)] p-3">
+                  <div className="rounded-xl bg-[color:var(--color-card)] p-3">
                     <ProfileCard variant="mobile" />
                   </div>
                 </div>
@@ -64,14 +64,15 @@ const MobileSidebar = () => {
 
             {/* BOTTOM */}
             {!isLoggedIn && (
-              <div className="mt-6 flex flex-col gap-3">
+              <div className="mt-6 flex flex-col gap-3 ">
                 <button className="rounded-full border border-[var(--color-border)] py-3" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
                   Login
                 </button>
 
-                <button className="rounded-full bg-[color:var(--color-primary)] py-3 text-[color:var(--color-text-on-dark)]" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
-                  <span className="text-[color:var(--color-text-on-dark)]">Sign up</span>
+                <button className="rounded-full bg-[color:var(--color-accent)] py-3 text-[color:var(--color-text-on-dark)]" onClick={() => { setOpen(false); navigate(ROUTES.AUTH.AUTHETICATION);}}>
+                  <span className="text-white">Sign up</span>
                 </button>
+                <br />
               </div>
             )}
           </div>

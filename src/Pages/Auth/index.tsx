@@ -47,7 +47,7 @@ const Authencation = () => {
             "url('https://cdn.shopify.com/s/files/1/0175/6875/9862/files/homepage_banner.png')", // add banner image
         }}
       />
-      <div className="mx-auto w-[90%] max-w-6xl py-10">
+      <div className="delvoura-container py-10">
         <div
           className="delvoura-auth-content mx-auto max-w-xl rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-6 md:p-8"
           style={{

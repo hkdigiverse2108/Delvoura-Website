@@ -43,7 +43,7 @@ const SearchFilterBar = () => {
 
   return (
     <section className="delvoura-home-filter-strip w-full">
-      <div className="mx-auto w-[90%] max-w-[1400px]">
+      <div className="delvoura-container">
         <div className="delvoura-home-filter-bar w-full">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
             <div className="flex w-full flex-1 flex-col gap-3 sm:flex-row sm:items-center">

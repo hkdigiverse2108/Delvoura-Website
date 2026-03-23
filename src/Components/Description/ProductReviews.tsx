@@ -1,6 +1,7 @@
-import { Form, Input, Modal, Rate, Select } from "antd";
+import { Form, Input, Modal, Rate, Select, ConfigProvider } from "antd";
 import { useMemo, useState } from "react";
 import { CommonEmailInput, CommonTextInput } from "../../Attribute";
+import { DownOutlined } from "@ant-design/icons";
 
 const ProductReviews = () => {
   const [open, setOpen] = useState(false);
@@ -13,6 +14,7 @@ const ProductReviews = () => {
   const [writeFirstName, setWriteFirstName] = useState("");
   const [writeLastName, setWriteLastName] = useState("");
   const [writeEmail, setWriteEmail] = useState("");
+  const [reviewSort, setReviewSort] = useState("Featured");
 
   const reviews = useMemo(
     () => [
@@ -44,7 +46,9 @@ const ProductReviews = () => {
               Write a review
             </button>
             <div className="delvoura-review-select-wrap">
-              <Select className="delvoura-review-select" dropdownClassName="delvoura-review-dropdown" defaultValue="Featured" options={[ { value: "Featured", label: "Featured" }, { value: "Newest", label: "Newest" }, { value: "Highest Ratings", label: "Highest Ratings" }, { value: "Lowest Ratings", label: "Lowest Ratings" }, ]} />
+              <ConfigProvider theme={{token: {colorPrimary: "var(--color-accent)",colorBorder: "var(--color-border)",colorText: "var(--color-text)",colorTextPlaceholder: "var(--color-text-muted)",colorBgContainer: "var(--color-card)",},}}>
+                <Select value={reviewSort} onChange={setReviewSort} options={[ { value: "Featured", label: "Featured" }, { value: "Newest", label: "Newest" }, { value: "Highest Ratings", label: "Highest Ratings" }, { value: "Lowest Ratings", label: "Lowest Ratings" }, ]} size="large" suffixIcon={<DownOutlined />} className="delvoura-sort-select" popupClassName="delvoura-sort-dropdown" getPopupContainer={() => document.body} />
+              </ConfigProvider>
             </div>
           </div>
         </div>

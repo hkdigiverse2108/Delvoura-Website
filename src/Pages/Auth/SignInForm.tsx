@@ -54,7 +54,7 @@ const SignInForm = () => {
               <button className="font-semibold text-[color:var(--color-accent)]">Forgot password?</button>
             </div>
 
-            <Button type="primary" size="large" loading={isSigninPending} htmlType="submit" className="w-full rounded-full tracking-[0.22em] text-[color:var(--color-text-on-dark)]" style={{ background: "var(--color-primary)", borderColor: "transparent" }}>
+            <Button type="primary" size="large" loading={isSigninPending} htmlType="submit" className="w-full rounded-full tracking-[0.22em] text-[color:var(--color-text-on-dark)]" style={{ background: "var(--color-accent)", borderColor: "transparent" }}>
               Login
             </Button>
           </Form>

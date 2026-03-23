@@ -23,7 +23,7 @@ const NotFound = () => {
         }}
       />
 
-      <div className="mx-auto flex h-full w-[90%] max-w-5xl flex-col items-center justify-center">
+      <div className="delvoura-container flex h-full flex-col items-center justify-center">
         <div
           className="w-full rounded-[32px] border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-8 backdrop-blur md:p-12"
           style={{

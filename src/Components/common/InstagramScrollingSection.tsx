@@ -9,7 +9,7 @@ const placeholderImages = Array.from({ length: 8 }).map((_, idx) => ({
 }));
 
 const InstagramScrollingSection = ({
-  containerClassName = "w-[90%] max-w-[1400px]",
+  containerClassName = "delvoura-container",
 }: {
   containerClassName?: string;
 }) => {
@@ -17,7 +17,7 @@ const InstagramScrollingSection = ({
 
   return (
     <section className="w-full overflow-x-hidden py-12">
-      <div className={`mx-auto ${containerClassName} text-center`}>
+      <div className={`${containerClassName} text-center`}>
         <div className="mb-3 flex items-center justify-center gap-3">
           <span
             className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-[color:var(--color-text-on-dark)]"
@@ -40,7 +40,7 @@ const InstagramScrollingSection = ({
         </Text>
       </div>
 
-      <div className={`mx-auto mt-8 ${containerClassName} overflow-x-hidden`}>
+      <div className={`mt-8 ${containerClassName} overflow-x-hidden`}>
         <div
           className="instagram-marquee overflow-hidden rounded-3xl bg-[color:var(--color-surface-dark)] px-[3px] py-3 sm:px-[4px]"
           style={{

@@ -1,4 +1,4 @@
-﻿/* Ingredient buttons like filter buttons */
+﻿Ingredient buttons like filter buttons
 .delvoura-ingredient-btns {
   display: flex;
   flex-wrap: wrap;
@@ -7,11 +7,13 @@
 }
 
 .delvoura-ingredient-btn {
+  margin-left: 5px;
+
   padding: 8px 18px;
   border-radius: 14px;
-  border: 1px solid var(--color-border);
-  background: var(--color-card);
-  color: var(--color-text);
+  border: 1px solid var(--color-accent);
+  background: var(--color-secondary-bg);
+  color: var(--color-secondary-text);
   font-size: 0.9rem;
   font-weight: 600;
   transition: background 0.2s ease, border 0.2s ease, color 0.2s ease, transform 0.2s ease;
@@ -20,9 +22,9 @@
 
 .delvoura-ingredient-btn.selected,
 .delvoura-ingredient-btn:active {
-  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-card));
-  border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-secondary-bg) 70%, var(--color-accent));
+  border-color: var(--color-accent);
+  color: var(--color-secondary-text);
   transform: translateY(-1px);
 }
 
@@ -33,12 +35,14 @@
 
 .delvoura-product-page {
   padding: clamp(120px, 8vw, 150px) 0 clamp(70px, 6vw, 100px);
-  background: white;
+  background: var(--color-bg);
+  --product-sticky-top: clamp(90px, 8vw, 130px);
 }
 
 .delvoura-product-shell {
-  width: min(90%, 1400px);
+  width: 90%;
   margin: 0 auto;
+  padding-inline: 0;
 }
 
 .delvoura-product-hero {
@@ -54,12 +58,35 @@
   grid-template-columns: minmax(0, 96px) minmax(0, 1fr);
   gap: 18px;
   align-items: center;
+  position: sticky;
+  top: var(--product-sticky-top);
+  align-self: start;
 }
 
 .delvoura-product-thumbs {
+  padding-top:  10px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  height: auto;
+  max-height: min(478px, 70vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  align-self: start;
+}
+
+.delvoura-product-thumbs::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.delvoura-product-thumbs::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .delvoura-product-thumb {
@@ -72,6 +99,7 @@
   overflow: hidden;
   place-items: center;
   transition: border 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  flex: 0 0 auto;
 }
 
 .delvoura-product-thumb img {
@@ -110,6 +138,16 @@
   gap: 18px;
   padding-left: 28px;
   border-left: 1px solid var(--color-border);
+  max-height: calc(100vh - var(--product-sticky-top));
+  overflow-y: auto;
+  padding-right: 10px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.delvoura-product-right::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .delvoura-product-main img {
@@ -120,29 +158,78 @@
   object-position: center;
 }
 
-.delvoura-gallery-nav {
+.delvoura-gallery-nav,
+.delvoura-related-nav,
+.delvoura-slider-nav {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  border: 1px solid var(--color-border);
-  background: color-mix(in srgb, var(--color-card) 70%, transparent);
-  color: var(--color-text);
+  border: 2px solid transparent;
+  background: #000;
+  color: #fff;
   height: 46px;
   width: 46px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  transition: transform 0.3s ease, border 0.2s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   opacity: 0;
   pointer-events: none;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 14px 30px -18px color-mix(in srgb, var(--color-primary) 60%, transparent);
+  box-shadow: none !important;
 }
 
-.delvoura-gallery-nav:hover {
-  transform: translateY(-50%) scale(1.04);
-  border-color: color-mix(in srgb, var(--color-accent) 70%, transparent);
+.delvoura-slider-nav-left,
+.delvoura-gallery-nav-left,
+.delvoura-related-nav-left {
+  left: 18px;
+  transform: translateX(-30px) translateY(-50%);
 }
+
+.delvoura-slider-nav-right,
+.delvoura-gallery-nav-right,
+.delvoura-related-nav-right {
+  right: 18px;
+  transform: translateX(30px) translateY(-50%);
+}
+
+.group:hover .delvoura-slider-nav,
+.group:hover .delvoura-gallery-nav,
+.group:hover .delvoura-related-nav {
+  transform: translateX(0) translateY(-50%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.delvoura-gallery-nav:hover,
+.delvoura-related-nav:hover,
+.delvoura-slider-nav:hover,
+.group:hover .delvoura-gallery-nav,
+.group:hover .delvoura-related-nav,
+.group:hover .delvoura-slider-nav {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+  transform: translateX(0) translateY(-50%) scale(1.06);
+}
+
+@keyframes delvoura-nav-slide-left {
+  from { transform: translateX(-20px) translateY(-50%); }
+  to { transform: translateX(0) translateY(-50%); }
+}
+
+@keyframes delvoura-nav-slide-right {
+  from { transform: translateX(20px) translateY(-50%); }
+  to { transform: translateX(0) translateY(-50%); }
+}
+
+@media (max-width: 768px) {
+  .delvoura-slider-nav,
+  .delvoura-gallery-nav,
+  .delvoura-related-nav {
+    transform: translateX(0) translateY(-50%) !important;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
 
 .delvoura-gallery-nav-left {
   left: 18px;
@@ -348,6 +435,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  width: fit-content;
   padding: 6px 12px;
   border-radius: 14px;
   border: 1px solid var(--color-border);
@@ -375,8 +463,8 @@
   height: 46px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #ff5b3d, #e64024);
-  color: #fff;
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
   font-weight: 700;
   padding: 0 24px;
   width: fit-content;
@@ -495,6 +583,8 @@
 .delvoura-accordion-details[open] .delvoura-accordion-content {
   max-height: 800px;
   opacity: 1;
+  padding-left: 25px;
+  padding-top: 10px;
 }
 
 .delvoura-accordion-body {
@@ -520,7 +610,6 @@
 .delvoura-accordion-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
   color: var(--color-accent);
   font-weight: 600;
 }
@@ -558,8 +647,9 @@
 }
 
 .delvoura-related-inner {
-  width: min(90%, 1400px);
+  width: 100%;
   margin: 0 auto;
+  padding-inline: 0;
 }
 
 .delvoura-related-header {
@@ -618,36 +708,35 @@
   height: 44px;
   width: 44px;
   border-radius: 999px;
-  border: 1px solid var(--color-border);
-  background: color-mix(in srgb, var(--color-card) 70%, transparent);
-  color: var(--color-text);
+  border: 2px solid transparent;
+  background: #000;
+  color: #fff;
   display: grid;
   place-items: center;
   box-shadow: none;
-  transition: border 0.2s ease, transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   z-index: 3;
   opacity: 0;
   pointer-events: none;
 }
 
-.delvoura-related-nav:hover {
-  border-color: color-mix(in srgb, var(--color-accent) 60%, var(--color-border));
+.delvoura-related-nav:hover,
+.delvoura-related-carousel:hover .delvoura-related-nav {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
   transform: translateY(-50%) scale(1.04);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .delvoura-related-nav-left {
-  left: -6px;
-  transform: translate(-16px, -50%);
+  left: -8px;
+  transform: translateX(-28px) translateY(-50%);
 }
 
 .delvoura-related-nav-right {
-  right: -6px;
-  transform: translate(16px, -50%);
-}
-
-.delvoura-related-carousel:hover .delvoura-related-nav {
-  opacity: 1;
-  pointer-events: auto;
+  right: -8px;
+  transform: translateX(28px) translateY(-50%);
 }
 
 .delvoura-related-carousel:hover .delvoura-related-nav-left {
@@ -692,6 +781,7 @@
 /* Reviews */
 .delvoura-review-section {
   margin-top: clamp(24px, 4vw, 42px);
+  width: 100%;
 }
 
 .delvoura-review-card {
@@ -701,6 +791,7 @@
   padding: clamp(18px, 3vw, 28px);
   box-shadow: 0 8px 18px -18px color-mix(in srgb, var(--color-text) 30%, transparent);
   height: auto;
+  width: 100%;
 }
 
 .delvoura-review-header {
@@ -759,6 +850,7 @@
   height: 44px !important;
   border-radius: 14px !important;
   border: 1px solid var(--color-border) !important;
+  border-color: var(--color-border) !important;
   background: var(--color-card) !important;
   color: var(--color-text) !important;
   padding: 0 14px !important;
@@ -778,22 +870,36 @@
 }
 
 .delvoura-review-select.ant-select-focused .ant-select-selector,
-.delvoura-review-select:hover .ant-select-selector {
-  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent) !important;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent) !important;
+.delvoura-review-select:hover .ant-select-selector,
+.delvoura-review-select.ant-select-open .ant-select-selector,
+.delvoura-review-select:focus-within .ant-select-selector {
+  border-color: var(--color-border) !important;
+  box-shadow: none !important;
   outline: none !important;
+}
+
+.delvoura-review-select.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: var(--color-border) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.delvoura-review-select *:focus,
+.delvoura-review-select *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .delvoura-review-select .ant-select-selector:focus,
 .delvoura-review-select .ant-select-selector:focus-visible {
-  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent) !important;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent) !important;
+  border-color: var(--color-border) !important;
+  box-shadow: none !important;
   outline: none !important;
 }
 
 .delvoura-review-select .ant-select-selector:focus-within {
-  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent) !important;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent) !important;
+  border-color: var(--color-border) !important;
+  box-shadow: none !important;
   outline: none !important;
 }
 
@@ -1148,11 +1254,16 @@
 
   .delvoura-product-gallery {
     grid-template-columns: minmax(0, 80px) minmax(0, 1fr);
+    position: static;
+    top: auto;
   }
 
   .delvoura-product-right {
     padding-left: 0;
     border-left: none;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
   }
 }
 
@@ -1166,8 +1277,19 @@
     flex-direction: row;
     order: 2;
     overflow-x: auto;
+    overflow-y: visible;
+    height: auto;
+    max-height: none;
     padding-bottom: 8px;
-    justify-content: center;
+    padding-top: 0;
+    width: 100%;
+    justify-content: flex-start;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .delvoura-product-thumbs::-webkit-scrollbar {
+    height: 0;
   }
 
   .delvoura-product-thumb {

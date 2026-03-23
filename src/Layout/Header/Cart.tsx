@@ -119,7 +119,7 @@ const Cart = () => {
                           Show Details
                         </button>
                       </div>
-                      <button type="button" className="delvoura-add-to-cart-btn self-center rounded-full border border-[color:var(--color-accent)] px-3 py-2 text-xs font-semibold text-[color:var(--color-accent)] transition hover:bg-[color:var(--color-accent)]">
+                      <button type="button" className="delvoura-add-to-cart-btn self-center rounded-full border border-[color:var(--color-accent)] px-3 py-2 text-xs font-semibold text-[color:var(--color-accent)] transition hover:bg-[color:var(--color-secondary-bg)] ">
                         Add To Cart
                       </button>
                     </div>
@@ -141,8 +141,8 @@ const Cart = () => {
                 <span>Subtotal</span>
                 <span>Rs. 1,438.20</span>
               </div>
-              <button type="button" className="delvoura-checkout-btn mt-4 w-full rounded-2xl bg-[color:var(--color-accent)] py-3 text-sm font-semibold transition hover:brightness-110">
-                Checkout
+              <button type="button" className="delvoura-checkout-btn mt-4 w-full rounded-2xl bg-[color:var(--color-accent)] py-3 text-sm font-semibold transition hover:brightness-110" > 
+                <span className="text-white">Checkout</span> 
               </button>
             </div>
           </div>

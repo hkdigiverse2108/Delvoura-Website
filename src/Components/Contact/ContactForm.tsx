@@ -22,7 +22,7 @@ const ContactForm = () => {
   );
 
   return (
-    <section className="mx-auto w-[90%] max-w-7xl py-10 md:py-12">
+    <section className="delvoura-container py-10 md:py-12">
       <div className="grid gap-26 rounded-2x  md:grid-cols-[0.9fr_1.5fr]">
         <div className="space-y-8">
           <div>
@@ -33,15 +33,15 @@ const ContactForm = () => {
               Delvoura 
             </h2>
           </div>
-
+{/* 
           <p className="text-base leading-7 text-[color:var(--color-text-muted)]">
             We would love to hear from you. Reach out for collaborations, orders, or
             anything fragrance-related.
-          </p>
+          </p> */}
 
           <div className="space-y-4 text-sm text-[color:var(--color-text)]">
             <div className="flex items-start gap-4">
-              <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-bg)] text-[color:var(--color-accent)]">
+              <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-card)] text-[color:var(--color-accent)]">
                 <EnvironmentOutlined />
               </span>
               <div>
@@ -52,7 +52,7 @@ const ContactForm = () => {
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-bg)] text-[color:var(--color-accent)]">
+              <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-card)] text-[color:var(--color-accent)]">
                 <MailOutlined />
               </span>
               <div>
@@ -63,7 +63,7 @@ const ContactForm = () => {
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-bg)] text-[color:var(--color-accent)]">
+              <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-card)] text-[color:var(--color-accent)]">
                 <PhoneOutlined />
               </span>
               <div>
@@ -74,7 +74,7 @@ const ContactForm = () => {
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-bg)] text-[color:var(--color-accent)]">
+              <span className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--color-card)] text-[color:var(--color-accent)]">
                 <GlobalOutlined />
               </span>
               <div>
@@ -87,14 +87,14 @@ const ContactForm = () => {
           </div>
         </div>
 
-        <div className="delvoura-contact-content rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-bg)] p-5 shadow-[0_16px_40px_-34px_color-mix(in_srgb,var(--color-primary)_35%,transparent)] md:p-7">
+        <div className="delvoura-contact-content rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-5 shadow-[0_16px_40px_-34px_color-mix(in_srgb,var(--color-primary)_35%,transparent)] md:p-7">
           <Form className="grid gap-3 md:gap-4">
             <CommonTextInput name="fullName" label="Full Name" placeholder="Your full name" value={fullName} onChange={(event) => setFullName(event.target.value)} onBlur={() => {}} error={undefined} touched={false} />
             <CommonEmailInput name="email" label="Email" placeholder="you@example.com" value={email} onChange={(event) => setEmail(event.target.value)} onBlur={() => {}} error={undefined} touched={false} />
             <CommonPhoneInput name="phone" label="Phone Number" placeholder="Enter phone number" value={phone} onChange={(event) => setPhone(event.target.value)} onBlur={() => {}} error={undefined} touched={false} countryValue={countryCode} onCountryChange={(value) => setCountryCode(value)} countryOptions={countryOptions} />
             <CommonTextArea name="message" label="Message" placeholder="Tell us how we can help" value={message} onChange={(event) => setMessage(event.target.value)} onBlur={() => {}} error={undefined} touched={false} rows={5} />
-            <button type="button" className="mt-2 w-full rounded-sm bg-[color:var(--color-primary)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.28em] text-white transition hover:bg-[color:var(--color-accent)]" style={{color:"white"}} >
-              Send Message
+            <button type="button" className="mt-2 w-full rounded-sm bg-[color:var(--color-accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.28em] text-[color:var(--color-text-on-dark)] transition hover:bg-[color:var(--color-accent)]" >
+              <span className="text-white">Send Message</span> 
             </button>
           </Form>
         </div>

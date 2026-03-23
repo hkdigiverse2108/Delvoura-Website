@@ -9,12 +9,12 @@ const slides = [
     alt: "Delvoura hero banner",
   },
   {
-    src: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=2000&auto=format&fit=crop",
+    src: "https://cdn.shopify.com/s/files/1/0175/6875/9862/files/homepage_banner.png",
     alt: "Lifestyle product display",
   },
   {
-    src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2000&auto=format&fit=crop",
-    alt: "Nature-inspired backdrop",
+    src: "https://cdn.shopify.com/s/files/1/0175/6875/9862/files/homepage_banner.png",
+      alt: "Nature-inspired backdrop",
   },
 ];
  
@@ -26,20 +26,9 @@ const BannerSlider = () => {
       <Carousel ref={carouselRef} autoplay dots className="w-full">
         {slides.map((slide) => (
           <div key={slide.src} className="w-full">
-            <div className="relative h-[100vh] w-full overflow-hidden sm:h-[70vh] lg:h-[80vh]">
-              <img
-                src={slide.src}
-                alt={slide.alt}
-                className="h-full w-full object-cover object-center"
-                loading="eager"
-              />
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "color-mix(in srgb, var(--color-primary) 10%, transparent)",
-                }}
-              />
+            <div className="relative h-[50vh] w-full overflow-hidden sm:h-[70vh] lg:h-[50vh]">
+              <img src={slide.src} alt={slide.alt} className="h-full w-full object-cover object-center" loading="eager"/>
+              <div  className="pointer-events-none absolute inset-0"  style={{  background:  "color-mix(in srgb, var(--color-primary) 10%, transparent)",  }} />
             </div>
           </div>
         ))}
@@ -49,24 +38,15 @@ const BannerSlider = () => {
         type="button"
         aria-label="Previous slide"
         onClick={() => carouselRef.current?.prev()}
-        className="pointer-events-none absolute left-4 top-1/2 z-20 -translate-x-8 -translate-y-1/2 rounded-full opacity-0 backdrop-blur transition duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100 hover:bg-[color:var(--color-surface-darker)] h-12 w-12 sm:h-14 sm:w-14"
-        style={{
-          border: "1px solid var(--color-border-dark)",
-          background:
-            "color-mix(in srgb, var(--color-surface-dark) 65%, transparent)",
-          color: "var(--color-text-on-dark)",
-          boxShadow:
-            "0 14px 30px -18px color-mix(in srgb, var(--color-primary) 80%, transparent)",
-        }}
+        className="delvoura-slider-nav delvoura-slider-nav-left absolute left-4 top-1/2 h-12 w-12 sm:h-14 sm:w-14"
       >
         <LeftOutlined className="text-2xl transition group-hover:-translate-x-0.5" />
       </button>
-      <button type="button" aria-label="Next slide" onClick={() => carouselRef.current?.next()} className="pointer-events-none absolute right-4 top-1/2 z-20 translate-x-8 -translate-y-1/2 rounded-full opacity-0 backdrop-blur transition duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100 hover:bg-[color:var(--color-surface-darker)] h-12 w-12 sm:h-14 sm:w-14" style={{ border: "1px solid var(--color-border-dark)", background:
-            "color-mix(in srgb, var(--color-surface-dark) 65%, transparent)",
-          color: "var(--color-text-on-dark)",
-          boxShadow:
-            "0 14px 30px -18px color-mix(in srgb, var(--color-primary) 80%, transparent)",
-        }}
+      <button
+        type="button"
+        aria-label="Next slide"
+        onClick={() => carouselRef.current?.next()}
+        className="delvoura-slider-nav delvoura-slider-nav-right absolute right-4 top-1/2 h-12 w-12 sm:h-14 sm:w-14"
       >
         <RightOutlined className="text-2xl transition group-hover:translate-x-0.5" />
       </button>

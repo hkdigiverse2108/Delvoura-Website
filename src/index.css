@@ -10,30 +10,62 @@
 
 * {
   font-family: "Jost", sans-serif;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+*::before,
+*::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.shadow,
+.shadow-sm,
+.shadow-md,
+.shadow-lg,
+.shadow-xl,
+.shadow-2xl,
+.shadow-inner,
+.delvoura-header-shell,
+.delvoura-footer-shell,
+.delvoura-product-media-shadow,
+.delvoura-product-media-shadow-bottom,
+.delvoura-collection-panel,
+.delvoura-hero-header,
+.delvoura-light-surface,
+.delvoura-auth-wrap,
+.delvoura-collection-panel-open,
+.delvoura-collection-panel-closed {
+  box-shadow: none !important;
 }
 
 :root {
-  --color-primary: #3a0f1b;
-  --color-accent: #5a1e2e;
-  --color-soft-accent: #7a2e3e;
-  --color-bg: #f8f4f6;
-  --color-card: #ffffff;
-  --color-text: #1a1a1a;
-  --color-text-muted: #6b5b63;
-  --color-border: #e8dde2;
-  --color-bg-light: #f8f4f6;
-  --color-card-light: #ffffff;
-  --color-text-dark: #1a1a1a;
-  --color-text-muted-dark: #6b5b63;
-  --color-border-light: #e8dde2;
-  --color-hover-dark: #2a0a13;
-  --color-bg-soft: color-mix(in srgb, var(--color-bg) 85%, var(--color-card));
-  --color-surface-dark: var(--color-primary);
-  --color-surface-darker: var(--color-hover-dark);
-  --color-text-on-dark: var(--color-card);
-  --color-text-on-dark-muted: color-mix(in srgb, var(--color-card) 70%, transparent);
-  --color-border-dark: color-mix(in srgb, var(--color-card) 18%, transparent);
-  --shadow-soft: 0 18px 45px -32px color-mix(in srgb, var(--color-primary) 35%, transparent);
+  --layout-max-width: 1280px;
+  --layout-page-padding: clamp(16px, 2.8vw, 32px);
+  --color-primary: #111111;
+  --color-accent: #eb4a2e;
+  --color-soft-accent: #eb4a2e;
+  --color-bg: #ffffff;
+  --color-card: #f8f8f8;
+  --color-text: #111111;
+  --color-text-muted: color-mix(in srgb, var(--color-text) 70%, transparent);
+  --color-border: #e0e0e0;
+  --color-bg-light: #ffffff;
+  --color-card-light: #f8f8f8;
+  --color-text-dark: #111111;
+  --color-text-muted-dark: color-mix(in srgb, var(--color-text) 70%, transparent);
+  --color-border-light: #e0e0e0;
+  --color-hover-dark: #f0f0f0;
+  --color-bg-soft: color-mix(in srgb, var(--color-bg) 70%, var(--color-card));
+  --color-surface-dark: #111111;
+  --color-surface-darker: #292929;
+  --color-text-on-dark: #fff3f3;
+  --color-text-on-dark-muted: color-mix(in srgb, var(--color-text-on-dark) 70%, transparent);
+  --color-border-dark: #eb4a2e;
+  --color-secondary-bg: #fff3f3;
+  --color-secondary-text: #111111;
+  --shadow-soft: 0 18px 45px -32px color-mix(in srgb, var(--color-accent) 35%, transparent);
 }
 
 body {
@@ -46,6 +78,12 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.delvoura-container {
+  width: 90%;
+  margin-inline: auto;
+  padding-inline: 0;
 }
 
 button,
@@ -102,14 +140,38 @@ textarea {
   }
 }
 
-/* 
+.delvoura-hero-btn {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  min-width: 200px !important;
+  height: 60px !important;
+  font-size: 1.2rem !important;
+  padding: 0 36px !important;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, letter-spacing 0.3s ease;
+}
 
-Primary (Deep Wine):      #3A0F1B
-Accent (Royal Rose):      #5A1E2E
-Soft Accent:              #7A2E3E
-Background:               #F8F4F6
-Card:                     #FFFFFF
-Text Primary:             #1A1A1A
-Text Secondary:           #6B5B63
-Border:                   #E8DDE2
-Hover Dark:               #2A0A13 */
+.delvoura-hero-btn:hover,
+.delvoura-hero-btn:focus {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border-color: #111111 !important;
+  transform: translateY(-2px);
+}
+
+.delvoura-hero-btn:active {
+  transform: translateY(0);
+}
+
+/*
+Primary Dark:             #111111
+Secondary Surface:        #292929
+Accent:                   #EB4A2E
+Secondary Button BG:      #FFF3F3
+Text (On Dark):           #FFF3F3
+Border (Accent):          #EB4A2E
+Light BG:                 #FFFFFF
+Light Card:               #F8F8F8
+Light Text:               #111111
+Light Border:             #E0E0E0
+*/

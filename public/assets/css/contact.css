@@ -95,6 +95,6 @@
 
 .delvoura-contact-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled),
 .delvoura-contact-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-card)) !important;
-  color: var(--color-primary) !important;
+  background: color-mix(in srgb, var(--color-accent) 10%, var(--color-card)) !important;
+  color: var(--color-accent) !important;
 }

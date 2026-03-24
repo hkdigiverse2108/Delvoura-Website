@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
           name: "Delvoura ",
           short_name: "Delvoura",
           description: "Delvoura App",
-          theme_color: "#sd3bff",
+          theme_color: "#5d3bff",
         },
 
         workbox: {

@@ -171,13 +171,11 @@
 }
 
 .delvoura-filter-panel {
-  background:
-    radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 60%),
-    linear-gradient(140deg, var(--color-card), var(--color-bg-soft));
+  background:var(--color-bg-soft);
   border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 18px 22px;
-  box-shadow: 0 26px 60px -32px color-mix(in srgb, var(--color-primary) 45%, transparent);
+  box-shadow: none;
 }
 
 .delvoura-filter-row {
@@ -207,9 +205,9 @@
 }
 
 .delvoura-filter-chip {
-  background: var(--color-secondary-bg);
-  color: var(--color-secondary-text);
-  border: 1px solid var(--color-accent);
+  background: #f6efe7;
+  color: #111111;
+  border: 1px solid transparent;
   border-radius: 12px;
   padding: 8px 14px;
   font-size: 14px;
@@ -217,8 +215,8 @@
 }
 
 .delvoura-filter-chip:hover {
-  border-color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-secondary-bg) 70%, var(--color-accent));
+  border-color: transparent;
+  background: #f2e7dc;
   transform: translateY(-1px);
 }
 

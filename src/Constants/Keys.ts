@@ -29,4 +29,14 @@ export const KEYS = {
     GET_RATINGS: "get-ratings",
     ADD_RATING: "add-rating",
   },
+
+  //========Scent=========
+  SCENT: {
+    GET_SCENTS: "get-scents",
+  },
+
+  //========Season=========
+  SEASON: {
+    GET_SEASONS: "get-seasons",
+  },
 } as const;

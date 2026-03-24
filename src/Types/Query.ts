@@ -113,3 +113,75 @@ export type ProductsQueryParams = {
   genderFilter?: string;
   TrendingFilter?: boolean;
 };
+
+//============Scents type==============
+export type ScentItem = {
+  _id?: string;
+  name?: string;
+  isActive?: boolean;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ScentsApiResponse = {
+  status?: number;
+  message?: string;
+  data?: {
+    scent_data?: ScentItem[];
+    totalData?: number;
+    state?: {
+      page?: number;
+      limit?: number;
+      totalPages?: number;
+      hasNext?: boolean;
+      hasPrev?: boolean;
+    };
+  };
+};
+
+export type ScentsQueryParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  startDateFilter?: string;
+  endDateFilter?: string;
+  ActiveFilter?: boolean;
+  status?: "active" | "inactive";
+};
+
+//============Seasons type==============
+export type SeasonItem = {
+  _id?: string;
+  name?: string;
+  isActive?: boolean;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type SeasonsApiResponse = {
+  status?: number;
+  message?: string;
+  data?: {
+    season_data?: SeasonItem[];
+    totalData?: number;
+    state?: {
+      page?: number;
+      limit?: number;
+      totalPages?: number;
+      hasNext?: boolean;
+      hasPrev?: boolean;
+    };
+  };
+};
+
+export type SeasonsQueryParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  startDateFilter?: string;
+  endDateFilter?: string;
+  ActiveFilter?: boolean;
+  status?: "active" | "inactive";
+};

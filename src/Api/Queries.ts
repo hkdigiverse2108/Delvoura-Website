@@ -1,5 +1,5 @@
 import { KEYS, URL_KEYS } from "../Constants";
-import type { CollectionsApiResponse, CollectionsQueryParams, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, SingleProductApiResponse, SingleUserApiResponse } from "../Types";
+import type { CollectionsApiResponse, CollectionsQueryParams, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleProductApiResponse, SingleUserApiResponse } from "../Types";
 import { Get } from "./Methods/Index";
 import { useQueries } from "./ReactQuery/Index";
 
@@ -19,4 +19,10 @@ export const Queries = {
 
   // ************ Rating ***********
   useGetRatings: (params?: RatingsQueryParams) => useQueries<RatingsApiResponse>( [KEYS.RATING.GET_RATINGS, params], () => Get<RatingsApiResponse>(URL_KEYS.RATING.GET_RATINGS, params), { enabled: !!params?.productId },),
+
+  // ************ Scent ***********
+  useGetScents: (params?: ScentsQueryParams) => useQueries<ScentsApiResponse>([KEYS.SCENT.GET_SCENTS, params], () => Get<ScentsApiResponse>(URL_KEYS.SCENT.GET_SCENTS, params),),
+
+  // ************ Season ***********
+  useGetSeasons: (params?: SeasonsQueryParams) => useQueries<SeasonsApiResponse>([KEYS.SEASON.GET_SEASONS, params], () => Get<SeasonsApiResponse>(URL_KEYS.SEASON.GET_SEASONS, params),),
 };

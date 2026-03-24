@@ -9,7 +9,7 @@ const staticSections = [
   },
   {
     title: "Shop By Gender",
-    items: [{ label: "Women's" }, { label: "Men's" }, { label: "Unisex" }],
+    items: [{ label: "women" }, { label: "men" }, { label: "unisex" }],
   },
 ];
 

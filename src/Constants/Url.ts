@@ -29,4 +29,14 @@ export const URL_KEYS = {
         GET_RATINGS: "/rating",
         ADD_RATING: "/rating/add"
     },
+
+    //==============SCENT===============
+    SCENT: {
+        GET_SCENTS: "/scent"
+    },
+
+    //==============SEASON===============
+    SEASON: {
+        GET_SEASONS: "/season"
+    },
 } as const

@@ -530,7 +530,7 @@
 
 .delvoura-search-modal .ant-modal {
   margin: 0 auto !important;
-  max-width: 1200px !important;
+  max-width: 1400px !important;
   transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
@@ -636,6 +636,89 @@ body.ant-modal-open::-webkit-scrollbar {
   background: transparent;
 }
 
+.delvoura-search-modal .delvoura-modal-surface {
+  background: #ffffff;
+  box-shadow: none;
+  overflow: hidden;
+  height: 100%;
+  overflow: auto;
+}
+
+.delvoura-search-modal .delvoura-modal-left {
+  background: #ffffff;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.delvoura-search-modal .delvoura-modal-right {
+  background: #f3f3f3;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.delvoura-search-modal .ant-modal-content {
+  border-radius: 28px !important;
+  overflow: hidden !important;
+}
+
+.delvoura-search-modal .ant-modal-body {
+  border-radius: 28px !important;
+  overflow: hidden !important;
+}
+
+.delvoura-search-modal .delvoura-modal-left .ant-typography,
+.delvoura-search-modal .delvoura-modal-left h5,
+.delvoura-search-modal .delvoura-modal-right .ant-typography,
+.delvoura-search-modal .delvoura-modal-right h5 {
+  color: var(--color-text);
+}
+
+.delvoura-search-modal .delvoura-modal-left .ant-typography-secondary,
+.delvoura-search-modal .delvoura-modal-right .ant-typography-secondary {
+  color: var(--color-text-muted);
+}
+
+.delvoura-search-modal .delvoura-chip {
+  background: #f6efe7;
+  color: #111111;
+  border: 1px solid transparent;
+  border-radius: 12px;
+}
+
+.delvoura-search-modal .delvoura-chip:hover {
+  border-color: transparent;
+  background: #f2e7dc;
+}
+
+.delvoura-search-modal .delvoura-chip-strong {
+  background: #f6efe7;
+  color: #111111;
+}
+
+.delvoura-search-modal .delvoura-chip-active,
+.delvoura-chip-active {
+  border-color: var(--color-accent) !important;
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent) !important;
+  color: var(--color-text) !important;
+}
+
+.delvoura-search-modal .ant-rate,
+.delvoura-search-modal .ant-rate-star-full .ant-rate-star-second,
+.delvoura-search-modal .ant-rate-star-half .ant-rate-star-first {
+  color: var(--color-accent);
+}
+
+.delvoura-search-modal .delvoura-input {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  box-shadow: none;
+}
+
+.delvoura-search-modal .delvoura-input::placeholder {
+  color: var(--color-text-muted);
+}
+
 .delvoura-chip {
   background: color-mix(in srgb, var(--color-card) 6%, transparent);
   border: 1px solid transparent;
@@ -665,6 +748,54 @@ body.ant-modal-open::-webkit-scrollbar {
   background: color-mix(in srgb, var(--color-card) 6%, transparent);
   border: 1px solid transparent;
   box-shadow: 0 12px 24px -18px color-mix(in srgb, var(--color-primary) 80%, transparent);
+}
+
+.delvoura-search-modal .delvoura-modal-product-card {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  box-shadow: none !important;
+  transition: transform 0.35s ease, border-color 0.35s ease;
+  color: var(--color-text);
+}
+
+.delvoura-search-modal .delvoura-modal-product-card .ant-typography,
+.delvoura-search-modal .delvoura-modal-product-card .ant-typography-secondary {
+  color: var(--color-text);
+}
+
+.delvoura-search-modal .delvoura-modal-product-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+  box-shadow: none !important;
+}
+
+.delvoura-search-modal .delvoura-modal-product-media {
+  height: 190px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--color-bg-soft);
+}
+
+.delvoura-search-modal .delvoura-modal-product-media-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  transform: scale(1);
+  transition: transform 0.4s ease;
+}
+
+.delvoura-search-modal .delvoura-modal-product-card:hover .delvoura-modal-product-media-img {
+  transform: scale(1.05);
+}
+
+.delvoura-search-modal .delvoura-modal-product-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.delvoura-search-modal .delvoura-modal-product-rating .ant-rate {
+  font-size: 12px;
 }
 
 .delvoura-input {
@@ -743,5 +874,33 @@ body.ant-modal-open::-webkit-scrollbar {
   .delvoura-modal-right {
     max-height: none;
     overflow: visible;
+  }
+}
+
+@media (max-width: 640px) {
+  .delvoura-search-modal .ant-modal-body {
+    height: 95vh !important;
+  }
+
+  .delvoura-search-modal .delvoura-modal-surface {
+    height: 95vh;
+  }
+
+  .delvoura-search-modal .delvoura-chip {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .delvoura-search-modal .delvoura-chip-lg {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .delvoura-search-modal .delvoura-modal-right {
+    padding: 16px;
+  }
+
+  .delvoura-search-modal .delvoura-modal-product-media {
+    height: 160px;
   }
 }

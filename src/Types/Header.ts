@@ -10,3 +10,9 @@ export type LogoutConfirmModelProps = {
   onCancel: () => void;
   confirmLoading?: boolean;
 };
+
+export type SearchBarWithModalProps = {
+  buttonClassName?: string;
+  showOnMobile?: boolean;
+  buttonText?: string;
+};

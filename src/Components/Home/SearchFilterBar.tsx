@@ -14,7 +14,7 @@ const sortOptions = [
 ];
 
 const filterSections = [
-  { title: "Gender", items: ["Women", "Men", "Unisex"] },
+  { title: "Gender", items: ["women", "men", "unisex"] },
   {
     title: "Scent Profile",
     items: [ "Amber", "Animalic", "Aquatic", "Aromatic", "Citrus", "Earthy", "Floral", "Fresh", "Fruity", "Gourmand", "Green", "Incense", "Leather", "Musky", "Mysterious", "Oriental", "Oud", "Patchouli", "Smoky", "Spicy", "Tobacco", "Vanilla", "Woody",],

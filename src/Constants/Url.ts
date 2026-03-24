@@ -23,4 +23,10 @@ export const URL_KEYS = {
         GET_PRODUCTS: "/product",
         GET_PRODUCT_BY_ID: "/product"
     },
+
+    //==============RATING===============
+    RATING: {
+        GET_RATINGS: "/rating",
+        ADD_RATING: "/rating/add"
+    },
 } as const

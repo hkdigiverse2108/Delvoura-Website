@@ -34,4 +34,12 @@ export const ResetForgetPasswordSchema = Yup.object({
   }),
 });
 
+export const ProductReviewSchema = Yup.object({
+  starRating: Validation("number", "Rating", { min: 1, max: 5 }),
+  description: Validation("string", "Review", { required: false, max: 1000 }),
+  firstName: Validation("string", "First name"),
+  lastName: Validation("string", "Last name"),
+  email: Validation("string", "Email", { extraRules: (s) => s.email("Invalid email address") }),
+});
+
 export { Validation };

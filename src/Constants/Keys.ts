@@ -23,4 +23,10 @@ export const KEYS = {
     GET_PRODUCTS: "get-products",
     GET_PRODUCT_BY_ID: "get-product-by-id",
   },
+
+  //========Ratings=========
+  RATING: {
+    GET_RATINGS: "get-ratings",
+    ADD_RATING: "add-rating",
+  },
 } as const;

@@ -39,7 +39,7 @@ const ProductDescription = () => {
               </div>
             </div> <br /><br /><br />
             <RelatedProductsSlider /> <br /><br />
-            <ProductReviews /> <br /><br />
+            <ProductReviews productId={product?._id} ratingSummary={product?.ratingSummary} /> <br /><br />
             <InstagramScrollingSection containerClassName="w-full" />
           </div>
         </div>

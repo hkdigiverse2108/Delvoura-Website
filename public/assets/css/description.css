@@ -295,7 +295,7 @@
 
 .delvoura-product-title {
   font-size: clamp(26px, 3vw, 34px);
-  font-weight: 700;
+  font-weight: 600;
   margin: 0;
   color: var(--color-text);
 }
@@ -808,7 +808,7 @@
 .delvoura-review-card {
   border-radius: 15px;
   border: 1px solid var(--color-border);
-  background: var(--color-bg-soft);
+  background: #f6f6f6;
   padding: clamp(18px, 3vw, 28px);
   box-shadow: 0 8px 18px -18px color-mix(in srgb, var(--color-text) 30%, transparent);
   height: auto;
@@ -860,106 +860,96 @@
   background: linear-gradient(135deg, var(--color-soft-accent), var(--color-accent));
 }
 
-.delvoura-review-select {
+.delvoura-sort-wrap {
+  position: relative;
+}
+
+.delvoura-sort-btn {
   height: 44px;
-  min-width: 200px;
-  font-weight: 600;
+  width: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  color: var(--color-text);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  transition: background 0.2s ease, border 0.2s ease, transform 0.2s ease;
+}
+
+.delvoura-sort-btn:hover,
+.delvoura-sort-btn.is-open {
+  border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-card));
+}
+
+.delvoura-sort-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  min-width: 220px;
+  background: var(--color-card);
+  border-radius: 14px;
+  border: 1px solid var(--color-border);
+  padding: 14px 12px;
+  display: grid;
+  gap: 8px;
+  box-shadow: 0 18px 38px -26px color-mix(in srgb, var(--color-text) 40%, transparent);
+  z-index: 10;
+}
+
+.delvoura-sort-title {
+  font-weight: 700;
   font-size: 14px;
+  color: var(--color-text);
+  padding: 4px 6px 6px;
 }
 
-.delvoura-review-select .ant-select-selector {
-  height: 44px !important;
-  border-radius: 14px !important;
-  border: 1px solid var(--color-border) !important;
-  border-color: var(--color-border) !important;
-  background: var(--color-card) !important;
-  color: var(--color-text) !important;
-  padding: 0 14px !important;
-  display: flex !important;
-  align-items: center !important;
-  box-shadow: none !important;
-  outline: none !important;
+.delvoura-sort-option {
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 14px;
+  color: var(--color-text);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.delvoura-review-select .ant-select-selection-item {
-  line-height: 44px !important;
-  color: var(--color-text) !important;
-}
-
-.delvoura-review-select .ant-select-arrow {
-  color: var(--color-text-muted) !important;
-}
-
-.delvoura-review-select.ant-select-focused .ant-select-selector,
-.delvoura-review-select:hover .ant-select-selector,
-.delvoura-review-select.ant-select-open .ant-select-selector,
-.delvoura-review-select:focus-within .ant-select-selector {
-  border-color: var(--color-border) !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-.delvoura-review-select.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  border-color: var(--color-border) !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-.delvoura-review-select *:focus,
-.delvoura-review-select *:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.delvoura-review-select .ant-select-selector:focus,
-.delvoura-review-select .ant-select-selector:focus-visible {
-  border-color: var(--color-border) !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-.delvoura-review-select .ant-select-selector:focus-within {
-  border-color: var(--color-border) !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-.delvoura-review-select .ant-select-selection-search-input:focus,
-.delvoura-review-select .ant-select-selection-search-input:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.delvoura-review-dropdown {
-  border-radius: 12px !important;
-  background: var(--color-card) !important;
-  border: 1px solid var(--color-border) !important;
-  box-shadow: 0 16px 30px -24px color-mix(in srgb, var(--color-text) 35%, transparent) !important;
-}
-
-.delvoura-review-dropdown .ant-select-item {
-  color: var(--color-text) !important;
-  font-weight: 600 !important;
-}
-
-.delvoura-review-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
-.delvoura-review-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-card)) !important;
-  color: var(--color-text) !important;
+.delvoura-sort-option:hover,
+.delvoura-sort-option.is-active {
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-card));
+  color: var(--color-text);
 }
 
 .delvoura-review-list {
   margin-top: 20px;
   display: grid;
   gap: 14px;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(240px, 320px);
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
   grid-template-rows: repeat(2, minmax(0, auto));
   overflow-x: auto;
   overflow-y: hidden;
   padding: 2px 0 6px;
   scrollbar-width: none;
   align-content: start;
+}
+
+.delvoura-review-list.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delvoura-review-empty {
+  grid-column: 1 / -1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .delvoura-review-list::-webkit-scrollbar {
@@ -969,16 +959,16 @@
 .delvoura-review-item {
   border-radius: 14px;
   border: 1px solid var(--color-border);
-  background: var(--color-bg-soft);
+  background: #ffffff;
   padding: 16px 18px;
   display: grid;
   gap: 10px;
-  max-width: 360px;
+  max-width: 320px;
   height: auto;
   cursor: pointer;
   transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-  min-height: 170px;
-  max-height: 170px;
+  min-height: 155px;
+  max-height: 155px;
   overflow: hidden;
 }
 
@@ -1015,6 +1005,18 @@
 
 .delvoura-review-stars {
   font-size: 14px;
+}
+
+.delvoura-review-rating .ant-rate,
+.delvoura-review-stars .ant-rate {
+  color: #2f2f2f;
+}
+
+.delvoura-review-rating .ant-rate-star-full .ant-rate-star-second,
+.delvoura-review-rating .ant-rate-star-full .ant-rate-star-first,
+.delvoura-review-stars .ant-rate-star-full .ant-rate-star-second,
+.delvoura-review-stars .ant-rate-star-full .ant-rate-star-first {
+  color: #2f2f2f;
 }
 
 .delvoura-review-text {
@@ -1363,12 +1365,7 @@
     width: 100%;
   }
 
-  .delvoura-review-btn,
-  .delvoura-review-select {
+  .delvoura-review-btn {
     width: 100%;
-  }
-
-  .delvoura-review-select {
-    min-width: 0;
   }
 }

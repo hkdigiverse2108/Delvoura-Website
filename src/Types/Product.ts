@@ -22,3 +22,12 @@ export type SetProductsPayload = {
   totalData?: number;
   state?: ProductState["list"]["state"];
 };
+
+export type ProductReviewsProps = {
+  productId?: string;
+  ratingSummary?: {
+    avgRating?: number;
+    ratingCount?: number;
+  } | null;
+};
+ 

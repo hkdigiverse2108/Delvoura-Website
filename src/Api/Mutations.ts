@@ -1,7 +1,7 @@
 import { KEYS, URL_KEYS } from "../Constants";
-import type { ForgetPasswordPayload, ForgetPasswordResponse, LoginPayload, LoginResponse, ResetForgetPasswordPayload, ResetForgetPasswordResponse, SignupPayload, SignupResponse, VerifyOtpPayload, VerifyOtpResponse,} from "../Types";
+import type { CreateRatingPayload, CreateRatingResponse, ForgetPasswordPayload, ForgetPasswordResponse, LoginPayload, LoginResponse, ResetForgetPasswordPayload, ResetForgetPasswordResponse, SignupPayload, SignupResponse, VerifyOtpPayload, VerifyOtpResponse,} from "../Types";
 import { Post } from "./Methods/Index";
-import { useMutations } from "./ReactQuery/Index";
+import { useMutations, type AppMutationOptions } from "./ReactQuery/Index";
 
 export const Mutations = {
   // ************ Auth ***********
@@ -10,4 +10,7 @@ export const Mutations = {
   useVerifyOtp: () =>useMutations<VerifyOtpPayload, VerifyOtpResponse>([KEYS.AUTH.VERIFY_OTP], (input) =>Post<VerifyOtpPayload, VerifyOtpResponse>(URL_KEYS.AUTH.VERIFY_OTP, input),),
   useForgetPassword: () =>useMutations<ForgetPasswordPayload, ForgetPasswordResponse>([KEYS.AUTH.FORGET_PASSWORD], (input) =>Post<ForgetPasswordPayload, ForgetPasswordResponse>(URL_KEYS.AUTH.FORGET_PASSWORD, input),),
   useResetForgetPassword: () =>useMutations<ResetForgetPasswordPayload, ResetForgetPasswordResponse>([KEYS.AUTH.RESET_FORGET_PASSWORD],(input) => Post<ResetForgetPasswordPayload, ResetForgetPasswordResponse>(URL_KEYS.AUTH.RESET_FORGET_PASSWORD, input),),
+
+  // ************ Rating ***********
+  useCreateRating: (options?: AppMutationOptions<CreateRatingResponse, CreateRatingPayload>) => useMutations<CreateRatingPayload, CreateRatingResponse>( [KEYS.RATING.ADD_RATING], (input) => Post<CreateRatingPayload, CreateRatingResponse>(URL_KEYS.RATING.ADD_RATING, input), options,),
 };

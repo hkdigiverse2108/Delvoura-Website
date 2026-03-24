@@ -13,37 +13,37 @@ const MainHomePage = () => {
   const [newsletterOpen, setNewsletterOpen] = useState(false);
   const location = useLocation();
   
-    useEffect(() => {
-      const handleScroll = () => {
-        if (window.scrollY > 300) return setHideOfferBar(true);
-          else return setHideOfferBar(false);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-      }, []);
-
+  //Newsletter Use Effect
   useEffect(() => {
     const navEntries = performance.getEntriesByType("navigation");
     const isReload = navEntries.length
       ? (navEntries[0] as PerformanceNavigationTiming).type === "reload"
       : false;
 
-    const hasHeroFlag = sessionStorage.getItem("dv_show_newsletter") === "1";
+    const fromHero = sessionStorage.getItem("dv_from_hero") === "1";
+    const shownCount = Number(sessionStorage.getItem("dv_newsletter_shown_count") || 0);
 
-    if (!isReload && !hasHeroFlag) {
-      setNewsletterOpen(false);
-      return;
+    if ((isReload || fromHero) && shownCount < 1) {
+      const timer = window.setTimeout(() => {
+        setNewsletterOpen(true);
+        sessionStorage.setItem("dv_newsletter_shown_count", String(shownCount + 1));
+        sessionStorage.removeItem("dv_from_hero");
+      }, 3000);
+
+      return () => window.clearTimeout(timer);
     }
-
-    if (hasHeroFlag) sessionStorage.removeItem("dv_show_newsletter");
-
-    const timer = window.setTimeout(() => {
-      setNewsletterOpen(true);
-    }, 3000);
-
-    return () => window.clearTimeout(timer);
   }, [location.key]);
 
+   //hide offerbar
+  useEffect(() => {
+    const handleScroll = () => {
+        if (window.scrollY > 70) return setHideOfferBar(true);
+        return setHideOfferBar(false);
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+    
   return (
     <>
       <section className="relative w-full bg-[color:var(--color-bg)]">

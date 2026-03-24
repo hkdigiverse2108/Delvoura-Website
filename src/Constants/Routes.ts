@@ -3,6 +3,7 @@ export const ROUTES = {
     
     COLLECTIONS_ALL: "/collections/all",
     PRODUCT_DETAILS: "/products/:id",
+    getProductDetails: (id: string) => `/products/${id}`,
     CONTACT: "/contact",
     SHIPPING: "/shipping",
     RETURNS_EXCHANGES: "/returns-and-exchanges",

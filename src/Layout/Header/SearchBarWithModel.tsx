@@ -8,6 +8,8 @@ import { setProducts } from "../../Store/Slices/ProductSlice";
 import { setScents } from "../../Store/Slices/ScentSlice";
 import { setSeasons } from "../../Store/Slices/SeasonSlice";
 import type { ProductsQueryParams, ProductItem, ScentItem, SeasonItem, SearchBarWithModalProps } from "../../Types";
+import { ROUTES } from "../../Constants";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -17,6 +19,8 @@ const genderTagLabels: Record<string, string> = { women: "Women",men: "Men",unis
 type ActiveFilter = | { type: "scent"; id: string; label: string } | { type: "season"; id: string; label: string } | { type: "gender"; value: string } | null;
 
 const SearchBarWithModal = ({ buttonClassName = "", showOnMobile = false, buttonText = "Search perfumes...", }: SearchBarWithModalProps) => {
+  
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [activeFilter, setActiveFilter] = useState<ActiveFilter>(null);
@@ -164,7 +168,7 @@ const SearchBarWithModal = ({ buttonClassName = "", showOnMobile = false, button
           const firstVariant = product.variants?.[0] as any;
           const priceValue = typeof firstVariant === "object" ? firstVariant?.price ?? 0 : product.price ?? product.mrp ?? 0;
           return (
-            <Card key={product._id || `${product.name}-${index}`} hoverable styles={{ body: { padding: 10 } }} className="delvoura-product-card delvoura-modal-product-card" style={{ borderRadius: 16 }}>
+            <Card key={product._id || `${product.name}-${index}`} hoverable styles={{ body: { padding: 10 } }} className="delvoura-product-card delvoura-modal-product-card" style={{ borderRadius: 16 }} onClick={() => navigate(ROUTES.getProductDetails(product._id || ""))}>
               <div className="delvoura-modal-product-media">
                 {cover ? (
                   <img src={cover} alt={product.name || "Product"} className="delvoura-modal-product-media-img" style={{ objectFit: "cover" }} loading="lazy" />
@@ -203,7 +207,7 @@ const SearchBarWithModal = ({ buttonClassName = "", showOnMobile = false, button
           <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_1.1fr]">
             <div className="delvoura-modal-left space-y-6 rounded-3xl p-5">
               <div>
-                <Title level={5}>Popular Searches</Title>
+                <Title level={5}>Popular Scents</Title>
                 {renderFilterTags(visibleScents, "scent", scentsLoading, (item) => item.name)}
               </div>
 

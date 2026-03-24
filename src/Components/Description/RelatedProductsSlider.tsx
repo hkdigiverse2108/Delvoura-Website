@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Button, Modal, Rate, Tag, Typography } from "antd";
 import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../Constants";
 
 const { Title, Text } = Typography;
 
@@ -158,9 +159,9 @@ const RelatedProductsSlider = () => {
                 className="delvoura-related-slide"
                 ref={idx === 0 ? cardRef : null}
               >
-                <article className="delvoura-product-card cursor-pointer" onClick={() => navigate(`/products/${idx + 1}`)}>
+                <article className="delvoura-product-card cursor-pointer" onClick={() => navigate(ROUTES.getProductDetails(`${idx + 1}`))}>
                   <div className="delvoura-product-media">
-                    <img src={product.image} alt={product.name} loading="lazy"  onClick={() => navigate(`/products/${idx + 1}`)}/>
+                    <img src={product.image} alt={product.name} loading="lazy"  onClick={() => navigate(ROUTES.getProductDetails(`${idx + 1}`))}/>
                     <div className="delvoura-product-media-shadow" />
                     <div className="delvoura-product-media-shadow-bottom" />
                     <div className="delvoura-product-badges">

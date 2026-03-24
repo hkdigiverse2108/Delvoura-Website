@@ -18,9 +18,9 @@ const Index = () => {
         </div>
 
         <div className="flex flex-1 items-end justify-center pb-8">
-          <Button  type="primary"  size="large"  className="delvoura-hero-btn h-20 min-w-[200px] rounded-full px-28 text-3xl font-bold tracking-[0.22em]"  onClick={() => {  sessionStorage.setItem("dv_show_newsletter", "1");  navigate(ROUTES.COLLECTIONS_ALL, { state: { fromHero: true } }); }} >
-            Shop All
-          </Button>
+        <Button type="primary" size="large" className="delvoura-hero-btn h-20 min-w-[200px] rounded-full px-28 text-3xl font-bold tracking-[0.22em]" onClick={() => { sessionStorage.setItem("dv_from_hero", "1"); sessionStorage.setItem("dv_newsletter_shown_count", "0"); navigate(ROUTES.COLLECTIONS_ALL, { state: { fromHero: true } }); }} >
+          Shop All
+        </Button>
         </div>
       </div>
     </section>

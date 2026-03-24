@@ -1,15 +1,33 @@
 import { useMemo, useRef, useState } from "react";
-import { Button, Modal, Rate, Tag, Typography } from "antd";
-import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, MinusOutlined, PlusOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Button, Empty, Modal, Rate, Spin, Tag, Typography } from "antd";
+import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, LoadingOutlined, MinusOutlined, PlusOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Queries } from "../../Api";
-import type { ProductItem } from "../../Types";
+import { ROUTES } from "../../Constants";
+import type { ProductItem, ProductsQueryParams } from "../../Types";
 
 const { Title, Text } = Typography;
 
 const ProductGrid = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = Queries.useGetProducts();
+  const location = useLocation();
+
+  const productFilters: ProductsQueryParams = useMemo(() => {
+    const search = new URLSearchParams(location.search);
+    const filters: ProductsQueryParams = {};
+
+    const scent = search.get("scent");
+    const season = search.get("season");
+    const gender = search.get("gender");
+
+    if (scent) filters.scentFilter = scent;
+    if (season) filters.seasonFilter = season;
+    if (gender) filters.genderFilter = gender;
+
+    return filters;
+  }, [location.search]);
+
+  const { data, isLoading } = Queries.useGetProducts(productFilters);
   const products = data?.data?.product_data || [];
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<string>("");
@@ -41,13 +59,17 @@ const ProductGrid = () => {
     <section className="delvoura-home-products">
       <div className="delvoura-container">
         <div className="delvoura-product-grid grid gap-6">
-          {!isLoading && products.length === 0 && (
-            <div className="text-sm text-[color:var(--color-text-muted)]">
-              No products found.
+          {(isLoading || products.length === 0) ? (
+            <div className="delvoura-product-empty-state">
+              {isLoading ? (
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "var(--color-text-muted)" }} spin />} />
+              ) : (
+                <Empty description="No products found" />
+              )}
             </div>
-          )}
-          {products.map((product, idx) => (
-            <article key={product._id || `${product.name}-${idx}`} className="delvoura-product-card cursor-pointer" onClick={() => navigate(`/products/${product._id}`)}>
+          ) : (
+            products.map((product, idx) => (
+            <article key={product._id || `${product.name}-${idx}`} className="delvoura-product-card cursor-pointer" onClick={() => navigate(ROUTES.getProductDetails(product._id || ""))}>
               <div className="delvoura-product-media">
                 <img src={product.coverimage || product.images?.[0] || ""} alt={product.name || "Product"} loading="lazy" />
                 <div className="delvoura-product-media-shadow" />
@@ -105,7 +127,7 @@ const ProductGrid = () => {
                 </div>
               </div>
             </article>
-          ))}
+          ))) }
         </div>
       </div>
 
@@ -192,7 +214,7 @@ const ProductGrid = () => {
                 </button>
               </div>
 
-              <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(`/products/${selectedProduct._id}`);}}>
+              <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(ROUTES.getProductDetails(selectedProduct._id || ""));}}>
                 View full details <ArrowRightOutlined />
               </button>
             </div>

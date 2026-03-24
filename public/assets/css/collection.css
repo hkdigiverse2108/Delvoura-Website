@@ -171,8 +171,8 @@
 }
 
 .delvoura-filter-panel {
-  background:var(--color-bg-soft);
-  border: 1px solid var(--color-border);
+  background: #262626;
+  border: 1px solid #353535;
   border-radius: 14px;
   padding: 18px 22px;
   box-shadow: none;
@@ -183,7 +183,7 @@
   grid-template-columns: 160px 1fr;
   gap: 12px;
   padding: 16px 0;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid #353535;
 }
 
 .delvoura-filter-row:last-child {
@@ -191,7 +191,7 @@
 }
 
 .delvoura-filter-title {
-  color: var(--color-text);
+  color: #FFFFFF;
   font-weight: 600;
   font-size: 16px;
   display: flex;
@@ -205,8 +205,8 @@
 }
 
 .delvoura-filter-chip {
-  background: #f6efe7;
-  color: #111111;
+  background: #353535;
+  color: #FFFFFF;
   border: 1px solid transparent;
   border-radius: 12px;
   padding: 8px 14px;
@@ -214,16 +214,112 @@
   transition: border 0.2s ease, transform 0.2s ease, background 0.2s ease;
 }
 
+.delvoura-filter-chip.is-active,
+.delvoura-filter-chip-active {
+  background: #EB4A2E;
+  color: #FFFFFF;
+  border-color: #EB4A2E;
+}
+
 .delvoura-filter-chip:hover {
   border-color: transparent;
-  background: #f2e7dc;
+  background: #404040;
   transform: translateY(-1px);
+}
+
+.delvoura-sort-select {
+  background: #353535 !important;
+  border: 1px solid #353535 !important;
+  border-radius: 12px !important;
+  min-width: 200px !important;
+}
+
+.delvoura-sort-select .ant-select-selector {
+  background: #353535 !important;
+  border: 1px solid #353535 !important;
+  border-radius: 12px !important;
+  color: #FFFFFF !important;
+}
+
+.delvoura-sort-select .ant-select-selector:hover {
+  border-color: #EB4A2E !important;
+}
+
+.delvoura-sort-select.ant-select-focused .ant-select-selector {
+  border-color: #EB4A2E !important;
+  box-shadow: 0 0 0 2px rgba(235, 74, 46, 0.2) !important;
+}
+
+.delvoura-sort-select .ant-select-arrow {
+  color: #FFFFFF !important;
+}
+
+.delvoura-sort-select .ant-select-selection-item {
+  color: #FFFFFF !important;
+}
+
+.delvoura-sort-dropdown {
+  background: #1E1E1E !important;
+  border: 1px solid #353535 !important;
+  border-radius: 12px !important;
+}
+
+.delvoura-sort-dropdown .ant-select-item {
+  color: #FFFFFF !important;
+  background: #353535 !important;
+  border-radius: 8px !important;
+  margin: 4px 8px !important;
+  padding: 8px 12px !important;
+}
+
+.delvoura-sort-dropdown .ant-select-item:hover {
+  background: #404040 !important;
+}
+
+.delvoura-sort-dropdown .ant-select-item-option-selected {
+  background: #EB4A2E !important;
+  color: #FFFFFF !important;
+}
+
+.delvoura-sort-dropdown .ant-select-item-option-selected:hover {
+  background: #D63F24 !important;
+}
+
+.delvoura-filter-clear-all {
+  color: #FFFFFF;
+  border: 1px solid #353535;
+  background: transparent;
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.delvoura-filter-clear-all:hover {
+  border-color: #EB4A2E;
+  color: #EB4A2E;
+  background: rgba(235, 74, 46, 0.1);
 }
 
 /****product card css **********/
 .delvoura-home-products {
   padding: 36px 0 64px;
   background: var(--color-bg);
+}
+
+.delvoura-product-empty-state {
+  grid-column: 1 / -1;
+  min-height: 15vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.delvoura-product-empty-state .ant-empty {
+  margin: 0;
 }
 
 .delvoura-home-products .delvoura-product-grid {

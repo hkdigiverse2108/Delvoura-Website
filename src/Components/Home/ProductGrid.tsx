@@ -1,34 +1,20 @@
 import { useMemo, useRef, useState } from "react";
 import { Button, Empty, Modal, Rate, Spin, Tag, Typography } from "antd";
 import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, LoadingOutlined, MinusOutlined, PlusOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Queries } from "../../Api";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
-import type { ProductItem, ProductsQueryParams } from "../../Types";
+import type { ProductItem } from "../../Types";
 
 const { Title, Text } = Typography;
 
-const ProductGrid = () => {
+type ProductGridProps = {
+  products: ProductItem[];
+  isLoading: boolean;
+};
+
+const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const productFilters: ProductsQueryParams = useMemo(() => {
-    const search = new URLSearchParams(location.search);
-    const filters: ProductsQueryParams = {};
-
-    const scent = search.get("scent");
-    const season = search.get("season");
-    const gender = search.get("gender");
-
-    if (scent) filters.scentFilter = scent;
-    if (season) filters.seasonFilter = season;
-    if (gender) filters.genderFilter = gender;
-
-    return filters;
-  }, [location.search]);
-
-  const { data, isLoading } = Queries.useGetProducts(productFilters);
-  const products = data?.data?.product_data || [];
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
@@ -59,13 +45,9 @@ const ProductGrid = () => {
     <section className="delvoura-home-products">
       <div className="delvoura-container">
         <div className="delvoura-product-grid grid gap-6">
-          {(isLoading || products.length === 0) ? (
+          {isLoading || products.length === 0 ? (
             <div className="delvoura-product-empty-state">
-              {isLoading ? (
-                <Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "var(--color-text-muted)" }} spin />} />
-              ) : (
-                <Empty description="No products found" />
-              )}
+              {isLoading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "var(--color-text-muted)" }} spin />} /> : <Empty description="No products found" />}
             </div>
           ) : (
             products.map((product, idx) => (
@@ -75,13 +57,9 @@ const ProductGrid = () => {
                 <div className="delvoura-product-media-shadow" />
                 <div className="delvoura-product-media-shadow-bottom" />
                 <div className="delvoura-product-badges">
-                  {product.gender ? (
-                    <Tag key={product.gender} className="delvoura-product-badge">
-                      {product.gender}
-                    </Tag>
-                  ) : null}
+                  {product.gender ? <Tag key={product.gender} className="delvoura-product-badge">{product.gender}</Tag> : null}
                 </div>
-                <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={(event) => { event.stopPropagation(); const firstVariant = (product.variants?.[0] as any)?.size || (product.variants?.[0] as any) || "50 ml"; setSelectedProduct(product); setSelectedVariant(firstVariant); setQuantity(1); setActiveImageIndex(0);}}>
+                <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={(event) => { event.stopPropagation(); const firstVariant = (product.variants?.[0] as any)?.size || (product.variants?.[0] as any) || "50 ml"; setSelectedProduct(product); setSelectedVariant(firstVariant); setQuantity(1); setActiveImageIndex(0); }}>
                   Select Options
                 </Button>
               </div>
@@ -96,16 +74,12 @@ const ProductGrid = () => {
                     <span className="delvoura-product-reviews">({product.ratingSummary?.ratingCount || 0})</span>
                   </div>
                   <div className="delvoura-product-sizes">
-                    {(product.variants?.length ? product.variants : ["50 ml"]).map((variant: any) => {
-                      const label = typeof variant === "string" ? variant : variant?.size;
-                      return (
-                        <span key={label} className="delvoura-size-pill">
-                          {label}
-                        </span>
-                      );
-                    })}
-                  </div>
+                  {(product.variants?.length ? product.variants : ["50 ml"]).map((variant: any) => {
+                    const label = typeof variant === "string" ? variant : variant?.size;
+                    return <span key={label} className="delvoura-size-pill">{label}</span>;
+                  })}
                 </div>
+              </div>
 
                 <div className="delvoura-product-row">
                   <span className="delvoura-product-price">
@@ -119,10 +93,7 @@ const ProductGrid = () => {
 
                 <div className="delvoura-product-tags">
                   {(product.ingredients || []).map((tag, tagIndex) => (
-                    <span key={`${tag}-${tagIndex}`}>
-                      {tag}
-                      {tagIndex < (product.ingredients?.length || 0) - 1 ? " |" : ""}
-                    </span>
+                    <span key={`${tag}-${tagIndex}`}>{tag}{tagIndex < (product.ingredients?.length || 0) - 1 ? " |" : ""}</span>
                   ))}
                 </div>
               </div>
@@ -134,41 +105,27 @@ const ProductGrid = () => {
       <Modal open={isModalOpen} onCancel={() => setSelectedProduct(null)} footer={null} centered closable={false} width={1080} className="delvoura-select-options-modal" maskStyle={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }} bodyStyle={{ padding: 0 }}>
         {selectedProduct && (
           <div className="delvoura-select-options-card ">
-            <button type="button" className="delvoura-select-options-close" onClick={() => setSelectedProduct(null)} aria-label="Close" >
-              <CloseOutlined />
-            </button>
+            <button type="button" className="delvoura-select-options-close" onClick={() => setSelectedProduct(null)} aria-label="Close"><CloseOutlined /></button>
 
-            <div className="delvoura-select-options-media">
-              <div className="delvoura-select-options-thumbs-wrap">
-                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll up" onClick={() => scrollThumbs("prev")}>
-                  <UpOutlined />
-                </button>
+              <div className="delvoura-select-options-media">
+                <div className="delvoura-select-options-thumbs-wrap">
+                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll up" onClick={() => scrollThumbs("prev")}><UpOutlined /></button>
                 <div ref={thumbsRef} className="delvoura-select-options-thumbs">
                   {modalImages.map((img, idx) => (
-                    <button type="button" className={`delvoura-select-options-thumb ${idx === activeImageIndex ? "is-active" : ""}`} key={`${img}-${idx}`} aria-label={`Preview ${idx + 1}`} onClick={() => setActiveImageIndex(idx)}>
-                      <img src={img} alt={`${selectedProduct.name} preview ${idx + 1}`} />
-                    </button>
+                    <button type="button" className={`delvoura-select-options-thumb ${idx === activeImageIndex ? "is-active" : ""}`} key={`${img}-${idx}`} aria-label={`Preview ${idx + 1}`} onClick={() => setActiveImageIndex(idx)}><img src={img} alt={`${selectedProduct.name} preview ${idx + 1}`} /></button>
                   ))}
                 </div>
-                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll down" onClick={() => scrollThumbs("next")}>
-                  <DownOutlined />
-                </button>
+                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll down" onClick={() => scrollThumbs("next")}><DownOutlined /></button>
               </div>
               <div className="delvoura-select-options-hero delvoura-product-main overflow-hidden">
-                <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-left" aria-label="Previous image" onClick={handlePrevImage}>
-                  <LeftOutlined />
-                </button>
+                <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-left" aria-label="Previous image" onClick={handlePrevImage}><LeftOutlined /></button>
                 <img src={activeImage || selectedProduct.coverimage || selectedProduct.images?.[0] || ""} alt={selectedProduct.name || "Product"} />
-                <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-right" aria-label="Next image" onClick={handleNextImage}>
-                  <RightOutlined />
-                </button>
+                <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-right" aria-label="Next image" onClick={handleNextImage}><RightOutlined /></button>
               </div>
             </div>
 
             <div className="delvoura-select-options-info">
-              <Title level={3} className="!mb-1 !mt-0">
-                {selectedProduct.name} | Eau De Parfum
-              </Title>
+              <Title level={3} className="!mb-1 !mt-0">{selectedProduct.name} | Eau De Parfum</Title>
               <div className="delvoura-select-options-rating">
                 <Rate disabled value={Number(selectedProduct.ratingSummary?.avgRating || 0)} />
                 <span>({selectedProduct.ratingSummary?.ratingCount || 0})</span>
@@ -191,32 +148,20 @@ const ProductGrid = () => {
               <div className="delvoura-select-options-sizes">
                 {(selectedProduct.variants?.length ? selectedProduct.variants : ["50 ml"]).map((variant: any) => {
                   const label = typeof variant === "string" ? variant : variant?.size;
-                  return (
-                    <button key={label} type="button" className={`delvoura-select-options-size ${selectedVariant === label ? "is-active" : ""}`} onClick={() => setSelectedVariant(label)} >
-                      {label}
-                    </button>
-                  );
+                  return <button key={label} type="button" className={`delvoura-select-options-size ${selectedVariant === label ? "is-active" : ""}`} onClick={() => setSelectedVariant(label)}>{label}</button>;
                 })}
               </div>
 
               <div className="delvoura-product-actions">
                 <div className="delvoura-qty-control">
-                  <button type="button" className="delvoura-qty-btn" onClick={() => setQuantity((q) => Math.max(1, q - 1))}>
-                    <MinusOutlined />
-                  </button>
+                  <button type="button" className="delvoura-qty-btn" onClick={() => setQuantity((q) => Math.max(1, q - 1))}><MinusOutlined /></button>
                   <span className="delvoura-qty-value">{quantity}</span>
-                  <button type="button" className="delvoura-qty-btn" onClick={() => setQuantity((q) => q + 1)}>
-                    <PlusOutlined />
-                  </button>
+                  <button type="button" className="delvoura-qty-btn" onClick={() => setQuantity((q) => q + 1)}><PlusOutlined /></button>
                 </div>
-                <button type="button" className="delvoura-add-to-cart">
-                  Add To Cart
-                </button>
+                <button type="button" className="delvoura-add-to-cart">Add To Cart</button>
               </div>
 
-              <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(ROUTES.getProductDetails(selectedProduct._id || ""));}}>
-                View full details <ArrowRightOutlined />
-              </button>
+              <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(ROUTES.getProductDetails(selectedProduct._id || "")); }}>View full details <ArrowRightOutlined /></button>
             </div>
           </div>
         )}

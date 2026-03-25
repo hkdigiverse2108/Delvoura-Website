@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button, ConfigProvider, Select } from "antd";
 import { CloseOutlined, DownOutlined, FilterOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
 import { Queries } from "../../Api";
 import SearchBarWithModal from "../../Layout/Header/SearchBarWithModel";
+import type { HomeFilters } from "../../Types";
 
 const sortOptions = [
   { value: "new", label: "New Arrivals" },
   { value: "best", label: "Best Seller" },
   { value: "price-desc", label: "Price descending" },
+  { value: "price-asc", label: "Price ascending" },
   { value: "created-asc", label: "Created ascending" },
   { value: "relevance", label: "Relevance" },
   { value: "title-asc", label: "Title ascending" },
@@ -17,15 +18,18 @@ const sortOptions = [
 
 const genderOptions = ["women", "men", "unisex"];
 
-const SearchFilterBar = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+type SearchFilterBarProps = {
+  filters: HomeFilters;
+  onChange: (next: HomeFilters) => void;
+};
 
-  const [sortValue, setSortValue] = useState("new");
+const SearchFilterBar = ({ filters, onChange }: SearchFilterBarProps) => {
+  const sortValue = filters.sort ?? "new";
   const [showFilters, setShowFilters] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<{ scent?: string; season?: string; gender?: string }>({});
+  const barRef = useRef<HTMLDivElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const filterBtnRef = useRef<HTMLButtonElement | null>(null);
+  const popupFixProps: any = { placement: "bottomLeft", popupAlign: { points: ["tl", "bl"], overflow: { adjustY: false, adjustX: false } } };
 
   const { data: scentsData } = Queries.useGetScents();
   const { data: seasonsData } = Queries.useGetSeasons();
@@ -33,85 +37,59 @@ const SearchFilterBar = () => {
   const scents = useMemo(() => (scentsData?.data?.scent_data ?? []).filter((item) => item?.isDeleted !== true && item?.isActive !== false), [scentsData]);
   const seasons = useMemo(() => (seasonsData?.data?.season_data ?? []).filter((item) => item?.isDeleted !== true && item?.isActive !== false), [seasonsData]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    setActiveFilters({
-      scent: params.get("scent") || undefined,
-      season: params.get("season") || undefined,
-      gender: params.get("gender") || undefined,
-    });
-    setSortValue(params.get("sort") || "new");
-  }, [location.search]);
-
-  const syncFiltersToUrl = (newFilters: { scent?: string; season?: string; gender?: string; sort?: string }) => {
-    const params = new URLSearchParams(location.search);
-
-    if (newFilters.scent !== undefined) {
-      if (newFilters.scent) params.set("scent", newFilters.scent);
-      else params.delete("scent");
-    }
-    if (newFilters.season !== undefined) {
-      if (newFilters.season) params.set("season", newFilters.season);
-      else params.delete("season");
-    }
-    if (newFilters.gender !== undefined) {
-      if (newFilters.gender) params.set("gender", newFilters.gender);
-      else params.delete("gender");
-    }
-    if (newFilters.sort !== undefined) {
-      if (newFilters.sort) params.set("sort", newFilters.sort);
-      else params.delete("sort");
-    }
-    const query = params.toString();
-    navigate(`${location.pathname}${query ? `?${query}` : ""}`, { replace: true });
+  const applyFilters = (next: HomeFilters) => {
+    const cleaned: HomeFilters = { ...next };
+    if (!cleaned.scent) delete cleaned.scent;
+    if (!cleaned.season) delete cleaned.season;
+    if (!cleaned.gender) delete cleaned.gender;
+    if (!cleaned.collectionFilter) delete cleaned.collectionFilter;
+    if (!cleaned.sort) delete cleaned.sort;
+    if (!cleaned.sortByFilter) delete cleaned.sortByFilter;
+    if (typeof cleaned.TrendingFilter === "undefined") delete cleaned.TrendingFilter;
+    onChange(cleaned);
   };
 
   const toggleFilter = (field: "scent" | "season" | "gender", value: string) => {
-    setActiveFilters((prev) => {
-      const selected = prev[field] === value ? undefined : value;
-      const next = { ...prev, [field]: selected };
-      if (!selected) delete next[field];
-      syncFiltersToUrl({ ...next, sort: sortValue });
-      return next;
-    });
+    const selected = filters[field] === value ? undefined : value;
+    const next = { ...filters, [field]: selected };
+    if (!selected) delete next[field];
+    applyFilters(next);
   };
 
   const removeFilter = (field: "scent" | "season" | "gender") => {
-    setActiveFilters((prev) => {
-      const next = { ...prev };
-      delete next[field];
-      syncFiltersToUrl({ ...next, sort: sortValue });
-      return next;
-    });
+    const next = { ...filters };
+    delete next[field];
+    applyFilters(next);
   };
 
   const clearAllFilters = () => {
-    setActiveFilters({});
-    setSortValue("new");
-    navigate(location.pathname, { replace: true });
+    applyFilters({ sort: "new" });
   };
 
   const activeFilterItems = useMemo(() => {
     const items: Array<{ key: string; label: string; field: "scent" | "season" | "gender" }> = [];
-    if (activeFilters.scent) {
-      const name = scents.find((s) => s._id === activeFilters.scent)?.name || "Scent";
-      items.push({ key: `scent-${activeFilters.scent}`, label: name, field: "scent" });
+    if (filters.scent) {
+      const name = scents.find((s) => s._id === filters.scent)?.name || "Scent";
+      items.push({ key: `scent-${filters.scent}`, label: name, field: "scent" });
     }
-    if (activeFilters.season) {
-      const name = seasons.find((s) => s._id === activeFilters.season)?.name || "Season";
-      items.push({ key: `season-${activeFilters.season}`, label: name, field: "season" });
+    if (filters.season) {
+      const name = seasons.find((s) => s._id === filters.season)?.name || "Season";
+      items.push({ key: `season-${filters.season}`, label: name, field: "season" });
     }
-    if (activeFilters.gender) {
-      items.push({ key: `gender-${activeFilters.gender}`, label: activeFilters.gender, field: "gender" });
+    if (filters.gender) {
+      items.push({ key: `gender-${filters.gender}`, label: filters.gender, field: "gender" });
     }
     return items;
-  }, [activeFilters, scents, seasons]);
+  }, [filters, scents, seasons]);
 
   useEffect(() => {
     if (!showFilters) return;
 
     const handleClick = (event: MouseEvent) => {
       const target = event.target as Node;
+      const el = event.target as HTMLElement | null;
+      if (el?.closest(".delvoura-sort-dropdown") || el?.closest(".ant-select-dropdown")) return;
+      if (barRef.current?.contains(target)) return;
       if (panelRef.current?.contains(target)) return;
       if (filterBtnRef.current?.contains(target)) return;
       setShowFilters(false);
@@ -122,13 +100,13 @@ const SearchFilterBar = () => {
   }, [showFilters]);
 
   return (
-    <section className="delvoura-home-filter-strip w-full">
+    <section className={`delvoura-home-filter-strip w-full ${showFilters ? "is-open" : ""}`}>
       <div className="delvoura-container">
-        <div className="delvoura-home-filter-bar w-full">
+        <div className="delvoura-home-filter-bar w-full" ref={barRef}>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
             <div className="flex w-full flex-1 flex-col gap-3 sm:flex-row sm:items-center">
               <div className="w-full flex-1 md:max-w-[620px]">
-                <SearchBarWithModal showOnMobile buttonText="Search" buttonClassName="delvoura-home-search-btn w-full"/>
+                <SearchBarWithModal showOnMobile buttonText="Search" buttonClassName="delvoura-home-search-btn w-full" />
               </div>
               <Button type="default" icon={showFilters ? <CloseOutlined /> : <FilterOutlined />} className="delvoura-filter-btn" ref={filterBtnRef} onClick={() => setShowFilters((prev) => !prev)}>
                 Filter
@@ -136,8 +114,8 @@ const SearchFilterBar = () => {
             </div>
 
             <div className="lg:ml-auto">
-              <ConfigProvider theme={{token: {colorPrimary: "#EB4A2E",colorBorder: "#353535",colorText: "#FFFFFF",colorTextPlaceholder: "#999999",colorBgContainer: "#353535",colorBgElevated: "#1E1E1E",},}}>
-                <Select value={sortValue} onChange={(value) => { setSortValue(value); syncFiltersToUrl({ ...activeFilters, sort: value }); }} options={sortOptions} size="large" suffixIcon={<DownOutlined />} className="delvoura-sort-select" popupClassName="delvoura-sort-dropdown" getPopupContainer={() => document.body} />
+              <ConfigProvider theme={{ token: { colorPrimary: "#EB4A2E", colorBorder: "#353535", colorText: "#FFFFFF", colorTextPlaceholder: "#999999", colorBgContainer: "#353535", colorBgElevated: "#1E1E1E" } }}>
+                <Select value={sortValue} onChange={(value) => { const base = { ...filters, sort: value, TrendingFilter: undefined, sortByFilter: undefined }; if (value === "best") applyFilters({ ...base, TrendingFilter: true }); else if (value === "new") applyFilters({ ...base, sortByFilter: "newest" }); else if (value === "price-desc") applyFilters({ ...base, sortByFilter: "priceDESC" }); else if (value === "price-asc") applyFilters({ ...base, sortByFilter: "priceASC" }); else if (value === "created-asc") applyFilters({ ...base, sortByFilter: "oldest" }); else if (value === "title-asc") applyFilters({ ...base, sortByFilter: "nameASC" }); else if (value === "title-desc") applyFilters({ ...base, sortByFilter: "nameDESC" }); else applyFilters(base); }} options={sortOptions} size="large" suffixIcon={<DownOutlined style={{ color: "#FFFFFF" }} />} className="delvoura-sort-select" popupClassName="delvoura-sort-dropdown" getPopupContainer={() => barRef.current ?? document.body} {...popupFixProps} />
               </ConfigProvider>
             </div>
           </div>
@@ -145,7 +123,7 @@ const SearchFilterBar = () => {
 
 
         {showFilters && (
-          <div ref={panelRef} className="delvoura-filter-panel mt-5 w-full">
+          <div ref={panelRef} className="delvoura-filter-panel w-full">
 
             <div className="delvoura-filter-row">
               <div className="delvoura-filter-title">Scents</div>
@@ -154,12 +132,7 @@ const SearchFilterBar = () => {
                   <span className="text-sm text-[color:var(--color-text-muted)]">No scents available</span>
                 ) : (
                   scents.map((scent) => (
-                    <button
-                      key={scent._id || scent.name}
-                      type="button"
-                      className={`delvoura-filter-chip ${activeFilters.scent === scent._id ? "is-active" : ""}`}
-                      onClick={() => scent._id && toggleFilter("scent", scent._id)}
-                    >
+                    <button key={scent._id || scent.name} type="button" className={`delvoura-filter-chip ${filters.scent === scent._id ? "is-active" : ""}`} onClick={() => scent._id && toggleFilter("scent", scent._id)}>
                       {scent.name}
                     </button>
                   ))
@@ -174,12 +147,7 @@ const SearchFilterBar = () => {
                   <span className="text-sm text-[color:var(--color-text-muted)]">No seasons available</span>
                 ) : (
                   seasons.map((season) => (
-                    <button
-                      key={season._id || season.name}
-                      type="button"
-                      className={`delvoura-filter-chip ${activeFilters.season === season._id ? "is-active" : ""}`}
-                      onClick={() => season._id && toggleFilter("season", season._id)}
-                    >
+                    <button key={season._id || season.name} type="button" className={`delvoura-filter-chip ${filters.season === season._id ? "is-active" : ""}`} onClick={() => season._id && toggleFilter("season", season._id)}>
                       {season.name}
                     </button>
                   ))
@@ -191,12 +159,7 @@ const SearchFilterBar = () => {
               <div className="delvoura-filter-title">Gender</div>
               <div className="delvoura-filter-chips">
                 {genderOptions.map((gender) => (
-                  <button
-                    key={gender}
-                    type="button"
-                    className={`delvoura-filter-chip ${activeFilters.gender === gender ? "is-active" : ""}`}
-                    onClick={() => toggleFilter("gender", gender)}
-                  >
+                  <button key={gender} type="button" className={`delvoura-filter-chip ${filters.gender === gender ? "is-active" : ""}`} onClick={() => toggleFilter("gender", gender)}>
                     {gender}
                   </button>
                 ))}
@@ -208,14 +171,11 @@ const SearchFilterBar = () => {
                 <div className="delvoura-filter-title">Refine By</div>
                 <div className="delvoura-filter-chips">
                   {activeFilterItems.map((item) => (
-                    <button key={item.key} type="button" className="delvoura-filter-chip delvoura-filter-chip-active flex items-center gap-1" onClick={() => removeFilter(item.field)} >
-                      {item.label}
-                      <CloseOutlined style={{ fontSize: 10 }} />
+                    <button key={item.key} type="button" className="delvoura-filter-chip delvoura-filter-chip-active flex items-center gap-1" onClick={() => removeFilter(item.field)}>
+                      {item.label} <CloseOutlined style={{ fontSize: 10 }} />
                     </button>
                   ))}
-                  <button type="button" className="delvoura-filter-clear-all" onClick={clearAllFilters}>
-                    Clear All
-                  </button>
+                  <button type="button" className="delvoura-filter-clear-all" onClick={clearAllFilters}>Clear All</button>
                 </div>
               </div>
             )}

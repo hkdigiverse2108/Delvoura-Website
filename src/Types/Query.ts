@@ -112,6 +112,7 @@ export type ProductsQueryParams = {
   scentFilter?: string;
   genderFilter?: string;
   TrendingFilter?: boolean;
+  sortByFilter?: string;
 };
 
 //============Scents type==============

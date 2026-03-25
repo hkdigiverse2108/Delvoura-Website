@@ -1,4 +1,5 @@
-import InstagramScrollingSection from "./InstagramScrollingSection"
-import OfferBar from "./OfferBar"
+import InstagramScrollingSection from "./InstagramScrollingSection";
+import OfferBar from "./OfferBar";
+import Pagination from "./Pagination";
 
-export {InstagramScrollingSection , OfferBar}
+export { InstagramScrollingSection, OfferBar, Pagination };

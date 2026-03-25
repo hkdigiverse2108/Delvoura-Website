@@ -7,11 +7,19 @@ import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useDataGrid } from "../../Utils/Hooks";
+import { Queries } from "../../Api";
+import Pagination from "../../Components/common/Pagination";
 
 const MainHomePage = () => {
   const [hideOfferBar, setHideOfferBar] = useState(false);
   const [newsletterOpen, setNewsletterOpen] = useState(false);
+  const { filters, setFilters, params, paginationModel, setPaginationModel } = useDataGrid({ defaultFilters: { sort: "new" }, pageSize: 20 });
   const location = useLocation();
+  const { data, isLoading } = Queries.useGetProducts(params);
+  const products = data?.data?.product_data || [];
+  const totalData = data?.data?.totalData || 0;
+  const totalPages = data?.data?.state?.totalPages;
   
   //Newsletter Use Effect
   useEffect(() => {
@@ -34,6 +42,14 @@ const MainHomePage = () => {
     }
   }, [location.key]);
 
+  useEffect(() => {
+    const stateFilters = (location.state as any)?.filters;
+    if (stateFilters) {
+      setFilters(stateFilters);
+      setPaginationModel((prev) => ({ ...prev, page: 0 }));
+    }
+  }, [location.key, setFilters, setPaginationModel]);
+
    //hide offerbar
   useEffect(() => {
     const handleScroll = () => {
@@ -52,8 +68,9 @@ const MainHomePage = () => {
         </div>
        {!hideOfferBar && <OfferBar className="top-20" />}
         <BannerSlider />
-        <SearchFilterBar />
-        <ProductGrid />
+        <SearchFilterBar filters={filters} onChange={setFilters} />
+        <ProductGrid products={products} isLoading={isLoading} />
+        <Pagination total={totalData} totalPages={totalPages} pageSize={paginationModel.pageSize} current={paginationModel.page + 1} onChange={(page) => { setPaginationModel((prev) => ({ ...prev, page: page - 1 })); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
         <InstagramScrollingSection />
       </section>
       <AppFooter />

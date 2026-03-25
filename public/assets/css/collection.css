@@ -13,6 +13,11 @@
   box-shadow: 0 20px 40px -28px rgba(0, 0, 0, 0.6);
 }
 
+.delvoura-home-filter-strip.is-open .delvoura-home-filter-bar {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .delvoura-home-search-btn {
   height: 52px;
   border-radius: 14px;
@@ -173,7 +178,7 @@
 .delvoura-filter-panel {
   background: #262626;
   border: 1px solid #353535;
-  border-radius: 14px;
+  border-radius: 0 0 14px 14px;
   padding: 18px 22px;
   box-shadow: none;
 }
@@ -262,6 +267,7 @@
   background: #1E1E1E !important;
   border: 1px solid #353535 !important;
   border-radius: 12px !important;
+  margin-top: 0 !important;
 }
 
 .delvoura-sort-dropdown .ant-select-item {
@@ -285,6 +291,7 @@
   background: #D63F24 !important;
 }
 
+
 .delvoura-filter-clear-all {
   color: #FFFFFF;
   border: 1px solid #353535;
@@ -300,6 +307,48 @@
   border-color: #EB4A2E;
   color: #EB4A2E;
   background: rgba(235, 74, 46, 0.1);
+}
+
+.delvoura-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 0 48px;
+}
+
+.delvoura-page-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: #eeeeee;
+  color: #111111;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.delvoura-page-btn:hover {
+  transform: translateY(-1px);
+  background: #e3e3e3;
+}
+
+.delvoura-page-btn.is-active {
+  background: #111111;
+  color: #ffffff;
+}
+
+.delvoura-page-btn.is-nav {
+  background: #f0f0f0;
+}
+
+.delvoura-page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /****product card css **********/

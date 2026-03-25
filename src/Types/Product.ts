@@ -31,3 +31,20 @@ export type ProductReviewsProps = {
   } | null;
 };
  
+
+export type HomeFilters = {
+  scent?: string;
+  season?: string;
+  gender?: string;
+  collectionFilter?: string;
+  sort?: string;
+  sortByFilter?: string;
+  TrendingFilter?: boolean;
+};
+
+export type UseDataGridOptions = {
+  defaultFilters?: HomeFilters;
+  page?: number;
+  pageSize?: number;
+  pagination?: boolean;
+};

@@ -140,6 +140,16 @@
   background: color-mix(in srgb, var(--color-card) 12%, transparent);
 }
 
+.delvoura-collection-item.is-active {
+  background: color-mix(in srgb, var(--color-accent) 20%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 55%, transparent);
+  color: var(--color-text);
+}
+
+.delvoura-collection-item.is-active span {
+  color: var(--color-text) !important;
+}
+
 .delvoura-signature-box {
   background: var(--color-surface-darker);
 }

@@ -42,4 +42,19 @@ export const ProductReviewSchema = Yup.object({
   email: Validation("string", "Email", { extraRules: (s) => s.email("Invalid email address") }),
 });
 
+export const ContactUsSchema = Yup.object({
+  fullName: Validation("string", "Full name"),
+  email: Validation("string", "Email", { extraRules: (s) => s.email("Invalid email address") }),
+  countryCode: Validation("string", "Country code", { required: false, max: 6 }),
+  phone: Validation("string", "Phone", {
+    required: false,
+    extraRules: (s) =>
+      s
+        .matches(/^\d*$/, "Phone must contain only digits")
+        .min(10, "Phone must be at least 10 digits")
+        .max(10, "Phone must be at least 10 digits")
+
+  }),
+});
+
 export { Validation };

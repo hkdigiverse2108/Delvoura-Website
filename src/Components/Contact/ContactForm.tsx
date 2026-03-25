@@ -1,25 +1,43 @@
-import { Form } from "antd";
-import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Form as FormikForm, Formik, type FormikHelpers } from "formik";
+import { useEffect, useState } from "react";
 import { CommonEmailInput, CommonPhoneInput, CommonTextArea, CommonTextInput } from "../../Attribute";
 import { EnvironmentOutlined, MailOutlined, PhoneOutlined, GlobalOutlined } from "@ant-design/icons";
+import { Mutations } from "../../Api";
+import type { ContactUsPayload } from "../../Types";
+import { ContactUsSchema } from "../../Utils/ValidationSchemas";
 
 const ContactForm = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [countryCode, setCountryCode] = useState("+91");
-  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [formVersion, setFormVersion] = useState(0);
+  const { mutate: contactUs, isPending } = Mutations.useContactUs();
 
-  const countryOptions = useMemo(
-    () => [
-      { value: "+91", label: "IN (+91)" },
-      { value: "+1", label: "US (+1)" },
-      { value: "+44", label: "UK (+44)" },
-      { value: "+971", label: "UAE (+971)" },
-      { value: "+61", label: "AU (+61)" },
-    ],
-    []
-  );
+  useEffect(() => {
+    if (!success) return;
+    const timer = window.setTimeout(() => setSuccess(false), 5000);
+    return () => window.clearTimeout(timer);
+  }, [success]);
+
+  const handleSubmit = (values: ContactUsPayload, helpers: FormikHelpers<ContactUsPayload>) => {
+    contactUs(
+      { ...values, email: values.email.toLowerCase().trim() },
+      {
+        onSuccess: () => {
+          helpers.resetForm({
+            values: { fullName: "", email: "", countryCode: "+91", phone: "", message: "" },
+          });
+          helpers.setTouched({});
+          helpers.setStatus(undefined);
+          setFormVersion((v) => v + 1);
+          setSuccess(true);
+        },
+        onError: (err) => {
+          const message = err instanceof Error ? err.message : "Something went wrong";
+          helpers.setStatus(message);
+        },
+      }
+    );
+  };
 
   return (
     <section className="delvoura-container py-10 md:py-12">
@@ -87,16 +105,35 @@ const ContactForm = () => {
           </div>
         </div>
 
-        <div className="delvoura-contact-content rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-5 shadow-[0_16px_40px_-34px_color-mix(in_srgb,var(--color-primary)_35%,transparent)] md:p-7">
-          <Form className="grid gap-3 md:gap-4">
-            <CommonTextInput name="fullName" label="Full Name" placeholder="Your full name" value={fullName} onChange={(event) => setFullName(event.target.value)} onBlur={() => {}} error={undefined} touched={false} />
-            <CommonEmailInput name="email" label="Email" placeholder="you@example.com" value={email} onChange={(event) => setEmail(event.target.value)} onBlur={() => {}} error={undefined} touched={false} />
-            <CommonPhoneInput name="phone" label="Phone Number" placeholder="Enter phone number" value={phone} onChange={(event) => setPhone(event.target.value)} onBlur={() => {}} error={undefined} touched={false} countryValue={countryCode} onCountryChange={(value) => setCountryCode(value)} countryOptions={countryOptions} />
-            <CommonTextArea name="message" label="Message" placeholder="Tell us how we can help" value={message} onChange={(event) => setMessage(event.target.value)} onBlur={() => {}} error={undefined} touched={false} rows={5} />
-            <button type="button" className="mt-2 w-full rounded-sm bg-[color:var(--color-accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.28em] text-[color:var(--color-text-on-dark)] transition hover:bg-[color:var(--color-accent)]" >
-              <span className="text-white">Send Message</span> 
-            </button>
-          </Form>
+        <div className="delvoura-contact-content relative rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-5 shadow-[0_16px_40px_-34px_color-mix(in_srgb,var(--color-primary)_35%,transparent)] md:p-7">
+          <AnimatePresence>
+            {success ? (
+              <motion.div className="delvoura-contact-success" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.div className="delvoura-contact-success-card" initial={{ scale: 0.9, y: 10 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 6 }} transition={{ duration: 0.35, ease: "easeOut" }} >
+                  <motion.svg viewBox="0 0 52 52" className="delvoura-contact-check" initial={{ scale: 0.9 }} animate={{ scale: 1 }} transition={{ duration: 0.35, ease: "easeOut" }} >
+                    <motion.circle cx="26" cy="26" r="24" className="delvoura-contact-check-ring" />
+                    <motion.path d="M16 27.2l6.4 6.1L36 20" className="delvoura-contact-check-mark" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.55, ease: "easeInOut", delay: 0.1 }} />
+                  </motion.svg>
+                  <h3>Message sent</h3>
+                  <p>We will get back to you shortly.</p>
+                </motion.div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+          <Formik<ContactUsPayload> key={formVersion} initialValues={{ fullName: "", email: "", countryCode: "+91", phone: "", message: "" }} validationSchema={ContactUsSchema} onSubmit={handleSubmit}>
+            {({ values, errors, touched, status, handleChange, handleBlur, setFieldValue, handleSubmit }) => (
+              <FormikForm className={`grid gap-3 md:gap-4 ${success ? "is-hidden" : ""}`} onSubmit={handleSubmit}>
+                <CommonTextInput name="fullName" label="Full Name" placeholder="Your full name" value={values.fullName} onChange={handleChange} onBlur={handleBlur} error={touched.fullName ? errors.fullName : undefined} touched={!!touched.fullName} />
+                <CommonEmailInput name="email" label="Email" placeholder="you@example.com" value={values.email} onChange={handleChange} onBlur={handleBlur} error={touched.email ? errors.email : undefined} touched={!!touched.email} />
+                <CommonPhoneInput name="phone" label="Phone Number" placeholder="Enter phone number" value={values.phone} onChange={handleChange} onBlur={handleBlur} error={touched.phone ? errors.phone : undefined} touched={!!touched.phone} countryValue={values.countryCode} onCountryChange={(value) => setFieldValue("countryCode", value)} />
+                <CommonTextArea name="message" label="Message" placeholder="Tell us how we can help" value={values.message} onChange={handleChange} onBlur={handleBlur} error={touched.message ? errors.message : undefined} touched={!!touched.message} rows={5} />
+                {status ? <div className="text-sm text-red-500">{status}</div> : null}
+                <button type="submit" disabled={isPending} className="mt-2 w-full rounded-sm bg-[color:var(--color-accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.28em] text-[color:var(--color-text-on-dark)] transition hover:bg-[color:var(--color-accent)] disabled:opacity-60" >
+                  <span className="text-white">{isPending ? "Sending..." : "Send Message"}</span>
+                </button>
+              </FormikForm>
+            )}
+          </Formik>
         </div>
       </div>
     </section>

@@ -6,9 +6,7 @@ const OfferBar = ({ className = "" }: { className?: string }) => {
 
   const payload = (data as TopbarApiResponse | undefined)?.data;
   const fromRoot = (payload as TopbarItem | undefined)?.topbarItems;
-  const fromList = (payload as { topbar_data?: TopbarItem[] } | undefined)?.topbar_data
-    ?.find((item) => item?.isActive !== false && item?.isDeleted !== true)
-    ?.topbarItems;
+  const fromList = (payload as { topbar_data?: TopbarItem[] } | undefined)?.topbar_data?.find((item) => item?.isActive !== false && item?.isDeleted !== true)?.topbarItems;
 
   const items = (fromRoot && fromRoot.length > 0 ? fromRoot : fromList) ?? [];
 
@@ -16,12 +14,7 @@ const OfferBar = ({ className = "" }: { className?: string }) => {
 
   return (
     <div className={`fixed left-0 right-0 top-0 z-[500] mt-3 ${className}`}>
-      <div
-        className="delvoura-container h-auto rounded-xl bg-[#111111] px-2 py-3 text-center text-[13px] text-sm-[10px] font-medium tracking-[0.08em] text-[#ffffff]"
-        style={{
-          boxShadow: "none",
-        }}
-      >
+      <div className="delvoura-container h-auto rounded-xl bg-[#111111] px-2 py-3 text-center text-[13px] text-sm-[10px] font-medium tracking-[0.08em] text-[#ffffff]"  style={{  boxShadow: "none",  }}  >
         {items.map((item, index) => (
           <span key={`${item}-${index}`}>
             {item}

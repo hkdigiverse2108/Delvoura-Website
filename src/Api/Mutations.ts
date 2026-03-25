@@ -1,5 +1,5 @@
 import { KEYS, URL_KEYS } from "../Constants";
-import type { CreateRatingPayload, CreateRatingResponse, ForgetPasswordPayload, ForgetPasswordResponse, LoginPayload, LoginResponse, ResetForgetPasswordPayload, ResetForgetPasswordResponse, SignupPayload, SignupResponse, VerifyOtpPayload, VerifyOtpResponse,} from "../Types";
+import type { ContactUsPayload, ContactUsResponse, CreateRatingPayload, CreateRatingResponse, ForgetPasswordPayload, ForgetPasswordResponse, LoginPayload, LoginResponse, ResetForgetPasswordPayload, ResetForgetPasswordResponse, SignupPayload, SignupResponse, VerifyOtpPayload, VerifyOtpResponse,} from "../Types";
 import { Post } from "./Methods/Index";
 import { useMutations, type AppMutationOptions } from "./ReactQuery/Index";
 
@@ -13,4 +13,7 @@ export const Mutations = {
 
   // ************ Rating ***********
   useCreateRating: (options?: AppMutationOptions<CreateRatingResponse, CreateRatingPayload>) => useMutations<CreateRatingPayload, CreateRatingResponse>( [KEYS.RATING.ADD_RATING], (input) => Post<CreateRatingPayload, CreateRatingResponse>(URL_KEYS.RATING.ADD_RATING, input), options,),
+
+  // ************ Contact ***********
+  useContactUs: (options?: AppMutationOptions<ContactUsResponse, ContactUsPayload>) => useMutations<ContactUsPayload, ContactUsResponse>([KEYS.CONTACT_US.ADD], (input) => Post<ContactUsPayload, ContactUsResponse>(URL_KEYS.CONTACT_US.ADD, input), options,),
 };

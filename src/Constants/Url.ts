@@ -44,4 +44,9 @@ export const URL_KEYS = {
     TOPBAR: {
         GET_TOPBAR: "/topbar"
     },
+
+    //==============CONTACT===============
+    CONTACT_US: {
+        ADD: "/contact-us/add"
+    },
 } as const

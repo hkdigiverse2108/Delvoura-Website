@@ -24,7 +24,22 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
   const collections = (data?.data?.collection_data || []).filter( (item) => item && item.isDeleted !== true && item.isActive !== false);
 
   const getImageSrc = (item: { image?: string; imageUrl?: string }) => item.image || item.imageUrl || "";
-  const goToCollections = (filters: any) => { setOpen(false); navigate(ROUTES.COLLECTIONS_ALL, { state: { filters } }); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const getStaticImage = (label: string) => {
+    const key = label.toLowerCase();
+    if (key === "shop all perfumes") return "/assets/images/collection/shopAllPerfume.png";
+    if (key === "women") return "/assets/images/collection/women.png";
+    if (key === "men") return "/assets/images/collection/mens.png";
+    if (key === "unisex") return "/assets/images/collection/unisex.png";
+    return "";
+  };
+  
+  const goToCollections = (filters: any) => {
+    setOpen(false);
+    sessionStorage.setItem("dv_collection_filters", JSON.stringify(filters));
+    window.dispatchEvent(new CustomEvent("dv:collection-filters", { detail: filters }));
+    navigate(ROUTES.COLLECTIONS_ALL, { state: { filters, _nav: Date.now() } });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const activeFilters = (location.state as any)?.filters || {};
   const activeGender = activeFilters.gender;
   const activeCollection = activeFilters.collectionFilter;
@@ -64,7 +79,11 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
                 <div className="flex flex-col gap-3">
                   {section.items.map((item) => (
                     <button key={item.label} className={`flex items-center gap-3 rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-3 py-3 ${item.label === "Shop All Perfumes" && isShopAllActive ? "is-active" : ""} ${item.label === activeGender ? "is-active" : ""}`} onClick={() => { if (item.label === "Shop All Perfumes") goToCollections({ sort: "new" }); if (item.label === "women") goToCollections({ sort: "new", gender: "women" }); if (item.label === "men") goToCollections({ sort: "new", gender: "men" }); if (item.label === "unisex") goToCollections({ sort: "new", gender: "unisex" }); }}>
-                      <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]"/>
+                      {getStaticImage(item.label) ? (
+                        <img src={getStaticImage(item.label)} alt={item.label} className="h-10 w-10 rounded-lg object-cover" />
+                      ) : (
+                        <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]"/>
+                      )}
                       <span className="text-sm">{item.label}</span>
                     </button>
                   ))}
@@ -133,7 +152,11 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
             <div className="flex flex-col gap-2">
               {section.items.map((item) => (
                 <button key={item.label} className={`delvoura-collection-item flex items-center gap-3 rounded-2xl px-3 py-3 text-left ${item.label === "Shop All Perfumes" && isShopAllActive ? "is-active" : ""} ${item.label === activeGender ? "is-active" : ""}`} onClick={() => { if (item.label === "Shop All Perfumes") goToCollections({ sort: "new" }); if (item.label === "women") goToCollections({ sort: "new", gender: "women" }); if (item.label === "men") goToCollections({ sort: "new", gender: "men" }); if (item.label === "unisex") goToCollections({ sort: "new", gender: "unisex" }); }}>
-                  <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]"/>
+                  {getStaticImage(item.label) ? (
+                    <img src={getStaticImage(item.label)} alt={item.label} className="h-9 w-9 rounded-xl object-cover" />
+                  ) : (
+                    <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]"/>
+                  )}
                   <span className="text-sm font-medium">{item.label}</span>
                 </button>
               ))}

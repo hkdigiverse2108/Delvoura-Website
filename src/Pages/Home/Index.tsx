@@ -5,8 +5,8 @@ import ProductGrid from "../../Components/Home/ProductGrid";
 import NewsletterModal from "../../Components/ConfirmModel/NewsletterModal";
 import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDataGrid } from "../../Utils/Hooks";
 import { Queries } from "../../Api";
 import Pagination from "../../Components/common/Pagination";
@@ -16,6 +16,9 @@ const MainHomePage = () => {
   const [newsletterOpen, setNewsletterOpen] = useState(false);
   const { filters, setFilters, params, paginationModel, setPaginationModel } = useDataGrid({ defaultFilters: { sort: "new" }, pageSize: 20 });
   const location = useLocation();
+  const navigate = useNavigate();
+  const isReloadRef = useRef(false);
+  const handledReloadRef = useRef(false);
   const { data, isLoading } = Queries.useGetProducts(params);
   const products = data?.data?.product_data || [];
   const totalData = data?.data?.totalData || 0;
@@ -28,8 +31,13 @@ const MainHomePage = () => {
       ? (navEntries[0] as PerformanceNavigationTiming).type === "reload"
       : false;
 
+    isReloadRef.current = isReload;
+  }, []);
+
+  useEffect(() => {
     const fromHero = sessionStorage.getItem("dv_from_hero") === "1";
     const shownCount = Number(sessionStorage.getItem("dv_newsletter_shown_count") || 0);
+    const isReload = isReloadRef.current;
 
     if ((isReload || fromHero) && shownCount < 1) {
       const timer = window.setTimeout(() => {
@@ -43,12 +51,37 @@ const MainHomePage = () => {
   }, [location.key]);
 
   useEffect(() => {
-    const stateFilters = (location.state as any)?.filters;
-    if (stateFilters) {
-      setFilters(stateFilters);
+    if (!isReloadRef.current || handledReloadRef.current) return;
+    handledReloadRef.current = true;
+    setFilters({ sort: "new" });
+    setPaginationModel((prev) => ({ ...prev, page: 0 }));
+    sessionStorage.removeItem("dv_collection_filters");
+    navigate(location.pathname, { replace: true, state: null });
+    isReloadRef.current = false;
+  }, [location.pathname, navigate, setFilters, setPaginationModel]);
+
+  useEffect(() => {
+    const handleCollectionFilters = (event: Event) => {
+      const detail = (event as CustomEvent).detail as any;
+      if (!detail) return;
+      setFilters(detail);
       setPaginationModel((prev) => ({ ...prev, page: 0 }));
-    }
-  }, [location.key, setFilters, setPaginationModel]);
+    };
+
+    window.addEventListener("dv:collection-filters", handleCollectionFilters);
+    return () => window.removeEventListener("dv:collection-filters", handleCollectionFilters);
+  }, [setFilters, setPaginationModel]);
+
+  const stateFilters = (location.state as any)?.filters;
+  useEffect(() => {
+    const stored = sessionStorage.getItem("dv_collection_filters");
+    const storedFilters = stored ? JSON.parse(stored) : null;
+    const nextFilters = stateFilters || storedFilters;
+    if (!nextFilters) return;
+    setFilters(nextFilters);
+    setPaginationModel((prev) => ({ ...prev, page: 0 }));
+    if (stored) sessionStorage.removeItem("dv_collection_filters");
+  }, [stateFilters, setFilters, setPaginationModel]);
 
    //hide offerbar
   useEffect(() => {

@@ -1,4 +1,19 @@
+import { Queries } from "../../Api";
+import type { TopbarApiResponse, TopbarItem } from "../../Types";
+
 const OfferBar = ({ className = "" }: { className?: string }) => {
+  const { data } = Queries.useGetTopbar();
+
+  const payload = (data as TopbarApiResponse | undefined)?.data;
+  const fromRoot = (payload as TopbarItem | undefined)?.topbarItems;
+  const fromList = (payload as { topbar_data?: TopbarItem[] } | undefined)?.topbar_data
+    ?.find((item) => item?.isActive !== false && item?.isDeleted !== true)
+    ?.topbarItems;
+
+  const items = (fromRoot && fromRoot.length > 0 ? fromRoot : fromList) ?? [];
+
+  if (items.length === 0) return null;
+
   return (
     <div className={`fixed left-0 right-0 top-0 z-[500] mt-3 ${className}`}>
       <div
@@ -7,9 +22,12 @@ const OfferBar = ({ className = "" }: { className?: string }) => {
           boxShadow: "none",
         }}
       >
-        Free Shipping above 999 INR | FLAT 10% OFF above 1499 INR and 20% OFF On
-        Orders above 2499 INR (Automatically Applied) | COD Eligible Above 999
-        INR
+        {items.map((item, index) => (
+          <span key={`${item}-${index}`}>
+            {item}
+            {index < items.length - 1 && <span className="mx-1 text-[#7a7a7a]">|</span>}
+          </span>
+        ))}
       </div>
     </div>
   );

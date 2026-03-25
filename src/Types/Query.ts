@@ -186,3 +186,19 @@ export type SeasonsQueryParams = {
   ActiveFilter?: boolean;
   status?: "active" | "inactive";
 };
+
+//============Topbar type==============
+export type TopbarItem = {
+  _id?: string;
+  topbarItems?: string[];
+  isActive?: boolean;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type TopbarApiResponse = {
+  status?: number;
+  message?: string;
+  data?: TopbarItem | { topbarItems?: string[]; topbar_data?: TopbarItem[] };
+};

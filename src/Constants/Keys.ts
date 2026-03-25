@@ -39,4 +39,9 @@ export const KEYS = {
   SEASON: {
     GET_SEASONS: "get-seasons",
   },
+
+  //========Topbar=========
+  TOPBAR: {
+    GET_TOPBAR: "get-topbar",
+  },
 } as const;

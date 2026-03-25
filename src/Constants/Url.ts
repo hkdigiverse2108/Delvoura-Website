@@ -39,4 +39,9 @@ export const URL_KEYS = {
     SEASON: {
         GET_SEASONS: "/season"
     },
+
+    //==============TOPBAR===============
+    TOPBAR: {
+        GET_TOPBAR: "/topbar"
+    },
 } as const

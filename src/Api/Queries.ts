@@ -1,5 +1,5 @@
 import { KEYS, URL_KEYS } from "../Constants";
-import type { CollectionsApiResponse, CollectionsQueryParams, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleProductApiResponse, SingleUserApiResponse } from "../Types";
+import type { CollectionsApiResponse, CollectionsQueryParams, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleProductApiResponse, SingleUserApiResponse, TopbarApiResponse } from "../Types";
 import { Get } from "./Methods/Index";
 import { useQueries } from "./ReactQuery/Index";
 
@@ -25,4 +25,7 @@ export const Queries = {
 
   // ************ Season ***********
   useGetSeasons: (params?: SeasonsQueryParams) => useQueries<SeasonsApiResponse>([KEYS.SEASON.GET_SEASONS, params], () => Get<SeasonsApiResponse>(URL_KEYS.SEASON.GET_SEASONS, params),),
+
+  // ************ Topbar ***********
+  useGetTopbar: () => useQueries<TopbarApiResponse>([KEYS.TOPBAR.GET_TOPBAR], () => Get<TopbarApiResponse>(URL_KEYS.TOPBAR.GET_TOPBAR),),
 };

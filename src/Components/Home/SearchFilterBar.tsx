@@ -16,7 +16,12 @@ const sortOptions = [
   { value: "title-desc", label: "Title descending" },
 ];
 
-const genderOptions = ["women", "men", "unisex"];
+const genderOptions = [
+  { value: "women", label: "Women" },
+  { value: "men", label: "Men" },
+  { value: "unisex", label: "Unisex" },
+];
+const genderLabelMap = Object.fromEntries(genderOptions.map((item) => [item.value, item.label])) as Record<string, string>;
 
 type SearchFilterBarProps = {
   filters: HomeFilters;
@@ -77,7 +82,7 @@ const SearchFilterBar = ({ filters, onChange }: SearchFilterBarProps) => {
       items.push({ key: `season-${filters.season}`, label: name, field: "season" });
     }
     if (filters.gender) {
-      items.push({ key: `gender-${filters.gender}`, label: filters.gender, field: "gender" });
+      items.push({ key: `gender-${filters.gender}`, label: genderLabelMap[filters.gender] || filters.gender, field: "gender" });
     }
     return items;
   }, [filters, scents, seasons]);
@@ -159,8 +164,8 @@ const SearchFilterBar = ({ filters, onChange }: SearchFilterBarProps) => {
               <div className="delvoura-filter-title">Gender</div>
               <div className="delvoura-filter-chips">
                 {genderOptions.map((gender) => (
-                  <button key={gender} type="button" className={`delvoura-filter-chip ${filters.gender === gender ? "is-active" : ""}`} onClick={() => toggleFilter("gender", gender)}>
-                    {gender}
+                  <button key={gender.value} type="button" className={`delvoura-filter-chip ${filters.gender === gender.value ? "is-active" : ""}`} onClick={() => toggleFilter("gender", gender.value)}>
+                    {gender.label}
                   </button>
                 ))}
               </div>

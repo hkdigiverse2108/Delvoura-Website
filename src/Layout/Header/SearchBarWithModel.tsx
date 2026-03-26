@@ -167,9 +167,13 @@ const SearchBarWithModal = ({ buttonClassName = "", showOnMobile = false, button
           const ratingValue = Number(product.ratingSummary?.avgRating || 0);
           const firstVariant = product.variants?.[0] as any;
           const priceValue = typeof firstVariant === "object" ? firstVariant?.price ?? 0 : product.price ?? product.mrp ?? 0;
+          const genderValue = (product.gender ?? "").toString().trim().toLowerCase();
+          const genderBadge = genderValue === "men"  ? "MEN"  : genderValue === "women"  ? "WOMEN"  : genderValue === "unisex" ? "UNISEX" : genderValue ? genderValue.toUpperCase() : "";
+          
           return (
             <Card key={product._id || `${product.name}-${index}`} hoverable styles={{ body: { padding: 10 } }} className="delvoura-product-card delvoura-modal-product-card" style={{ borderRadius: 16 }} onClick={() => navigate(ROUTES.getProductDetails(product._id || ""))}>
               <div className="delvoura-modal-product-media">
+                {genderBadge ? <span className="delvoura-modal-product-badge">{genderBadge}</span> : null}
                 {cover ? (
                   <img src={cover} alt={product.name || "Product"} className="delvoura-modal-product-media-img" style={{ objectFit: "cover" }} loading="lazy" />
                 ) : (

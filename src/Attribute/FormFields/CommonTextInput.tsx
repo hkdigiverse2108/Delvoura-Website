@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Input } from "antd";
 import type { CommonTextInputProps } from "../../Types";
 
 export const CommonTextInput = ({ name, label, placeholder, value, onChange, onBlur, error, touched }: CommonTextInputProps) => {
@@ -6,9 +6,10 @@ export const CommonTextInput = ({ name, label, placeholder, value, onChange, onB
   return (
     <div>
       <label className="mb-2 block text-sm text-[color:var(--color-text)]">{label}</label>
-      <Form.Item name={name} className="mb-0" validateStatus={hasError ? "error" : ""} help={hasError ? error : undefined}>
-        <Input placeholder={placeholder} size="large" value={value} onChange={onChange} onBlur={onBlur} />
-      </Form.Item>
+      <div>
+        <Input  name={name} placeholder={placeholder}  size="large"  value={value}  onChange={onChange}  onBlur={onBlur} status={hasError ? "error" : ""} style={{  borderColor: hasError ? "#ff4d4f" : undefined, }} />
+        {hasError && <div className="mt-1 text-sm text-red-500">{error}</div>}
+      </div>
     </div>
   );
 };

@@ -34,6 +34,16 @@ export const ResetForgetPasswordSchema = Yup.object({
   }),
 });
 
+export const ChangePasswordSchema = Yup.object({
+  currentPassword: Validation("string", "Current password"),
+  newPassword: Validation("string", "New password", {
+    extraRules: (s) => s.matches(/[!@#$%^&*()_+={}:;"'<>,.?/-]/, "Password must include at least one special character"),
+  }),
+  confirmPassword: Validation("string", "Confirm password", {
+    extraRules: (s) => s.oneOf([Yup.ref("newPassword")], "Passwords do not match"),
+  }),
+});
+
 export const ProductReviewSchema = Yup.object({
   starRating: Validation("number", "Rating", { min: 1, max: 5 }),
   description: Validation("string", "Review", { required: false, max: 1000 }),
@@ -55,6 +65,31 @@ export const ContactUsSchema = Yup.object({
         .max(10, "Phone must be at least 10 digits")
 
   }),
+});
+
+export const ProfileInfoSchema = Yup.object({
+  firstName: Validation("string", "First name"),
+  lastName: Validation("string", "Last name"),
+  email: Validation("string", "Email", { extraRules: (s) => s.email("Invalid email address") }),
+  countryCode: Validation("string", "Country code", { required: false, max: 6 }),
+  phone: Validation("string", "Phone", {
+    required: false,
+    extraRules: (s) =>
+      s
+        .matches(/^\d*$/, "Phone must contain only digits")
+        .min(10, "Phone must be at least 10 digits")
+        .max(10, "Phone must be at least 10 digits")
+  }),
+});
+
+export const AddressSchema = Yup.object({
+  country: Validation("string", "Country"),
+  address1: Validation("string", "Address line 1"),
+  address2: Validation("string", "Landmark", { required: false }),
+  city: Validation("string", "City"),
+  state: Validation("string", "State"),
+  pinCode: Validation("string", "Pin code"),
+  default: Validation("mixed", "Default", { required: false }),
 });
 
 export { Validation };

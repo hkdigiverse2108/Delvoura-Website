@@ -6,11 +6,13 @@ export const KEYS = {
     VERIFY_OTP: "verify-otp",
     FORGET_PASSWORD: "forget-password",
     RESET_FORGET_PASSWORD: "reset-forget-password",
+    CHANGE_PASSWORD: "change-password",
   },
 
   //========User=========
   USER: {
     GET_SINGLE_USER_BY_ID: "get-single-user-by-id",
+    UPDATE_USER: "update-user",
   },
 
   //========Collections=========

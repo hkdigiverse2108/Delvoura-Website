@@ -1,6 +1,6 @@
+import ProfileTabs from "../../Components/Profile/ProfileTabs";
 import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
-import ProfileTabs from "../../Components/Profile/ProfileTabs";
 
 const ProfilePage = () => {
   return (

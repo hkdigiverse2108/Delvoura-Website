@@ -6,10 +6,25 @@ import AddressManager from "./AddressManager";
 import ChangePasswordForm from "./ChangePasswordForm";
 import MyOrders from "./MyOrders";
 import { UserOutlined, HomeOutlined, ShoppingOutlined, LockOutlined } from "@ant-design/icons";
+import { useAppSelector } from "../../Store/Hooks";
+import { Queries } from "../../Api";
 
 const ProfileTabs = () => {
   const [tabPosition, setTabPosition] = useState<"left" | "top">("left");
   const [isEditing, setIsEditing] = useState(false);
+  const { user: storeUser } = useAppSelector((state) => state.auth);
+  const { data: userData } = Queries.useGetSingleUser( ((storeUser as { _id?: string } | null)?._id), );
+  
+  const resolveUser = (input: unknown) => {
+    if (!input) return null;
+    return (
+      (input as { data?: { user?: unknown } })?.data?.user ??
+      (input as { data?: unknown })?.data ??
+      (input as { user?: unknown })?.user ??
+      input
+    );
+  };
+  const resolvedUser = resolveUser(userData) ?? resolveUser(storeUser) ?? {};
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,12 +37,7 @@ const ProfileTabs = () => {
 
   return (
     <Card className="profile-main-card w-full border border-[color:var(--color-border)] bg-white">
-      <Tabs
-        defaultActiveKey="profile-info"
-        tabPosition={tabPosition}
-        tabBarStyle={tabPosition === "left" ? { width: 240 } : undefined}
-        className="profile-settings-tabs"
-        items={[
+      <Tabs defaultActiveKey="profile-info" tabPosition={tabPosition} tabBarStyle={tabPosition === "left" ? { width: 240 } : undefined} className="profile-settings-tabs" items={[
           {
             key: "profile-info",
             label: (
@@ -38,18 +48,10 @@ const ProfileTabs = () => {
             children: (
               <div className="profile-info-shell">
                 <div className="profile-info-section">
-                  <ProfileHeaderCard
-                    firstName="Aarav"
-                    lastName="Mehta"
-                    email="aarav.mehta@delvoura.com"
-                    phone="+91 98765 43210"
-                    memberSince="Jan 2022"
-                    profileStrength={82}
-                    onEdit={() => setIsEditing(true)}
-                  />
+                  <ProfileHeaderCard onEdit={() => setIsEditing(true)} user={resolvedUser} />
                 </div>
                 <div className="profile-info-section profile-info-divider">
-                  <ProfileInfoForm isEditing={isEditing} onEditChange={setIsEditing} />
+                  <ProfileInfoForm isEditing={isEditing} onEditChange={setIsEditing} user={resolvedUser} />
                 </div>
               </div>
             ),

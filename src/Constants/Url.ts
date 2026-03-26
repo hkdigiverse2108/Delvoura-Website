@@ -5,12 +5,14 @@ export const URL_KEYS = {
         SIGNUP : "/auth/signup",
         VERIFY_OTP : "/auth/verify-otp",
         FORGET_PASSWORD : "/auth/forgot-password",
-        RESET_FORGET_PASSWORD : "/auth/reset-password"
+        RESET_FORGET_PASSWORD : "/auth/reset-password",
+        CHANGE_PASSWORD : "/auth/change-password"
     },
 
     //==============USER===============
     USER : {
-        GET_SINGLE_USER_BY_ID : "/user"
+        GET_SINGLE_USER_BY_ID : "/user",
+        UPDATE_USER : "/user/edit"
     },
 
     //==============COLLECTION===============

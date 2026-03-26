@@ -1,140 +1,112 @@
-import { Button, Form, Input, Select, Typography, message } from "antd";
-import { useMemo } from "react";
+import { Button, Typography, message } from "antd";
+import { useMemo, useState } from "react";
+import { Form as FormikForm, Formik } from "formik";
+import { Mutations } from "../../Api";
+import { useAppDispatch } from "../../Store/Hooks";
+import { setUser } from "../../Store/Slices/AuthSlice";
+import { KEYS } from "../../Constants";
+import { CommonTextInput, CommonEmailInput, CommonPhoneInput } from "../../Attribute/FormFields";
+import { ProfileInfoSchema } from "../../Utils/ValidationSchemas";
 
 const { Text } = Typography;
 
 interface ProfileInfoFormProps {
   isEditing: boolean;
   onEditChange: (next: boolean) => void;
+  user?: any;
 }
 
-const ProfileInfoForm = ({ isEditing, onEditChange }: ProfileInfoFormProps) => {
-  const [form] = Form.useForm();
+const ProfileInfoForm = ({ isEditing, onEditChange, user }: ProfileInfoFormProps) => {
+  const dispatch = useAppDispatch();
+  const [formVersion, setFormVersion] = useState(0);
+  const { mutate: updateUser, isPending } = Mutations.useUpdateUser({  invalidateQueryKeys: [[KEYS.USER.GET_SINGLE_USER_BY_ID]], });
 
-  const initialValues = useMemo(
-    () => ({
-      firstName: "Aarav",
-      lastName: "Mehta",
-      email: "aarav.mehta@delvoura.com",
-      phone: "+91 98765 43210",
-      gender: "Male",
-      dob: "1995-02-18",
-      language: "English",
-      company: "Delvoura",
-      bio: "Product Designer",
-      city: "Bengaluru",
-      role: "Product Designer",
-      location: "Bengaluru, India",
-    }),
-    []
-  );
+  // -------- Initial Values --------
+  const initialValues = useMemo(() => {
+    const fullName = user?.fullName || user?.name || "";
+    const [firstName = "", ...rest] = fullName.split(" ");
 
-  const handleSave = async () => {
-    try {
-      await form.validateFields();
-      onEditChange(false);
-      message.success("Profile updated successfully");
-    } catch {
-      // validation handles UI feedback
+    return { firstName: user?.firstName || firstName, lastName: user?.lastName || rest.join(" "), email: user?.email || "", countryCode: user?.contact?.countryCode || "+91", phone: user?.contact?.phoneNo ? String(user.contact.phoneNo) : "",};
+  }, [user]);
+
+  // -------- Submit --------
+  const handleSubmit = (values: any) => {
+    if (!user?._id) {
+      message.error("User not found");
+      return;
     }
-  };
 
-  const handleCancel = () => {
-    form.setFieldsValue(initialValues);
-    onEditChange(false);
+    updateUser(
+      {
+        userId: user._id,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        contact: {
+          countryCode: values.countryCode,
+          phoneNo: values.phone,
+        },
+      },
+      {
+        onSuccess: (res: any) => {
+          dispatch(setUser(res?.data?.user || res?.data || res));
+          onEditChange(false);
+          message.success("Profile updated");
+          setFormVersion((v) => v + 1);
+        },
+        onError: () => message.error("Update failed"),
+      }
+    );
   };
 
   return (
     <div className="space-y-5">
-
-      <Form form={form} layout="vertical" className="" initialValues={initialValues}>
-          {!isEditing ? (
-            <div className="profile-info-grid grid grid-cols-1 gap-x-10 gap-y-4 md:grid-cols-2">
-              <div className="profile-info-item">
-                <Text className="profile-info-label">First Name</Text>
-                <Text className="profile-info-value">{initialValues.firstName}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">Last Name</Text>
-                <Text className="profile-info-value">{initialValues.lastName}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">Email</Text>
-                <Text className="profile-info-value">{initialValues.email}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">Phone</Text>
-                <Text className="profile-info-value">{initialValues.phone}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">Gender</Text>
-                <Text className="profile-info-value">{initialValues.gender}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">Date of Birth</Text>
-                <Text className="profile-info-value">{initialValues.dob}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">Preferred Language</Text>
-                <Text className="profile-info-value">{initialValues.language}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">Company</Text>
-                <Text className="profile-info-value">{initialValues.company}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">Bio</Text>
-                <Text className="profile-info-value">{initialValues.bio}</Text>
-              </div>
-              <div className="profile-info-item">
-                <Text className="profile-info-label">City</Text>
-                <Text className="profile-info-value">{initialValues.city}</Text>
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <Form.Item name="firstName" label="First Name" rules={[{ required: true, message: "First name is required" }]}>
-                  <Input placeholder="Enter first name" />
-                </Form.Item>
-                <Form.Item name="lastName" label="Last Name" rules={[{ required: true, message: "Last name is required" }]}>
-                  <Input placeholder="Enter last name" />
-                </Form.Item>
-                <Form.Item name="email" label="Email" rules={[{ required: true, message: "Email is required" }, { type: "email", message: "Enter a valid email" }]}>
-                  <Input placeholder="Enter email" />
-                </Form.Item>
-                <Form.Item name="phone" label="Phone" rules={[{ required: true, message: "Phone number is required" }]}>
-                  <Input placeholder="Enter phone" />
-                </Form.Item>
-                <Form.Item name="gender" label="Gender">
-                  <Select options={[{ value: "Male", label: "Male" }, { value: "Female", label: "Female" }, { value: "Other", label: "Other" }]} />
-                </Form.Item>
-                <Form.Item name="dob" label="Date of Birth">
-                  <Input placeholder="YYYY-MM-DD" />
-                </Form.Item>
-                <Form.Item name="language" label="Preferred Language">
-                  <Select options={[{ value: "English", label: "English" }, { value: "Hindi", label: "Hindi" }, { value: "Tamil", label: "Tamil" }]} />
-                </Form.Item>
-                <Form.Item name="company" label="Company (Optional)">
-                  <Input placeholder="Enter company" />
-                </Form.Item>
-                <Form.Item name="bio" label="Bio">
-                  <Input placeholder="Add role" />
-                </Form.Item>
-                <Form.Item name="city" label="City">
-                  <Input placeholder="Enter city" />
-                </Form.Item>
+      {/* -------- VIEW MODE -------- */}
+      {!isEditing ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Text className="profile-info-label">First Name</Text>
+            <Text className="profile-info-value">{initialValues.firstName}</Text>
+          </div>
+          <div>
+            <Text className="profile-info-label">Last Name</Text>
+            <Text className="profile-info-value">{initialValues.lastName}</Text>
+          </div>
+          <div>
+            <Text className="profile-info-label">Email</Text>
+            <Text className="profile-info-value">{initialValues.email}</Text>
+          </div>
+          <div>
+            <Text className="profile-info-label">Phone</Text>
+            <Text className="profile-info-value">
+              {initialValues.countryCode} {initialValues.phone}
+            </Text>
+          </div>
+        </div>
+      ) : (
+        /* -------- EDIT MODE -------- */
+        <Formik<any> key={`${isEditing}-${formVersion}`} initialValues={initialValues} validationSchema={ProfileInfoSchema} onSubmit={handleSubmit} enableReinitialize={true} >
+          {({ values, errors, touched, handleChange, handleBlur, setFieldValue, handleSubmit, isSubmitting }) => (
+            <FormikForm className="delvoura-contact-content" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <CommonTextInput  name="firstName"  label="First Name"  placeholder="Enter first name"  value={values.firstName}  onChange={handleChange}  onBlur={handleBlur}  error={typeof errors.firstName === 'string' ? errors.firstName : undefined}  touched={!!touched.firstName} />
+                <CommonTextInput  name="lastName"  label="Last Name"  placeholder="Enter last name"  value={values.lastName}  onChange={handleChange}  onBlur={handleBlur}  error={typeof errors.lastName === 'string' ? errors.lastName : undefined}  touched={!!touched.lastName} />
+                <CommonEmailInput name="email" label="Email" placeholder="you@example.com" value={values.email} onChange={handleChange} onBlur={handleBlur} error={typeof errors.email === 'string' ? errors.email : undefined} touched={!!touched.email} />
+                <CommonPhoneInput name="phone" label="Phone" placeholder="Enter phone number" value={values.phone} onChange={handleChange} onBlur={handleBlur} error={typeof errors.phone === 'string' ? errors.phone : undefined} touched={!!touched.phone} countryValue={values.countryCode} onCountryChange={(value) => setFieldValue("countryCode", value)} />
               </div>
 
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <Button type="primary" onClick={handleSave}>
-                  Save Changes
+              <div className="mt-6 flex gap-3">
+                <Button type="primary" htmlType="submit" loading={isPending || isSubmitting} size="large" className="px-8 py-2 text-base font-semibold">
+                  Save
                 </Button>
-                <Button onClick={handleCancel}>Cancel</Button>
+                <Button onClick={() => onEditChange(false)} size="large" className="px-8 py-2 text-base font-semibold">
+                  Cancel
+                </Button>
               </div>
-            </>
+            </FormikForm>
           )}
-      </Form>
+        </Formik>
+      )}
     </div>
   );
 };

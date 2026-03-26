@@ -52,3 +52,22 @@ export type ResetForgetPasswordPayload = {
   password: string;
 };
 export type ResetForgetPasswordResponse = Record<string, unknown>;
+
+export type ChangePasswordPayload = {
+  oldPassword: string;
+  newPassword: string;
+};
+export type ChangePasswordResponse = Record<string, unknown>;
+
+export type UpdateUserPayload = {
+  userId: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  contact?: {
+    countryCode?: string;
+    phoneNo?: number | string;
+  };
+};
+
+export type UpdateUserResponse = Record<string, unknown>;

@@ -10,6 +10,7 @@ import PrivacyPolicy from "../Pages/Privacy Policy/Index";
 import TermsAndConditions from "../Pages/Terms and Conditions/Index";
 import RefundPolicy from "../Pages/Refund Policy/Index";
 import TermsOfService from "../Pages/Terms of Service/Index";
+import ProfilePage from "../Pages/Profile/Index";
 
 export const PageRoutes = [
   { path: ROUTES.HERO, element: <Hero /> },
@@ -22,6 +23,7 @@ export const PageRoutes = [
   { path: ROUTES.TERMS_CONDITIONS, element: <TermsAndConditions /> },
   { path: ROUTES.REFUND_POLICY, element: <RefundPolicy /> },
   { path: ROUTES.TERMS_OF_SERVICE, element: <TermsOfService /> },
+  { path: ROUTES.PROFILE, element: <ProfilePage /> },
 ];
 
 export const AuthRoutes = [

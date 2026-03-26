@@ -1,11 +1,13 @@
 import { Avatar, Dropdown } from "antd";
 import { DownOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Store/Hooks";
 import { setSignOut } from "../../Store/Slices/AuthSlice";
 import { Queries } from "../../Api";
 import type { ProfileCardProps } from "../../Types";
 import LogoutConfirmModel from "../../Components/ConfirmModel/LogoutConfirmModel";
+import { ROUTES } from "../../Constants";
 
 
 const getInitials = (fullName: string) => {
@@ -24,6 +26,7 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
   const [open, setOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const dataUser = (userData as { data?: { user?: unknown } })?.data?.user ?? (userData as { data?: unknown })?.data ?? userProp ??  storeUser;
 
@@ -52,7 +55,13 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
 
         {open && (
           <div className="mt-3 flex flex-col gap-2 rounded-xl bg-[color:var(--color-card)] p-3" style={{ border: "1px solid var(--color-border)" }}>
-            <button className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold">
+            <button
+              className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold"
+              onClick={() => {
+                setOpen(false);
+                navigate(ROUTES.PROFILE);
+              }}
+            >
               Profile
             </button>
             <button className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold text-[color:var(--color-accent)]" onClick={() => setLogoutOpen(true)}>
@@ -80,19 +89,12 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
               </div>
             </div>
 
-            <button type="button" className="delvoura-profile-menu-item">
+            <button type="button" className="delvoura-profile-menu-item" onClick={() => { setDropdownOpen(false); navigate(ROUTES.PROFILE); }} >
               <UserOutlined />
               Profile
             </button>
 
-            <button
-              type="button"
-              className="delvoura-profile-menu-item delvoura-profile-menu-logout"
-              onClick={() => {
-                setDropdownOpen(false);
-                setLogoutOpen(true);
-              }}
-            >
+            <button  type="button"  className="delvoura-profile-menu-item delvoura-profile-menu-logout"  onClick={() => {  setDropdownOpen(false);  setLogoutOpen(true);  }} >
               <LogoutOutlined />
               Logout
             </button>

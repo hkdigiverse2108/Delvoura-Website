@@ -11,6 +11,7 @@ export const ROUTES = {
     TERMS_CONDITIONS: "/terms-and-conditions",
     REFUND_POLICY: "/refund-policy",
     TERMS_OF_SERVICE: "/terms-of-service",
+    PROFILE: "/profile",
 
     AUTH : {
         AUTHETICATION : "/authentication"

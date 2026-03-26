@@ -1,5 +1,5 @@
 @import "tailwindcss";
-/* @import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap");
 
 @import "../public/assets/css/Header.css";
 @import "../public/assets/css/collection.css";
@@ -7,6 +7,7 @@
 @import "../public/assets/css/contact.css";
 @import "../public/assets/css/notification.css";
 @import "../public/assets/css/description.css";
+@import "../public/assets/css/profile.css";
 
 * {
   font-family: "Jost", sans-serif;

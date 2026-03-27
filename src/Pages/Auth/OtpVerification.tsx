@@ -45,7 +45,7 @@ const OtpVerification = ({ email, onSuccess, onBack }: OtpVerificationProps) => 
               <h2 className="text-xl font-semibold">Verify OTP</h2>
               <Text className="text-xs text-[color:var(--color-text-muted)]">We sent a code to {email}.</Text>
             </div>
-            <CommonOtpInput name="otp" value={values.otp} onChange={(val) => setFieldValue("otp", val)} onBlur={() => setFieldTouched("otp", true)} error={otpError} touched={!!touched.otp} />
+            <CommonOtpInput name="otp" value={values.otp} onChange={(val: string) => setFieldValue("otp", val)} onBlur={() => setFieldTouched("otp", true)} error={otpError} touched={!!touched.otp} />
             <Button type="primary" size="large" htmlType="submit" className="w-full rounded-full tracking-[0.22em] text-[color:var(--color-text-on-dark)]" style={{ background: "var(--color-accent)", borderColor: "transparent" }}>
               Verify OTP
             </Button> <br /> <br />

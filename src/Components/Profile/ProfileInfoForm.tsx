@@ -5,7 +5,7 @@ import { Mutations } from "../../Api";
 import { useAppDispatch } from "../../Store/Hooks";
 import { setUser } from "../../Store/Slices/AuthSlice";
 import { KEYS } from "../../Constants";
-import { CommonTextInput, CommonEmailInput, CommonPhoneInput } from "../../Attribute/FormFields";
+import { CommonTextInput, CommonEmailInput, CommonPhoneInput } from "../../Attribute";
 import { ProfileInfoSchema } from "../../Utils/ValidationSchemas";
 
 const { Text } = Typography;
@@ -92,7 +92,7 @@ const ProfileInfoForm = ({ isEditing, onEditChange, user }: ProfileInfoFormProps
                 <CommonTextInput  name="firstName"  label="First Name"  placeholder="Enter first name"  value={values.firstName}  onChange={handleChange}  onBlur={handleBlur}  error={typeof errors.firstName === 'string' ? errors.firstName : undefined}  touched={!!touched.firstName} />
                 <CommonTextInput  name="lastName"  label="Last Name"  placeholder="Enter last name"  value={values.lastName}  onChange={handleChange}  onBlur={handleBlur}  error={typeof errors.lastName === 'string' ? errors.lastName : undefined}  touched={!!touched.lastName} />
                 <CommonEmailInput name="email" label="Email" placeholder="you@example.com" value={values.email} onChange={handleChange} onBlur={handleBlur} error={typeof errors.email === 'string' ? errors.email : undefined} touched={!!touched.email} />
-                <CommonPhoneInput name="phone" label="Phone" placeholder="Enter phone number" value={values.phone} onChange={handleChange} onBlur={handleBlur} error={typeof errors.phone === 'string' ? errors.phone : undefined} touched={!!touched.phone} countryValue={values.countryCode} onCountryChange={(value) => setFieldValue("countryCode", value)} />
+                <CommonPhoneInput name="phone" label="Phone" placeholder="Enter phone number" value={values.phone} onChange={handleChange} onBlur={handleBlur} error={typeof errors.phone === 'string' ? errors.phone : undefined} touched={!!touched.phone} countryValue={values.countryCode} onCountryChange={(value: string) => setFieldValue("countryCode", value)} />
               </div>
 
               <div className="mt-6 flex gap-3">
@@ -112,3 +112,4 @@ const ProfileInfoForm = ({ isEditing, onEditChange, user }: ProfileInfoFormProps
 };
 
 export default ProfileInfoForm;
+

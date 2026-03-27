@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../Layout/Index";
+import Layout from "../Layout";
 import NotFound from "../Pages/NotFound";
 import { AuthRoutes, PageRoutes } from "./PageRoutes";
 import PrivateRoutes from "./PrivateRoutes";

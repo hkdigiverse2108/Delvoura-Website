@@ -2,7 +2,7 @@ import { Button, Modal, Switch } from "antd";
 import { Form as FormikForm, Formik } from "formik";
 import { useMemo } from "react";
 import type { AddressData } from "./AddressCard";
-import { CommonCountrySelect, CommonPinCodeInput, CommonTextInput } from "../../Attribute/FormFields";
+import { CommonCountrySelect, CommonPinCodeInput, CommonTextInput } from "../../Attribute";
 import { AddressSchema } from "../../Utils/ValidationSchemas";
 
 export type AddressFormValues = {
@@ -46,7 +46,7 @@ const emptyValues: AddressFormValues = useMemo(() => ({ country: "India", addres
         {({ values, errors, touched, handleChange, handleBlur, setFieldValue, isSubmitting }) => (
           <FormikForm className="delvoura-contact-content space-y-5 mt-5">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <CommonCountrySelect name="country" label="Country" placeholder="Select country" value={values.country} onChange={(nextValue) => setFieldValue("country", nextValue)} onBlur={handleBlur} error={typeof errors.country === "string" ? errors.country : undefined} touched={!!touched.country} />
+              <CommonCountrySelect name="country" label="Country" placeholder="Select country" value={values.country} onChange={(nextValue: string) => setFieldValue("country", nextValue)} onBlur={handleBlur} error={typeof errors.country === "string" ? errors.country : undefined} touched={!!touched.country} />
               <CommonTextInput name="state" label="State" placeholder="State" value={values.state} onChange={handleChange} onBlur={handleBlur} error={typeof errors.state === "string" ? errors.state : undefined} touched={!!touched.state}/>
               <CommonTextInput  name="city"  label="City"  placeholder="City"  value={values.city}  onChange={handleChange}  onBlur={handleBlur}  error={typeof errors.city === "string" ? errors.city : undefined}  touched={!!touched.city} />
               <CommonPinCodeInput name="pinCode" label="Pin Code" placeholder="Pin code" value={values.pinCode} onChange={handleChange} onBlur={handleBlur} error={typeof errors.pinCode === "string" ? errors.pinCode : undefined} touched={!!touched.pinCode} />
@@ -76,3 +76,4 @@ const emptyValues: AddressFormValues = useMemo(() => ({ country: "India", addres
 };
 
 export default AddressFormModal;
+

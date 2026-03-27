@@ -1,29 +1,38 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../Constants";
-import type { BlogItem } from "../../Types";
-
-type BlogDetailsProps = {
-  post: BlogItem;
-  onBack?: () => void;
-  backTo?: string;
-};
+import type { BlogDetailsProps } from "../../Types";
+import { formatRelativeTime } from "../common";
 
 const BlogDetails = ({ post, onBack, backTo = ROUTES.BLOG }: BlogDetailsProps) => {
-  const createdLabel = post.createdAt ? new Date(post.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", }) : "—";
+  const createdLabel = post.createdAt
+    ? new Date(post.createdAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "-";
+  const relativeLabel = formatRelativeTime(post.createdAt);
 
   return (
     <section className="delvoura-container py-10">
       <div className="mt-6 overflow-hidden rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-card)]">
         <div className="relative h-[52vh] w-full">
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${post.image ?? ""}')` }}   />
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${post.image ?? ""}')` }} />
           <div className="absolute inset-0 bg-black/45" />
           <div className="absolute left-4 top-4 z-20">
             {onBack ? (
-              <button type="button" className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur" onClick={onBack} >
+              <button
+                type="button"
+                className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur"
+                onClick={onBack}
+              >
                 Back to Blog
               </button>
             ) : (
-              <Link to={backTo} className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur" >
+              <Link
+                to={backTo}
+                className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur"
+              >
                 Back to Blog
               </Link>
             )}
@@ -34,7 +43,8 @@ const BlogDetails = ({ post, onBack, backTo = ROUTES.BLOG }: BlogDetailsProps) =
                 {post.title}
               </h1>
               <p className="mt-3 text-sm uppercase tracking-[0.35em] text-white/70">
-                {createdLabel} · 4 min read
+                {createdLabel}
+                {relativeLabel ? ` · ${relativeLabel}` : ""}
               </p>
             </div>
           </div>

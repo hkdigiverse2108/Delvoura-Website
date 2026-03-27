@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Button, Card, ConfigProvider, Flex, Input, Modal, Rate, Tag, Typography, Empty, Spin } from "antd";
+import { Button, Card, ConfigProvider, Flex, Input, Modal, Rate, Tag, Typography, Spin } from "antd";
 import { CloseOutlined, SearchOutlined } from "@ant-design/icons";
 import { Queries } from "../../Api";
 import { useAppDispatch, useAppSelector } from "../../Store/Hooks";
@@ -156,7 +156,10 @@ const SearchBarWithModal = ({ buttonClassName = "", showOnMobile = false, button
     if (filteredProducts.length === 0) {
       return (
         <div className="mt-8 flex items-center justify-center min-h-96">
-          <Empty description="No products found" />
+          <div className="text-center text-sm text-[color:var(--color-text-muted)]">
+            <img src="/assets/images/order/empty.png" alt="No products" className="mx-auto mb-3 w-40 opacity-80" />
+            <div>No products found</div>
+          </div>
         </div>
       );
     }

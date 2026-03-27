@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button, Empty, Modal, Rate, Spin, Tag, Typography } from "antd";
+import { Button, Modal, Rate, Spin, Tag, Typography } from "antd";
 import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, LoadingOutlined, MinusOutlined, PlusOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
-import { Queries } from "../../Api/Queries";
 import type { ProductItem } from "../../Types";
+import { useFeaturedProducts, useAddToCart } from "../../Utils/Hooks";
 
 const { Title, Text } = Typography;
 
@@ -23,13 +23,7 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [activePage, setActivePage] = useState(0);
   
-  const { data: productsResponse, isLoading, isFetching } = Queries.useGetProducts({ FeaturedFilter: true });
-  const isLoadingProducts = isLoading || isFetching;
-  
-  const products = useMemo(() => {
-    const list = productsResponse?.data?.product_data ?? [];
-    return excludeId ? list.filter(item => item?._id !== excludeId) : list;
-  }, [productsResponse, excludeId]);
+  const { products, isLoading: isLoadingProducts } = useFeaturedProducts(excludeId);
   
   const modalImages = useMemo(() => {
     if (!selectedProduct) return [];
@@ -95,6 +89,18 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
     if (selected && typeof selected === "object") return selected.price ?? 0;
     return product.price ?? product.mrp ?? 0;
   };
+  const addToCart = useAddToCart();
+  
+  //============== Handle Add To Cart (Related Products Modal) ==============
+  const handleAddToCart = () => {
+    if (!selectedProduct) return;
+    addToCart({
+      product: selectedProduct,
+      selectedVariant,
+      quantity,
+      image: activeImage || selectedProduct.coverimage || selectedProduct.images?.[0] || "",
+    });
+  };
   
   const ProductCard = ({ product }: { product: ProductItem }) => (
     <article className="delvoura-product-card cursor-pointer" onClick={() => navigate(ROUTES.getProductDetails(product._id || ""))}>
@@ -126,7 +132,14 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
         
         <div className="delvoura-related-carousel">
           {isLoadingProducts || products.length === 0 ? (
-            <div className="delvoura-product-empty-state">{isLoadingProducts ? <Spin indicator={<LoadingOutlined style={{ fontSize: 32, color: "var(--color-text-muted)" }} spin />} /> : <Empty description="No featured products found" />}</div>
+            <div className="delvoura-product-empty-state">
+              {isLoadingProducts ? <Spin indicator={<LoadingOutlined style={{ fontSize: 32, color: "var(--color-text-muted)" }} spin />} /> : (
+                <div className="text-center text-sm text-[color:var(--color-text-muted)]">
+                  <img src="/assets/images/order/empty.png" alt="No featured products" className="mx-auto mb-3 w-40 opacity-80" />
+                  <div>No featured products found</div>
+                </div>
+              )}
+            </div>
           ) : (
             <>
               <div ref={trackRef} className="delvoura-related-track">{products.map((product, idx) => <div key={product._id || `${product.name}-${idx}`} className="delvoura-related-slide" ref={idx === 0 ? cardRef : null}><ProductCard product={product} /></div>)}</div>
@@ -143,7 +156,7 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
         )}
       </div>
       
-      <Modal open={!!selectedProduct} onCancel={() => setSelectedProduct(null)} footer={null} centered width={1080} className="delvoura-select-options-modal" maskStyle={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }} bodyStyle={{ padding: 0 }}>
+      <Modal open={!!selectedProduct} onCancel={() => setSelectedProduct(null)} footer={null} centered width={1080} closable={false} className="delvoura-select-options-modal" maskStyle={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }} bodyStyle={{ padding: 0 }}>
         {selectedProduct && (
           <div className="delvoura-select-options-card">
             <button type="button" className="delvoura-select-options-close" onClick={() => setSelectedProduct(null)}><CloseOutlined /></button>
@@ -173,7 +186,7 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
               })}</div>
               <div className="delvoura-product-actions">
                 <div className="delvoura-qty-control"><button type="button" className="delvoura-qty-btn" onClick={() => setQuantity(q => Math.max(1, q - 1))}><MinusOutlined /></button><span className="delvoura-qty-value">{quantity}</span><button type="button" className="delvoura-qty-btn" onClick={() => setQuantity(q => q + 1)}><PlusOutlined /></button></div>
-                <button type="button" className="delvoura-add-to-cart">Add To Cart</button>
+                <button type="button" className="delvoura-add-to-cart" onClick={handleAddToCart}>Add To Cart</button>
               </div>
               <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(ROUTES.getProductDetails(selectedProduct._id || "")); }}>View full details <ArrowRightOutlined /></button>
             </div>

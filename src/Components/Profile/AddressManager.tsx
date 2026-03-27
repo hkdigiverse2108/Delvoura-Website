@@ -1,4 +1,4 @@
-import { Button, Empty, Spin, Typography, message } from "antd";
+import { Button, Spin, Typography, message } from "antd";
 import { useMemo, useState } from "react";
 import AddressCard from "./AddressCard";
 import type { AddressData } from "./AddressCard";
@@ -103,7 +103,10 @@ const AddressManager = ({ addresses, isLoading }: AddressManagerProps) => {
           <Spin />
         </div>
       ) : sortedAddresses.length === 0 ? (
-        <Empty description="No addresses yet" />
+        <div className="text-center text-sm text-[color:var(--color-text-muted)]">
+          <img src="/assets/images/order/empty.png" alt="No addresses" className="mx-auto mb-3 w-40 opacity-80" />
+          <div>No addresses yet</div>
+        </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {sortedAddresses.map((address) => (

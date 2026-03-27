@@ -6,7 +6,7 @@ import BannerSlider from "../../Components/Home/BannerSlider";
 import { BlogCardGrid } from "../../Components/Blog";
 import Pagination from "../../Components/common/Pagination";
 import { Queries } from "../../Api";
-import { Empty, Spin } from "antd";
+import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const BlogPage = () => {
@@ -70,7 +70,10 @@ const BlogPage = () => {
           <BlogCardGrid posts={posts} />
         ) : (
           <div className="delvoura-product-empty-state">
-            <Empty description="No blogs found." />
+            <div className="text-center text-sm text-[color:var(--color-text-muted)]">
+              <img src="/assets/images/order/empty.png" alt="No blogs" className="mx-auto mb-3 w-40 opacity-80" />
+              <div>No blogs found.</div>
+            </div>
           </div>
         )}
         {totalPosts > 0 && (

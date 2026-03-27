@@ -1,6 +1,7 @@
  import { useEffect, useState } from "react";
 import { Rate } from "antd";
 import type { ProductItem } from "../../Types";
+import { useAddToCart } from "../../Utils/Hooks";
 
 type ProductInfoProps = {
   product?: ProductItem | null;
@@ -9,6 +10,7 @@ type ProductInfoProps = {
 const ProductInfo = ({ product }: ProductInfoProps) => {
   const [selectedVariant, setSelectedVariant] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
+  const addToCart = useAddToCart();
 
   useEffect(() => {
     const firstVariant = (product?.variants?.[0] as any);
@@ -21,6 +23,17 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
   const selected = variants.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant);
   const price = typeof selected === "object" ? selected?.price ?? product?.price ?? 0 : product?.price ?? 0;
   const mrp = typeof selected === "object" ? selected?.mrp ?? product?.mrp : product?.mrp;
+  
+  //============== Handle Add To Cart (Product Detail) ==============
+  const handleAddToCart = () => {
+    if (!product) return;
+    addToCart({
+      product,
+      selectedVariant,
+      quantity,
+      image: product.coverimage || product.images?.[0] || "",
+    });
+  };
 
   return (
     <div className="delvoura-product-info">
@@ -93,7 +106,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
             <span className="delvoura-qty-value">{quantity}</span>
             <button type="button" className="delvoura-qty-btn" onClick={() => setQuantity((q) => q + 1)}>+</button>
           </div>
-          <button type="button" className="delvoura-add-to-cart">Add To Cart</button>
+          <button type="button" className="delvoura-add-to-cart" onClick={handleAddToCart}>Add To Cart</button>
         </div>
       </div>
     </div>

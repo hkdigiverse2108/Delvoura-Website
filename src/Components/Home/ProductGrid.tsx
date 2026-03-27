@@ -1,9 +1,10 @@
 import { useMemo, useRef, useState } from "react";
-import { Button, Empty, Modal, Rate, Spin, Tag, Typography } from "antd";
+import { Button, Modal, Rate, Spin, Tag, Typography } from "antd";
 import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, LoadingOutlined, MinusOutlined, PlusOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
 import type { ProductItem } from "../../Types";
+import { useAddToCart } from "../../Utils/Hooks";
 
 const { Title, Text } = Typography;
 
@@ -38,8 +39,18 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
     const delta = direction === "next" ? 140 : -140;
     node.scrollBy({ top: delta, behavior: "smooth" });
   };
+  const addToCart = useAddToCart();
 
-  console.log(products)
+  //============== Handle Add To Cart (Select Options Modal) ==============
+  const handleAddToCart = () => {
+    if (!selectedProduct) return;
+    addToCart({
+      product: selectedProduct,
+      selectedVariant,
+      quantity,
+      image: activeImage || selectedProduct.coverimage || selectedProduct.images?.[0] || "",
+    });
+  };
 
   return (
     <section className="delvoura-home-products">
@@ -47,7 +58,12 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
         <div className="delvoura-product-grid grid gap-6">
           {isLoading || products.length === 0 ? (
             <div className="delvoura-product-empty-state">
-              {isLoading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "var(--color-text-muted)" }} spin />} /> : <Empty description="No products found" />}
+              {isLoading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "var(--color-text-muted)" }} spin />} /> : (
+                <div className="text-center text-sm text-[color:var(--color-text-muted)]">
+                  <img src="/assets/images/order/empty.png" alt="No products" className="mx-auto mb-3 w-40 opacity-80" />
+                  <div>No products found</div>
+                </div>
+              )}
             </div>
           ) : (
             products.map((product, idx) => (
@@ -162,7 +178,7 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                   <span className="delvoura-qty-value">{quantity}</span>
                   <button type="button" className="delvoura-qty-btn" onClick={() => setQuantity((q) => q + 1)}><PlusOutlined /></button>
                 </div>
-                <button type="button" className="delvoura-add-to-cart">Add To Cart</button>
+                <button type="button" className="delvoura-add-to-cart" onClick={handleAddToCart}>Add To Cart</button>
               </div>
 
               <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(ROUTES.getProductDetails(selectedProduct._id || "")); }}>View full details <ArrowRightOutlined /></button>

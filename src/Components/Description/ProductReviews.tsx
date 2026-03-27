@@ -1,4 +1,4 @@
-import { Empty, Input, Modal, Rate, Spin } from "antd";
+import { Input, Modal, Rate, Spin } from "antd";
 import { Form, Formik, type FormikHelpers } from "formik";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Mutations, Queries } from "../../Api";
@@ -141,8 +141,9 @@ const ProductReviews = ({ productId, ratingSummary }: ProductReviewsProps) => {
             </div>
           ) : null}
           {!isLoading && sortedReviews.length === 0 ? (
-            <div className="delvoura-review-empty py-10">
-              <Empty description="No reviews yet" />
+            <div className="delvoura-review-empty py-10 text-center text-sm text-[color:var(--color-text-muted)] flex flex-col items-center gap-2">
+              <img src="/assets/images/order/empty.png" alt="No reviews" className="w-40 opacity-80" />
+              <div>No reviews yet</div>
             </div>
           ) : null}
           {!isLoading && sortedReviews.map((review, index) => {

@@ -18,7 +18,7 @@ const InstagramScrollingSection = ({
   return (
     <section className="w-full overflow-x-hidden py-12">
       <div className={`${containerClassName} text-center`}>
-        <div className="mb-3 flex items-center justify-center gap-3">
+        <div className="mb-3 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <span
             className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-[color:var(--color-text-on-dark)]"
             style={{
@@ -30,7 +30,7 @@ const InstagramScrollingSection = ({
           >
             <InstagramOutlined className="text-2xl" />
           </span>
-          <Title level={3} className="!m-0 !text-[color:var(--color-text)]">
+          <Title level={3} className="!m-0 !text-[color:var(--color-text)] text-center">
             Catch the Delvoura on Instagram!
           </Title>
         </div>

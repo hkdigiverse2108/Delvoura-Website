@@ -96,6 +96,10 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                     <span key={`${tag}-${tagIndex}`}>{tag}{tagIndex < (product.ingredients?.length || 0) - 1 ? " |" : ""}</span>
                   ))}
                 </div>
+
+                <Button className="delvoura-product-cta delvoura-product-cta-inline" type="default" onClick={(event) => { event.stopPropagation(); const firstVariant = (product.variants?.[0] as any)?.size || (product.variants?.[0] as any) || "50 ml"; setSelectedProduct(product); setSelectedVariant(firstVariant); setQuantity(1); setActiveImageIndex(0); }}>
+                  Select Options
+                </Button>
               </div>
             </article>
           ))) }

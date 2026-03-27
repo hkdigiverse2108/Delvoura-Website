@@ -557,6 +557,10 @@
   box-shadow: 0 14px 30px -18px color-mix(in srgb, var(--color-primary) 45%, transparent);
 }
 
+.delvoura-home-products .delvoura-product-cta-inline {
+  display: none;
+}
+
 .delvoura-home-products .delvoura-product-cta:hover {
   background: var(--color-accent) !important;
   color: var(--color-text-on-dark) !important;
@@ -949,8 +953,47 @@
 
 @media (max-width: 640px) {
   .delvoura-home-products .delvoura-product-card {
-    max-width: 360px;
+    max-width: none;
     margin: 0 auto;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 240px;
+    position: relative;
+  }
+
+  .delvoura-home-products .delvoura-product-media {
+    width: 35%;
+    flex: 0 0 35%;
+    height: auto;
+    min-height: 160px;
+  }
+
+  .delvoura-home-products .delvoura-product-media img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    background: var(--color-bg);
+  }
+
+  .delvoura-home-products .delvoura-product-content {
+    width: 65%;
+    flex: 1 1 65%;
+    padding: 14px 16px 56px;
+  }
+
+  .delvoura-home-products .delvoura-product-badge {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .delvoura-home-products .delvoura-product-cta-overlay {
+    display: none;
+  }
+
+  .delvoura-home-products .delvoura-product-cta-inline {
+    display: block;
+    width: 100%;
+    margin: 6px 0 0;
   }
 }
 

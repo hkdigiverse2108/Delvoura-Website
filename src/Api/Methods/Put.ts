@@ -1,5 +1,5 @@
 import axios, { AxiosError, type AxiosRequestConfig } from "axios"
-import { HTTP_STATUS } from "../../Constants"
+import { HTTP_STATUS } from "../../Constants/HttpStatus"
 import { handleUnauthorized } from "./handleUnauthorized"
 
 export async function Put<TInput, TResponse>( url: string, data?: TInput, token?: string): Promise<TResponse> {

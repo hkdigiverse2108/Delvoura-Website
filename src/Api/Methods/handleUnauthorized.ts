@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from "../../Constants";
+import { HTTP_STATUS } from "../../Constants/HttpStatus";
 import Store from "../../Store/Store";
 import { setSessionExpired } from "../../Store/Slices/AuthSlice";
 

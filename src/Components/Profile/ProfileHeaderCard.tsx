@@ -24,7 +24,16 @@ const ProfileHeaderCard = ({onEdit,user: userProp,}: ProfileHeaderCardProps) => 
   const phoneStatus = (user as { phoneVerificationStatus?: string })?.phoneVerificationStatus;
   const explicitVerified =  (user as { isPhoneVerified?: boolean })?.isPhoneVerified ??  (user as { phoneVerified?: boolean })?.phoneVerified ??  (user as { verifiedPhone?: boolean })?.verifiedPhone ??  (typeof phoneStatus === "string" ? phoneStatus.toLowerCase() === "verified" : undefined);
   const phoneVerified = explicitVerified ?? !!phone;
-  const profileStrength = (user as { profileStrength?: number })?.profileStrength ?? 0;
+ 
+  const nameParts = fullName.trim().split(/\s+/).filter(Boolean);
+  const derivedFirstName = (user as { firstName?: string })?.firstName ?? nameParts[0];
+  const derivedLastName = (user as { lastName?: string })?.lastName ?? (nameParts.length > 1 ? nameParts[nameParts.length - 1] : "");
+  const hasFirstName = !!derivedFirstName && derivedFirstName.toLowerCase() !== "user";
+  const hasLastName = !!derivedLastName && derivedLastName.toLowerCase() !== "user";
+  const hasEmail = !!(user as { email?: string })?.email;
+  const hasPhone = !!phone;
+  const computedStrength = Math.round(((Number(hasFirstName) + Number(hasLastName) + Number(hasEmail) + Number(hasPhone)) / 4) * 100);
+  const profileStrength = (user as { profileStrength?: number })?.profileStrength ?? computedStrength;
 
   return (
     <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">

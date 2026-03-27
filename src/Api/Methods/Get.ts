@@ -1,5 +1,6 @@
 import axios, { AxiosError, type AxiosRequestConfig } from "axios"
 import { HTTP_STATUS } from "../../Constants"
+import { handleUnauthorized } from "./handleUnauthorized"
 
 type Params = Record<string, string | number | boolean | null | undefined>
 
@@ -25,9 +26,7 @@ export async function Get<T>( url: string, params?: Params, headers?: Record<str
     const axiosError = error as AxiosError<{ message?: string; status?: number }>
     const message = axiosError.response?.data?.message || axiosError.message || "Something went wrong"
 
-    if (axiosError.response?.status === HTTP_STATUS.UNAUTHORIZED) {
-      throw new Error(message)
-    }
+    handleUnauthorized(axiosError.response?.status)
 
     throw new Error(message)
   }

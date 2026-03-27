@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { STORAGE_KEYS } from "../../Constants";
 import type { AuthState, SigninPayload } from "../../Types";
-import { notifySuccess } from "../../Attribute";
+import { notifySuccess, notifyWarning } from "../../Attribute";
 
 
 const safeJsonParse = (value: string | null) => {
@@ -69,8 +69,18 @@ const authSlice = createSlice({
         localStorage.removeItem(STORAGE_KEYS.USER);
       }
     },
+    setSessionExpired: (state) => {
+      state.token = null;
+      state.user = null;
+      state.isAuthenticated = false;
+      if (typeof window !== "undefined") {
+        notifyWarning("Session expired. Please sign in again.");
+        localStorage.removeItem(STORAGE_KEYS.TOKEN);
+        localStorage.removeItem(STORAGE_KEYS.USER);
+      }
+    },
   },
 });
 
-export const { setSignOut, setUser, setSignin } = authSlice.actions;
+export const { setSignOut, setUser, setSignin, setSessionExpired } = authSlice.actions;
 export default authSlice.reducer;

@@ -38,7 +38,7 @@ const ProductDescription = () => {
                 <ProductAccordions product={product} />
               </div>
             </div> <br /><br /><br />
-            <RelatedProductsSlider /> <br /><br />
+            <RelatedProductsSlider excludeId={product?._id} /> <br /><br />
             <ProductReviews productId={product?._id} ratingSummary={product?.ratingSummary} /> <br /><br />
             <InstagramScrollingSection containerClassName="w-full" />
           </div>

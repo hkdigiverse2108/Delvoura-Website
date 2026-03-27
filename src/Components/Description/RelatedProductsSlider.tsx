@@ -1,351 +1,181 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button, Modal, Rate, Tag, Typography } from "antd";
-import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
+import { Button, Empty, Modal, Rate, Spin, Tag, Typography } from "antd";
+import { ArrowRightOutlined, CloseOutlined, DownOutlined, LeftOutlined, LoadingOutlined, MinusOutlined, PlusOutlined, RightOutlined, UpOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
+import { Queries } from "../../Api/Queries";
+import type { ProductItem } from "../../Types";
 
 const { Title, Text } = Typography;
 
-const products = [
-  {
-    name: "Ocean Breeze",
-    subtitle: "Inspired by Davidoff Cool Water",
-    price: "Rs. 299 - 799.0",
-    rating: 5,
-    reviews: 59,
-    sizes: ["50 ml", "15 ml"],
-    tags: ["Fruity", "Citrus", "Aquatic", "Fresh"],
-    badges: ["Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Pause",
-    subtitle: "Inspired by Bleu de Chanel",
-    price: "Rs. 299 - 799.0",
-    rating: 4,
-    reviews: 25,
-    sizes: ["50 ml", "15 ml"],
-    tags: ["Aromatic", "Spicy", "Fruity", "Woody"],
-    badges: ["Women", "Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Ispahan",
-    subtitle: "Solid Perfume",
-    price: "Rs. 249",
-    rating: 5,
-    reviews: 13,
-    sizes: ["12 g"],
-    tags: ["Oud", "Floral", "Woody", "Spicy"],
-    badges: ["Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Ispahan",
-    subtitle: "Eau De Parfum",
-    price: "Rs. 299 - 799.0",
-    rating: 4,
-    reviews: 30,
-    sizes: ["50 ml", "15 ml"],
-    tags: ["Oud", "Floral", "Woody", "Spicy"],
-    badges: ["Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=900&auto=format&fit=crop",
-  },
-  {
-    name: "Million",
-    subtitle: "Eau De Parfum",
-    price: "Rs. 299 - 799.0",
-    rating: 5,
-    reviews: 34,
-    sizes: ["50 ml", "15 ml"],
-    tags: ["Floral", "Amber", "Animalic", "Woody"],
-    badges: ["Men", "Unisex"],
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=900&auto=format&fit=crop",
-  },
-];
+type RelatedProductsSliderProps = { excludeId?: string };
 
-const RelatedProductsSlider = () => {
+const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
   const navigate = useNavigate();
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const cardRef = useRef<HTMLDivElement | null>(null);
-  const thumbsRef = useRef<HTMLDivElement | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<(typeof products)[number] | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string>("50 ml");
+  const trackRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const thumbsRef = useRef<HTMLDivElement>(null);
+  
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
+  const [selectedVariant, setSelectedVariant] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(4);
   const [activePage, setActivePage] = useState(0);
-  const isModalOpen = Boolean(selectedProduct);
+  
+  const { data: productsResponse, isLoading, isFetching } = Queries.useGetProducts({ FeaturedFilter: true });
+  const isLoadingProducts = isLoading || isFetching;
+  
+  const products = useMemo(() => {
+    const list = productsResponse?.data?.product_data ?? [];
+    return excludeId ? list.filter(item => item?._id !== excludeId) : list;
+  }, [productsResponse, excludeId]);
+  
   const modalImages = useMemo(() => {
     if (!selectedProduct) return [];
-    return Array.from({ length: 4 }, () => selectedProduct.image);
+    const cover = selectedProduct.coverimage || "";
+    const imgs = selectedProduct.images?.length ? selectedProduct.images : [];
+    return [...new Set(cover ? [cover, ...imgs] : imgs)];
   }, [selectedProduct]);
-
+  
+  const activeImage = modalImages[activeImageIndex] || "";
+  
+  const handlePrevImage = () => setActiveImageIndex(prev => prev <= 0 ? modalImages.length - 1 : prev - 1);
+  const handleNextImage = () => setActiveImageIndex(prev => prev >= modalImages.length - 1 ? 0 : prev + 1);
+  
+  const scroll = (ref: React.RefObject<HTMLDivElement | null>, direction: "prev" | "next", amount: number) => {
+    if (!ref.current) return;
+    const delta = direction === "next" ? amount : -amount;
+    ref.current.scrollBy({ left: ref === trackRef ? delta : 0, top: ref === thumbsRef ? delta : 0, behavior: "smooth" });
+  };
+  
   const scrollByCard = (direction: "prev" | "next") => {
-    const track = trackRef.current;
-    const card = cardRef.current;
-    if (!track || !card) return;
-    const gap = 16;
-    const cardWidth = card.getBoundingClientRect().width + gap;
-    const delta = direction === "next" ? cardWidth * slidesPerView : -cardWidth * slidesPerView;
-    track.scrollBy({ left: delta, behavior: "smooth" });
+    if (!trackRef.current || !cardRef.current) return;
+    const cardWidth = cardRef.current.getBoundingClientRect().width + 16;
+    scroll(trackRef, direction, cardWidth * slidesPerView);
   };
-  const scrollThumbs = (direction: "prev" | "next") => {
-    const node = thumbsRef.current;
-    if (!node) return;
-    const delta = direction === "next" ? 140 : -140;
-    node.scrollBy({ top: delta, behavior: "smooth" });
+  
+  const scrollThumbs = (direction: "prev" | "next") => scroll(thumbsRef, direction, 140);
+  
+  const goToPage = (page: number) => {
+    if (!trackRef.current || !cardRef.current) return;
+    const cardWidth = cardRef.current.getBoundingClientRect().width + 16;
+    trackRef.current.scrollTo({ left: page * cardWidth * slidesPerView, behavior: "smooth" });
   };
-
+  
   useEffect(() => {
     const updateSlides = () => {
       const width = window.innerWidth;
-      if (width <= 640) {
-        setSlidesPerView(1);
-      } else if (width <= 900) {
-        setSlidesPerView(2);
-      } else if (width <= 1200) {
-        setSlidesPerView(3);
-      } else {
-        setSlidesPerView(4);
-      }
+      if (width <= 640) setSlidesPerView(1);
+      else if (width <= 900) setSlidesPerView(2);
+      else if (width <= 1200) setSlidesPerView(3);
+      else setSlidesPerView(4);
     };
     updateSlides();
     window.addEventListener("resize", updateSlides);
     return () => window.removeEventListener("resize", updateSlides);
   }, []);
-
+  
   useEffect(() => {
     const track = trackRef.current;
     const card = cardRef.current;
     if (!track || !card) return;
-    const gap = 16;
-    const cardWidth = card.getBoundingClientRect().width + gap;
-    const onScroll = () => {
-      const pageWidth = cardWidth * slidesPerView;
-      const current = pageWidth > 0 ? Math.round(track.scrollLeft / pageWidth) : 0;
-      setActivePage(current);
-    };
+    const cardWidth = card.getBoundingClientRect().width + 16;
+    const onScroll = () => setActivePage(Math.round(track.scrollLeft / (cardWidth * slidesPerView)) || 0);
     onScroll();
     track.addEventListener("scroll", onScroll, { passive: true });
     return () => track.removeEventListener("scroll", onScroll);
   }, [slidesPerView]);
-
-  const totalPages = Math.max(1, Math.ceil(products.length / slidesPerView));
-  const goToPage = (page: number) => {
-    const track = trackRef.current;
-    const card = cardRef.current;
-    if (!track || !card) return;
-    const gap = 16;
-    const cardWidth = card.getBoundingClientRect().width + gap;
-    track.scrollTo({ left: page * cardWidth * slidesPerView, behavior: "smooth" });
+  
+  const totalPages = Math.ceil(products.length / slidesPerView);
+  
+  const getPrice = (product: ProductItem, variant?: string) => {
+    const variants = product.variants as any[];
+    const selected = variants?.find(v => (typeof v === "object" ? v.size : v) === variant);
+    if (selected && typeof selected === "object") return selected.price ?? 0;
+    return product.price ?? product.mrp ?? 0;
   };
-
+  
+  const ProductCard = ({ product }: { product: ProductItem }) => (
+    <article className="delvoura-product-card cursor-pointer" onClick={() => navigate(ROUTES.getProductDetails(product._id || ""))}>
+      <div className="delvoura-product-media">
+        <img src={product.coverimage || product.images?.[0] || ""} alt={product.name || "Product"} loading="lazy" />
+        <div className="delvoura-product-media-shadow" />
+        <div className="delvoura-product-media-shadow-bottom" />
+        {product.gender && <div className="delvoura-product-badges"><Tag className="delvoura-product-badge">{product.gender}</Tag></div>}
+        {/* Keep modal open on button click without navigating the card */}
+        <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); setSelectedVariant((product.variants?.[0] as any)?.size || "50 ml"); setQuantity(1); setActiveImageIndex(0); }}>Select Options</Button>
+      </div>
+      <div className="delvoura-product-content">
+        <h3 className="delvoura-product-title">{product.name || "Untitled"}</h3>
+        <div className="delvoura-product-subtitle">{product.title || "Eau De Parfum"}</div>
+        <div className="delvoura-product-row">
+          <div className="flex items-center gap-2"><Rate disabled value={Number(product.ratingSummary?.avgRating || 0)} /><span className="delvoura-product-reviews">({product.ratingSummary?.ratingCount || 0})</span></div>
+          <div className="delvoura-product-sizes">{(product.variants?.length ? product.variants : ["50 ml"]).map((v: any) => <span key={typeof v === "string" ? v : v?.size} className="delvoura-size-pill">{typeof v === "string" ? v : v?.size}</span>)}</div>
+        </div>
+        <div className="delvoura-product-row"><span className="delvoura-product-price">Rs. {getPrice(product)}</span></div>
+        <div className="delvoura-product-tags">{(product.ingredients || []).map((tag, i) => <span key={i}>{tag}{i < (product.ingredients?.length || 0) - 1 ? " |" : ""}</span>)}</div>
+      </div>
+    </article>
+  );
+  
   return (
     <section className="delvoura-home-products delvoura-related-products">
       <div className="delvoura-related-inner">
-        <div className="delvoura-related-header">
-          <h2 className="delvoura-related-title">Fragrances You Might Love</h2>
-        </div>
-
+        <div className="delvoura-related-header"><h2 className="delvoura-related-title">Fragrances You Might Love</h2></div>
+        
         <div className="delvoura-related-carousel">
-          <div ref={trackRef} className="delvoura-related-track">
-            {products.map((product, idx) => (
-              <div
-                key={`${product.name}-${idx}`}
-                className="delvoura-related-slide"
-                ref={idx === 0 ? cardRef : null}
-              >
-                <article className="delvoura-product-card cursor-pointer" onClick={() => navigate(ROUTES.getProductDetails(`${idx + 1}`))}>
-                  <div className="delvoura-product-media">
-                    <img src={product.image} alt={product.name} loading="lazy"  onClick={() => navigate(ROUTES.getProductDetails(`${idx + 1}`))}/>
-                    <div className="delvoura-product-media-shadow" />
-                    <div className="delvoura-product-media-shadow-bottom" />
-                    <div className="delvoura-product-badges">
-                      {product.badges.map((badge) => (
-                        <Tag key={badge} className="delvoura-product-badge">
-                          {badge}
-                        </Tag>
-                      ))}
-                    </div>
-                    <Button
-                      className="delvoura-product-cta delvoura-product-cta-overlay"
-                      type="default"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setSelectedProduct(product);
-                        setSelectedSize(product.sizes[0]);
-                      }}
-                    >
-                      Select Options
-                    </Button>
-                  </div>
-
-                  <div className="delvoura-product-content">
-                    <h3 className="delvoura-product-title">{product.name}</h3>
-                    <div className="delvoura-product-subtitle">{product.subtitle}</div>
-
-                    <div className="delvoura-product-row">
-                      <div className="flex items-center gap-2">
-                        <Rate disabled defaultValue={product.rating} />
-                        <span className="delvoura-product-reviews">({product.reviews})</span>
-                      </div>
-                      <div className="delvoura-product-sizes">
-                        {product.sizes.map((size) => (
-                          <span key={size} className="delvoura-size-pill">
-                            {size}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="delvoura-product-row">
-                      <span className="delvoura-product-price">{product.price}</span>
-                    </div>
-
-                    <div className="delvoura-product-tags">
-                      {product.tags.map((tag, tagIndex) => (
-                        <span key={`${tag}-${tagIndex}`}>
-                          {tag}
-                          {tagIndex < product.tags.length - 1 ? " |" : ""}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              </div>
-            ))}
+          {isLoadingProducts || products.length === 0 ? (
+            <div className="delvoura-product-empty-state">{isLoadingProducts ? <Spin indicator={<LoadingOutlined style={{ fontSize: 32, color: "var(--color-text-muted)" }} spin />} /> : <Empty description="No featured products found" />}</div>
+          ) : (
+            <>
+              <div ref={trackRef} className="delvoura-related-track">{products.map((product, idx) => <div key={product._id || `${product.name}-${idx}`} className="delvoura-related-slide" ref={idx === 0 ? cardRef : null}><ProductCard product={product} /></div>)}</div>
+              <button type="button" aria-label="Previous fragrance" onClick={() => scrollByCard("prev")} className="delvoura-related-nav delvoura-related-nav-left"><LeftOutlined /></button>
+              <button type="button" aria-label="Next fragrance" onClick={() => scrollByCard("next")} className="delvoura-related-nav delvoura-related-nav-right"><RightOutlined /></button>
+            </>
+          )}
+        </div>
+        
+        {totalPages > 0 && (
+          <div className="delvoura-related-dots" role="tablist">
+            {Array.from({ length: totalPages }).map((_, idx) => <button key={`dot-${idx}`} type="button" role="tab" aria-selected={activePage === idx} className={`delvoura-related-dot ${activePage === idx ? "is-active" : ""}`} onClick={() => goToPage(idx)} />)}
           </div>
-
-          <button
-            type="button"
-            aria-label="Previous fragrance"
-            onClick={() => scrollByCard("prev")}
-            className="delvoura-related-nav delvoura-related-nav-left"
-          >
-            <LeftOutlined />
-          </button>
-          <button
-            type="button"
-            aria-label="Next fragrance"
-            onClick={() => scrollByCard("next")}
-            className="delvoura-related-nav delvoura-related-nav-right"
-          >
-            <RightOutlined />
-          </button>
-        </div>
-        <div className="delvoura-related-dots" role="tablist" aria-label="Related products pages">
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <button
-              key={`related-dot-${idx}`}
-              type="button"
-              role="tab"
-              aria-selected={activePage === idx}
-              aria-label={`Go to slide set ${idx + 1}`}
-              className={`delvoura-related-dot ${activePage === idx ? "is-active" : ""}`}
-              onClick={() => goToPage(idx)}
-            />
-          ))}
-        </div>
+        )}
       </div>
-
-      <Modal
-        open={isModalOpen}
-        onCancel={() => setSelectedProduct(null)}
-        footer={null}
-        centered
-        closable={false}
-        width={1080}
-        className="delvoura-select-options-modal"
-        maskStyle={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }}
-        bodyStyle={{ padding: 0 }}
-      >
+      
+      <Modal open={!!selectedProduct} onCancel={() => setSelectedProduct(null)} footer={null} centered width={1080} className="delvoura-select-options-modal" maskStyle={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }} bodyStyle={{ padding: 0 }}>
         {selectedProduct && (
           <div className="delvoura-select-options-card">
-            <button
-              type="button"
-              className="delvoura-select-options-close"
-              onClick={() => setSelectedProduct(null)}
-              aria-label="Close"
-            >
-              <CloseOutlined />
-            </button>
-
+            <button type="button" className="delvoura-select-options-close" onClick={() => setSelectedProduct(null)}><CloseOutlined /></button>
             <div className="delvoura-select-options-media">
               <div className="delvoura-select-options-thumbs-wrap">
-                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll up" onClick={() => scrollThumbs("prev")}>
-                  <UpOutlined />
-                </button>
-                <div ref={thumbsRef} className="delvoura-select-options-thumbs">
-                  {modalImages.map((img, idx) => (
-                    <button
-                      type="button"
-                      className="delvoura-select-options-thumb"
-                      key={`${img}-${idx}`}
-                      aria-label={`Preview ${idx + 1}`}
-                    >
-                      <img src={img} alt={`${selectedProduct.name} preview ${idx + 1}`} />
-                    </button>
-                  ))}
-                </div>
-                <button type="button" className="delvoura-thumb-nav" aria-label="Scroll down" onClick={() => scrollThumbs("next")}>
-                  <DownOutlined />
-                </button>
+                <button type="button" className="delvoura-thumb-nav" onClick={() => scrollThumbs("prev")}><UpOutlined /></button>
+                <div ref={thumbsRef} className="delvoura-select-options-thumbs">{modalImages.map((img, idx) => <button key={idx} type="button" className={`delvoura-select-options-thumb ${idx === activeImageIndex ? "is-active" : ""}`} onClick={() => setActiveImageIndex(idx)}><img src={img} alt={`Preview ${idx + 1}`} /></button>)}</div>
+                <button type="button" className="delvoura-thumb-nav" onClick={() => scrollThumbs("next")}><DownOutlined /></button>
               </div>
-              <div className="delvoura-select-options-hero overflow-hidden">
-                <img src={selectedProduct.image} alt={selectedProduct.name} />
+              <div className="delvoura-select-options-hero delvoura-product-main overflow-hidden">
+                <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-left" onClick={handlePrevImage}><LeftOutlined /></button>
+                <img src={activeImage || selectedProduct.coverimage || selectedProduct.images?.[0] || ""} alt={selectedProduct.name || "Product"} />
+                <button type="button" className="delvoura-gallery-nav delvoura-gallery-nav-right" onClick={handleNextImage}><RightOutlined /></button>
               </div>
             </div>
-
             <div className="delvoura-select-options-info">
-              <Title level={3} className="!mb-1 !mt-0">
-                {selectedProduct.name} | Eau De Parfum
-              </Title>
-              <div className="delvoura-select-options-rating">
-                <Rate disabled defaultValue={selectedProduct.rating} />
-                <span>({selectedProduct.reviews})</span>
-              </div>
+              <Title level={3} className="!mb-1 !mt-0">{selectedProduct.name} | Eau De Parfum</Title>
+              <div className="delvoura-select-options-rating"><Rate disabled value={Number(selectedProduct.ratingSummary?.avgRating || 0)} /><span>({selectedProduct.ratingSummary?.ratingCount || 0})</span></div>
               <div className="delvoura-select-options-price-row">
-                <span className="delvoura-select-options-price">Rs. 799</span>
-                <span className="delvoura-select-options-price-old">Rs. 1,499</span>
+                <span className="delvoura-select-options-price">Rs. {getPrice(selectedProduct, selectedVariant)}</span>
+                {selectedProduct.mrp && <span className="delvoura-select-options-price-old">Rs. {selectedProduct.mrp}</span>}
               </div>
               <Text className="delvoura-select-options-tax">Inclusive of all taxes</Text>
-
-              <div className="delvoura-select-options-sizes">
-                {selectedProduct.sizes.map((size) => (
-                  <button
-                    key={size}
-                    type="button"
-                    className={`delvoura-select-options-size ${selectedSize === size ? "is-active" : ""}`}
-                    onClick={() => setSelectedSize(size)}
-                  >
-                    {size}
-                  </button>
-                ))}
+              <div className="delvoura-select-options-sizes">{(selectedProduct.variants?.length ? selectedProduct.variants : ["50 ml"]).map((v: any) => {
+                const label = typeof v === "string" ? v : v?.size;
+                return <button key={label} type="button" className={`delvoura-select-options-size ${selectedVariant === label ? "is-active" : ""}`} onClick={() => setSelectedVariant(label)}>{label}</button>;
+              })}</div>
+              <div className="delvoura-product-actions">
+                <div className="delvoura-qty-control"><button type="button" className="delvoura-qty-btn" onClick={() => setQuantity(q => Math.max(1, q - 1))}><MinusOutlined /></button><span className="delvoura-qty-value">{quantity}</span><button type="button" className="delvoura-qty-btn" onClick={() => setQuantity(q => q + 1)}><PlusOutlined /></button></div>
+                <button type="button" className="delvoura-add-to-cart">Add To Cart</button>
               </div>
-
-              <div className="delvoura-select-options-actions">
-                <Button className="delvoura-qty-btn">-</Button>
-                <span className="delvoura-qty-value">1</span>
-                <Button className="delvoura-qty-btn">+</Button>
-                <Button className="delvoura-add-to-cart" type="primary">
-                  Add To Cart
-                </Button>
-              </div>
-
-              <button
-                type="button"
-                className="delvoura-select-options-link"
-                onClick={() => {
-                  setSelectedProduct(null);
-                  navigate(`/products/1`);
-                }}
-              >
-                View full details <ArrowRightOutlined/>
-              </button>
+              <button type="button" className="delvoura-select-options-link" onClick={() => { setSelectedProduct(null); navigate(ROUTES.getProductDetails(selectedProduct._id || "")); }}>View full details <ArrowRightOutlined /></button>
             </div>
           </div>
         )}

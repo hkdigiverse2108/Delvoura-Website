@@ -47,6 +47,7 @@ export type ProductItem = {
   coverimage?: string;
   price?: number;
   mrp?: number;
+  isFeatured?: boolean;
   seasonIds?: { _id?: string; name?: string }[];
   gender?: string;
   collectionIds?: { _id?: string; name?: string }[];
@@ -112,6 +113,7 @@ export type ProductsQueryParams = {
   scentFilter?: string;
   genderFilter?: string;
   TrendingFilter?: boolean;
+  FeaturedFilter?: boolean;
   sortByFilter?: string;
 };
 

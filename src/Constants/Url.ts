@@ -47,6 +47,12 @@ export const URL_KEYS = {
         GET_TOPBAR: "/topbar"
     },
 
+    //==============BLOG===============
+    BLOG: {
+        GET_BLOGS: "/blog",
+        GET_BLOG_BY_ID: "/blog"
+    },
+
     //==============CONTACT===============
     CONTACT_US: {
         ADD: "/contact-us/add"

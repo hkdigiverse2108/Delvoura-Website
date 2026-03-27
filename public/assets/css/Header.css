@@ -215,7 +215,7 @@
 
 .delvoura-cart-btn:hover {
   border-color: #ffffff !important;
-  background-color: rgba(255,255,255,0.05) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 .delvoura-auth-wrap {
@@ -263,7 +263,7 @@
   border: none !important;
   box-shadow: none !important;
   transform: none !important;
-  transition: all 0.5s ease ;
+  transition: all 0.5s ease;
 }
 
 .delvoura-auth-btn:hover {
@@ -434,7 +434,7 @@
 }
 
 .delvoura-light-surface .delvoura-profile-avatar,
-.delvoura-light-surface .delvoura-profile-avatar * ,
+.delvoura-light-surface .delvoura-profile-avatar *,
 .delvoura-light-surface .ant-avatar,
 .delvoura-light-surface .ant-avatar-string {
   color: var(--color-text-on-dark) !important;
@@ -883,16 +883,20 @@ body.ant-modal-open::-webkit-scrollbar {
   color: var(--color-accent) !important;
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
 }
- .delvoura-cart-drawer .ant-drawer-content {
- background: transparent;
+
+.delvoura-cart-drawer .ant-drawer-content {
+  background: transparent;
 }
+
 .delvoura-cart-drawer .ant-drawer-body {
   background: transparent;
 }
+
 .delvoura-cart-scroll {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 .delvoura-cart-scroll::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -940,4 +944,28 @@ body.ant-modal-open::-webkit-scrollbar {
   .delvoura-search-modal .delvoura-modal-product-media {
     height: 160px;
   }
+}
+
+
+
+/**************FOOTER************************/
+.footer-link {
+  position: relative;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--color-border);
+  transition: width 0.25s ease;
+}
+
+.footer-link:hover::after {
+  width: 100%;
 }

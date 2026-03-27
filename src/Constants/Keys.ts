@@ -47,6 +47,12 @@ export const KEYS = {
     GET_TOPBAR: "get-topbar",
   },
 
+  //========Blog=========
+  BLOG: {
+    GET_BLOGS: "get-blogs",
+    GET_BLOG_BY_ID: "get-blog-by-id",
+  },
+
   //========Contact=========
   CONTACT_US: {
     ADD: "contact-us-add",

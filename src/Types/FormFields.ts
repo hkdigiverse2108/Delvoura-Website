@@ -33,6 +33,28 @@ export type CommonTextInputProps = {
   touched?: boolean;
 };
 
+export type CommonPinCodeInputProps = {
+  name: string;
+  label: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  error?: string;
+  touched?: boolean;
+};
+
+export type CommonCountrySelectProps = {
+  name: string;
+  label: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  onBlur?: React.FocusEventHandler<HTMLElement>;
+  error?: string;
+  touched?: boolean;
+};
+
 export type CommonPhoneInputProps = {
   name: string;
   label: string;

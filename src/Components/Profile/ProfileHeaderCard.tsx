@@ -48,7 +48,7 @@ const ProfileHeaderCard = ({onEdit,user: userProp,}: ProfileHeaderCardProps) => 
         </div>
       </div>
       
-      <button className="absolute right-0 top-0 rounded-[15px] border border-[color:var(--color-border)] px-4 py-2 text-sm font-medium text-[color:var(--color-text)]" type="button" onClick={onEdit} >
+      <button className="absolute right-0 top-0 rounded-[15px] border border-[color:var(--color-border)] px-4 py-2 text-sm font-medium text-[color:var(--color-text)] profile-action-edit" type="button" onClick={onEdit} >
         Edit
       </button>
     </div>

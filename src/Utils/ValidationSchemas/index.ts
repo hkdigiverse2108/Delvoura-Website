@@ -88,8 +88,11 @@ export const AddressSchema = Yup.object({
   address2: Validation("string", "Landmark", { required: false }),
   city: Validation("string", "City"),
   state: Validation("string", "State"),
-  pinCode: Validation("string", "Pin code"),
-  default: Validation("mixed", "Default", { required: false }),
+  pinCode: Validation("string", "Pin code", {
+    extraRules: (s) => s.matches(/^\d{6}$/, "Pin code must be 6 digits"),
+  }),
+  isDefault: Validation("mixed", "Default", { required: false }),
+  isActive: Validation("mixed", "Active", { required: false }),
 });
 
 export { Validation };

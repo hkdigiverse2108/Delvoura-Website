@@ -57,4 +57,13 @@ export const URL_KEYS = {
     CONTACT_US: {
         ADD: "/contact-us/add"
     },
+
+    //==============ADDRESS===============
+    ADDRESS: {
+        GET_ADDRESSES: "/address",
+        GET_ADDRESS_BY_ID: "/address",
+        ADD_ADDRESS: "/address/add",
+        UPDATE_ADDRESS: "/address/edit",
+        DELETE_ADDRESS: "/address"
+    },
 } as const

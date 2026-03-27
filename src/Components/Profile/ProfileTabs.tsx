@@ -1,19 +1,27 @@
 import { Card, Tabs } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileHeaderCard from "./ProfileHeaderCard";
 import AddressManager from "./AddressManager";
 import ChangePasswordForm from "./ChangePasswordForm";
 import MyOrders from "./MyOrders";
 import { UserOutlined, HomeOutlined, ShoppingOutlined, LockOutlined } from "@ant-design/icons";
-import { useAppSelector } from "../../Store/Hooks";
+import { useAppDispatch, useAppSelector } from "../../Store/Hooks";
 import { Queries } from "../../Api";
+import { setAddresses } from "../../Store/Slices/AddressSlice";
+import type { AddressItem } from "../../Types";
 
 const ProfileTabs = () => {
   const [tabPosition, setTabPosition] = useState<"left" | "top">("left");
   const [isEditing, setIsEditing] = useState(false);
-  const { user: storeUser } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const { user: storeUser, token } = useAppSelector((state) => state.auth);
+  //Users Data
   const { data: userData } = Queries.useGetSingleUser( ((storeUser as { _id?: string } | null)?._id), );
+
+  //Address
+  const { data: addressData, isLoading: isAddressLoading } = Queries.useGetAddresses(undefined, token ?? undefined);
+  const addresses = useAppSelector((state) => state.address.items);
   
   const resolveUser = (input: unknown) => {
     if (!input) return null;
@@ -25,6 +33,23 @@ const ProfileTabs = () => {
     );
   };
   const resolvedUser = resolveUser(userData) ?? resolveUser(storeUser) ?? {};
+
+  const resolveAddressList = (input: unknown): AddressItem[] => {
+    if (!input) return [];
+    const root = (input as { data?: unknown })?.data ?? input;
+    if (Array.isArray(root)) return root;
+    const data = root as { address_data?: unknown; addresses?: unknown; data?: unknown };
+    if (Array.isArray(data.address_data)) return data.address_data;
+    if (Array.isArray(data.addresses)) return data.addresses;
+    if (Array.isArray(data.data)) return data.data;
+    return [];
+  };
+
+  const resolvedAddresses = useMemo(() => resolveAddressList(addressData), [addressData]);
+
+  useEffect(() => {
+    dispatch(setAddresses(resolvedAddresses));
+  }, [dispatch, resolvedAddresses]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,7 +88,7 @@ const ProfileTabs = () => {
                 <HomeOutlined /> Address
               </span>
             ),
-            children: <AddressManager />,
+            children: <AddressManager addresses={addresses} isLoading={isAddressLoading} />,
           },
           {
             key: "my-orders",

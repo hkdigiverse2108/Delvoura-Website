@@ -1,91 +1,76 @@
-import { Form, Input, Modal, Switch } from "antd";
-import { useEffect } from "react";
+import { Button, Modal, Switch } from "antd";
+import { Form as FormikForm, Formik } from "formik";
+import { useMemo } from "react";
 import type { AddressData } from "./AddressCard";
+import { CommonCountrySelect, CommonPinCodeInput, CommonTextInput } from "../../Attribute/FormFields";
+import { AddressSchema } from "../../Utils/ValidationSchemas";
+
+export type AddressFormValues = {
+  country: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  pinCode: string;
+  isDefault?: boolean;
+  isActive?: boolean;
+};
 
 interface AddressFormModalProps {
   open: boolean;
   initialValues?: AddressData | null;
   onCancel: () => void;
-  onSubmit: (values: Omit<AddressData, "id">) => void;
+  onSubmit: (values: AddressFormValues) => void | Promise<void>;
 }
 
 const AddressFormModal = ({ open, initialValues, onCancel, onSubmit }: AddressFormModalProps) => {
-  const [form] = Form.useForm();
+const emptyValues: AddressFormValues = useMemo(() => ({ country: "India", address1: "", address2: "", city: "", state: "", pinCode: "", isDefault: false, isActive: true, }), [] );
 
-  useEffect(() => {
-    if (open) {
-      form.resetFields();
-      if (initialValues) {
-        const { id, ...rest } = initialValues;
-        form.setFieldsValue(rest);
-      }
-    }
-  }, [open, initialValues, form]);
+  const resolvedInitialValues = useMemo<AddressFormValues>(() => {
+    if (!initialValues) return emptyValues;
+    return {
+      country: initialValues.country ?? "India",
+      address1: initialValues.address1 ?? "",
+      address2: initialValues.address2 ?? "",
+      city: initialValues.city ?? "",
+      state: initialValues.state ?? "",
+      pinCode: initialValues.pinCode ?? "",
+      isDefault: Boolean(initialValues.isDefault),
+      isActive: typeof initialValues.isActive === "boolean" ? initialValues.isActive : true,
+    };
+  }, [emptyValues, initialValues]);
 
   return (
-    <Modal
-      open={open}
-      title={initialValues ? "Edit Address" : "Add New Address"}
-      onCancel={onCancel}
-      okText={initialValues ? "Save Address" : "Add Address"}
-      onOk={() => form.submit()}
-      width={760}
-      centered
-    >
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onSubmit}
-        initialValues={{
-          label: "Home",
-          name: "Aarav Mehta",
-          phone: "+91 98765 43210",
-          street: "742 Sunrise Residency",
-          area: "Sector 12",
-          landmark: "Near Lotus Park",
-          city: "Bengaluru",
-          state: "Karnataka",
-          country: "India",
-          pincode: "560102",
-          isDefault: false,
-        }}
-      >
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <Form.Item name="label" label="Address Label" rules={[{ required: true, message: "Label is required" }]}>
-            <Input placeholder="Home / Work" />
-          </Form.Item>
-          <Form.Item name="name" label="Full Name" rules={[{ required: true, message: "Name is required" }]}>
-            <Input placeholder="Recipient name" />
-          </Form.Item>
-          <Form.Item name="phone" label="Phone" rules={[{ required: true, message: "Phone is required" }]}>
-            <Input placeholder="Phone number" />
-          </Form.Item>
-          <Form.Item name="street" label="Street Address" rules={[{ required: true, message: "Street is required" }]}>
-            <Input placeholder="Flat / House / Building" />
-          </Form.Item>
-          <Form.Item name="area" label="Area" rules={[{ required: true, message: "Area is required" }]}>
-            <Input placeholder="Sector / Locality" />
-          </Form.Item>
-          <Form.Item name="landmark" label="Landmark" rules={[{ required: true, message: "Landmark is required" }]}>
-            <Input placeholder="Near landmark" />
-          </Form.Item>
-          <Form.Item name="city" label="City" rules={[{ required: true, message: "City is required" }]}>
-            <Input placeholder="City" />
-          </Form.Item>
-          <Form.Item name="state" label="State" rules={[{ required: true, message: "State is required" }]}>
-            <Input placeholder="State" />
-          </Form.Item>
-          <Form.Item name="country" label="Country" rules={[{ required: true, message: "Country is required" }]}>
-            <Input placeholder="Country" />
-          </Form.Item>
-          <Form.Item name="pincode" label="Pincode" rules={[{ required: true, message: "Pincode is required" }]}>
-            <Input placeholder="Postal code" />
-          </Form.Item>
-        </div>
-        <Form.Item name="isDefault" label="Set as default" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-      </Form>
+    <Modal open={open} title={initialValues ? "Edit Address" : "Add New Address"} onCancel={onCancel} footer={null} width={760} centered className="profile-address-modal" > 
+      <Formik<AddressFormValues> initialValues={resolvedInitialValues} validationSchema={AddressSchema} onSubmit={onSubmit} enableReinitialize >
+        {({ values, errors, touched, handleChange, handleBlur, setFieldValue, isSubmitting }) => (
+          <FormikForm className="delvoura-contact-content space-y-5 mt-5">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <CommonCountrySelect name="country" label="Country" placeholder="Select country" value={values.country} onChange={(nextValue) => setFieldValue("country", nextValue)} onBlur={handleBlur} error={typeof errors.country === "string" ? errors.country : undefined} touched={!!touched.country} />
+              <CommonTextInput name="state" label="State" placeholder="State" value={values.state} onChange={handleChange} onBlur={handleBlur} error={typeof errors.state === "string" ? errors.state : undefined} touched={!!touched.state}/>
+              <CommonTextInput  name="city"  label="City"  placeholder="City"  value={values.city}  onChange={handleChange}  onBlur={handleBlur}  error={typeof errors.city === "string" ? errors.city : undefined}  touched={!!touched.city} />
+              <CommonPinCodeInput name="pinCode" label="Pin Code" placeholder="Pin code" value={values.pinCode} onChange={handleChange} onBlur={handleBlur} error={typeof errors.pinCode === "string" ? errors.pinCode : undefined} touched={!!touched.pinCode} />
+              <CommonTextInput name="address1" label="Address Line 1" placeholder="Flat / House / Building" value={values.address1} onChange={handleChange} onBlur={handleBlur} error={typeof errors.address1 === "string" ? errors.address1 : undefined} touched={!!touched.address1}   />
+              <CommonTextInput name="address2" label="Landmark" placeholder="Landmark (optional)" value={values.address2} onChange={handleChange} onBlur={handleBlur} error={typeof errors.address2 === "string" ? errors.address2 : undefined} touched={!!touched.address2}   />
+            </div>
+
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-[color:var(--color-text)]">Set as default</span>
+                <Switch checked={!!values.isDefault} onChange={(checked) => setFieldValue("isDefault", checked)} />
+              </div>
+              <div className="flex gap-3">
+                <Button danger size="large" className="px-8 py-2 text-base font-semibold profile-action-cancel" onClick={onCancel}>
+                  Cancel
+                </Button>
+                <Button type="primary" htmlType="submit" loading={isSubmitting} size="large" className="px-8 py-2 text-base font-semibold">
+                  {initialValues ? "Save Address" : "Add Address"}
+                </Button>
+              </div>
+            </div>
+          </FormikForm>
+        )}
+      </Formik>
     </Modal>
   );
 };

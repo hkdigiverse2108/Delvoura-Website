@@ -99,7 +99,7 @@ const ProfileInfoForm = ({ isEditing, onEditChange, user }: ProfileInfoFormProps
                 <Button type="primary" htmlType="submit" loading={isPending || isSubmitting} size="large" className="px-8 py-2 text-base font-semibold">
                   Save
                 </Button>
-                <Button onClick={() => onEditChange(false)} size="large" className="px-8 py-2 text-base font-semibold">
+                <Button danger onClick={() => onEditChange(false)} size="large" className="px-8 py-2 text-base font-semibold profile-action-cancel">
                   Cancel
                 </Button>
               </div>

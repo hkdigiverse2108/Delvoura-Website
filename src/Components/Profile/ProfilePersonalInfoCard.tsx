@@ -14,7 +14,7 @@ const ProfilePersonalInfoCard = () => {
             Update your personal details.
           </Text>
         </div>
-        <Button className="rounded-full px-4">Edit</Button>
+        <Button className="rounded-full px-4 profile-action-edit">Edit</Button>
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-x-12 gap-y-6 md:grid-cols-2">

@@ -144,10 +144,36 @@
   color: var(--color-accent) !important;
 }
 
+.profile-page .profile-content .address-edit-btn,
+.profile-page .profile-content .profile-action-edit {
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+  background: #fff !important;
+  transition: 0.3s;
+}
+
+.profile-page .profile-content .profile-action-edit:hover,
 .profile-page .profile-content .address-edit-btn:hover,
+.profile-page .profile-content .profile-action-edit:focus,
 .profile-page .profile-content .address-edit-btn:focus {
   border-color: var(--color-success) !important;
   color: var(--color-success) !important;
+}
+
+.profile-page .profile-content .profile-action-cancel,
+.profile-page .profile-content .profile-action-cancel:focus,
+.profile-page .profile-content .ant-btn-danger {
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+  background: #fff !important;
+}
+
+.profile-page .profile-content .profile-action-cancel:hover,
+.profile-page .profile-content .profile-action-cancel:focus,
+.profile-page .profile-content .ant-btn-danger:hover,
+.profile-page .profile-content .ant-btn-danger:focus {
+  border-color: var(--color-error) !important;
+  color: var(--color-error) !important;
 }
 
 .profile-page .profile-content .ant-tabs-nav {
@@ -248,6 +274,21 @@
   .profile-page .profile-content .profile-settings-tabs.ant-tabs-left > .ant-tabs-content-holder {
     overflow: visible;
   }
+}
+
+.profile-page .profile-content .profile-address-modal .delvoura-country-select .ant-select-selector,
+.profile-page .profile-content .profile-address-modal .delvoura-country-select.ant-select-focused .ant-select-selector,
+.profile-page .profile-content .profile-address-modal .delvoura-country-select .ant-select-selector:focus,
+.profile-page .profile-content .profile-address-modal .delvoura-country-select.ant-select-focused .ant-select-selector,
+.profile-page .profile-content .profile-address-modal .delvoura-country-select .ant-select-selector:focus-within {
+  border-color: var(--color-border) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.profile-page .profile-content .profile-address-modal .delvoura-country-select .ant-select-arrow,
+.profile-page .profile-content .profile-address-modal .delvoura-country-select .ant-select-selector {
+  color: var(--color-text) !important;
 }
 
 /* Top tabs (mobile) */
@@ -444,6 +485,20 @@
   border-radius: 15px !important;
 }
 
+.profile-address-modal .ant-modal-content {
+  overflow: hidden;
+}
+
+.profile-address-modal .ant-modal-header {
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+}
+
+.profile-address-modal .ant-modal-footer {
+  border-bottom-left-radius: 15px !important;
+  border-bottom-right-radius: 15px !important;
+}
+
 .profile-address-modal .delvoura-contact-content .ant-input,
 .profile-address-modal .delvoura-contact-content .ant-input-affix-wrapper,
 .profile-address-modal .delvoura-contact-content .ant-select-selector,
@@ -462,6 +517,136 @@
   color: color-mix(in srgb, var(--color-text) 45%, transparent) !important;
 }
 
+.profile-address-modal .delvoura-country-select .ant-select-selector {
+  border-radius: 12px !important;
+  min-height: 48px;
+  padding: 10px 12px !important;
+  box-shadow: none !important;
+  border-color: var(--color-border) !important;
+  background: #fff !important;
+  outline: none !important;
+}
+
+.profile-address-modal .delvoura-country-select .ant-select-selector:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent) !important;
+}
+
+.profile-address-modal .delvoura-country-select.ant-select-focused .ant-select-selector,
+.profile-address-modal .delvoura-country-select.ant-select-open .ant-select-selector,
+.profile-address-modal .delvoura-country-select .ant-select-selector:focus,
+.profile-address-modal .delvoura-country-select .ant-select-selector:focus-within {
+  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
+}
+
+/* Strong override for antd default focus ring */
+.profile-address-modal
+  .delvoura-country-select.ant-select-focused:not(.ant-select-disabled)
+  .ant-select-selector {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
+}
+
+/* Force hover state to avoid blue border */
+.profile-address-modal
+  .delvoura-country-select:not(.ant-select-disabled):not(.ant-select-focused):not(.ant-select-open):hover
+  .ant-select-selector {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.profile-address-modal
+  .delvoura-country-select:not(.ant-select-disabled):hover
+  .ant-select-selector {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent) !important;
+}
+
+.profile-address-modal .delvoura-country-select .ant-select-selection-search-input {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.delvoura-country-dropdown .ant-select-item-option-selected {
+  background: color-mix(in srgb, var(--color-accent) 15%, white) !important;
+  color: var(--color-text) !important;
+}
+
+.delvoura-country-dropdown .ant-select-item-option-active {
+  background: color-mix(in srgb, var(--color-accent) 10%, white) !important;
+}
+
+/* Custom country dropdown to avoid blue native focus */
+.profile-address-modal .delvoura-country-native {
+  position: relative;
+  outline: none;
+}
+
+.profile-address-modal .delvoura-country-trigger {
+  width: 100%;
+  text-align: left;
+  border-radius: 12px;
+  min-height: 48px;
+  padding: 10px 40px 10px 12px;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  color: var(--color-text);
+  outline: none;
+  box-shadow: none;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+}
+
+.profile-address-modal .delvoura-country-trigger::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--color-text-muted);
+  border-bottom: 2px solid var(--color-text-muted);
+  transform: translateY(-60%) rotate(45deg);
+}
+
+.profile-address-modal .delvoura-country-trigger .is-placeholder {
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+
+.profile-address-modal .delvoura-country-native:hover .delvoura-country-trigger {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
+}
+
+.profile-address-modal .delvoura-country-native.is-open .delvoura-country-trigger {
+  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+
+.profile-address-modal .delvoura-country-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 6px;
+  box-shadow: 0 10px 24px -16px color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.profile-address-modal .delvoura-country-option {
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.profile-address-modal .delvoura-country-option:hover,
+.profile-address-modal .delvoura-country-option[aria-selected="true"] {
+  background: color-mix(in srgb, var(--color-accent) 15%, white);
+}
+
 .profile-address-modal .delvoura-contact-content .ant-input:hover,
 .profile-address-modal .delvoura-contact-content .ant-input-affix-wrapper:hover {
   border-color: color-mix(in srgb, var(--color-accent) 60%, transparent) !important;
@@ -477,6 +662,20 @@
 .profile-address-modal .ant-btn-primary {
   background: var(--color-accent) !important;
   border-color: var(--color-accent) !important;
+}
+
+
+.profile-address-modal .ant-switch {
+  background: var(--color-border) !important;
+  box-shadow: none !important;
+}
+
+.profile-address-modal .ant-switch-checked {
+  background: var(--color-accent) !important;
+}
+
+.profile-address-modal .ant-switch:hover:not(.ant-switch-disabled) {
+  background: color-mix(in srgb, var(--color-accent) 60%, var(--color-border)) !important;
 }
 
 .profile-avatar-ring {

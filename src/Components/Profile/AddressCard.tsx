@@ -1,21 +1,9 @@
 import { Button, Card, Tag, Typography } from "antd";
+import type { AddressItem } from "../../Types";
 
 const { Text, Title } = Typography;
 
-export interface AddressData {
-  id: string;
-  label: string;
-  name: string;
-  phone: string;
-  street: string;
-  area: string;
-  landmark: string;
-  city: string;
-  state: string;
-  country: string;
-  pincode: string;
-  isDefault?: boolean;
-}
+export type AddressData = AddressItem;
 
 interface AddressCardProps {
   address: AddressData;
@@ -24,33 +12,38 @@ interface AddressCardProps {
 }
 
 const AddressCard = ({ address, onEdit, onDelete }: AddressCardProps) => {
+  const locationParts = [address.city, address.state, address.country].filter(Boolean).join(", ");
   return (
     <Card className="address-card h-full border border-[color:var(--color-border)] bg-white">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2">
             <Title level={5} className="!mb-0">
-              {address.label}
+              {address.address1 || "Address"}
             </Title>
             <Tag color={address.isDefault ? "green" : "default"}>
               {address.isDefault ? "Default" : "Saved"}
             </Tag>
           </div>
-          <Text className="block font-medium text-[color:var(--color-text)]">{address.name}</Text>
-          <Text className="block text-sm text-[color:var(--color-text-muted)]">{address.phone}</Text>
           <Text className="block text-sm text-[color:var(--color-text-muted)]">
-            {address.street}, {address.area}
+            {address.address1}
           </Text>
+          {address.address2 ? (
+            <Text className="block text-sm text-[color:var(--color-text-muted)]">
+              Landmark: {address.address2}
+            </Text>
+          ) : null}
           <Text className="block text-sm text-[color:var(--color-text-muted)]">
-            Landmark: {address.landmark}
-          </Text>
-          <Text className="block text-sm text-[color:var(--color-text-muted)]">
-            {address.city}, {address.state}, {address.country} - {address.pincode}
+            {locationParts}
+            {locationParts && address.pinCode ? " - " : ""}
+            {address.pinCode}
           </Text>
         </div>
         <div className="flex gap-2 sm:flex-col">
-          <Button onClick={() => onEdit(address)}>Edit</Button>
-          <Button danger onClick={() => onDelete(address.id)}>
+          <Button className="profile-action-edit" onClick={() => onEdit(address)}>
+            Edit
+          </Button>
+          <Button danger onClick={() => address._id && onDelete(address._id)}>
             Delete
           </Button>
         </div>

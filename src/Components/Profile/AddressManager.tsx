@@ -1,45 +1,26 @@
-import { Button, Typography, message } from "antd";
+import { Button, Empty, Spin, Typography, message } from "antd";
 import { useMemo, useState } from "react";
 import AddressCard from "./AddressCard";
 import type { AddressData } from "./AddressCard";
-import AddressFormModal from "./AddressFormModal";
+import AddressFormModal, { type AddressFormValues } from "./AddressFormModal";
+import { Mutations } from "../../Api";
+import { useAppSelector } from "../../Store/Hooks";
 
 const { Title, Text } = Typography;
 
-const initialAddresses: AddressData[] = [
-  {
-    id: "addr-1",
-    label: "Home",
-    name: "Aarav Mehta",
-    phone: "+91 98765 43210",
-    street: "742 Sunrise Residency",
-    area: "Sector 12",
-    landmark: "Near Lotus Park",
-    city: "Bengaluru",
-    state: "Karnataka",
-    country: "India",
-    pincode: "560102",
-    isDefault: true,
-  },
-  {
-    id: "addr-2",
-    label: "Work",
-    name: "Aarav Mehta",
-    phone: "+91 98765 43210",
-    street: "5th Floor, Orion Tech Park",
-    area: "MG Road",
-    landmark: "Opp. City Mall",
-    city: "Bengaluru",
-    state: "Karnataka",
-    country: "India",
-    pincode: "560001",
-  },
-];
+interface AddressManagerProps {
+  addresses: AddressData[];
+  isLoading?: boolean;
+}
 
-const AddressManager = () => {
-  const [addresses, setAddresses] = useState<AddressData[]>(initialAddresses);
+const AddressManager = ({ addresses, isLoading }: AddressManagerProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<AddressData | null>(null);
+  const { token } = useAppSelector((state) => state.auth);
+
+  const { mutateAsync: createAddress, isPending: isCreating } = Mutations.useCreateAddress(token ?? undefined);
+  const { mutateAsync: updateAddress, isPending: isUpdating } = Mutations.useUpdateAddress(token ?? undefined);
+  const { mutate: deleteAddress, isPending: isDeleting } = Mutations.useDeleteAddress(token ?? undefined);
 
   const sortedAddresses = useMemo(() => {
     return [...addresses].sort((a, b) => Number(Boolean(b.isDefault)) - Number(Boolean(a.isDefault)));
@@ -56,32 +37,45 @@ const AddressManager = () => {
   };
 
   const handleDelete = (id: string) => {
-    setAddresses((prev) => prev.filter((item) => item.id !== id));
-    message.success("Address deleted");
+    if (!token) {
+      message.error("Please sign in to continue");
+      return;
+    }
+    deleteAddress(
+      { id },
+      {
+        onSuccess: () => message.success("Address deleted"),
+        onError: () => message.error("Delete failed"),
+      }
+    );
   };
 
-  const handleSubmit = (values: Omit<AddressData, "id">) => {
-    if (editingAddress) {
-      setAddresses((prev) =>
-        prev.map((item) =>
-          item.id === editingAddress.id
-            ? { ...item, ...values }
-            : values.isDefault
-            ? { ...item, isDefault: false }
-            : item
-        )
-      );
-      message.success("Address updated");
-    } else {
-      setAddresses((prev) => [
-        { id: `addr-${Date.now()}`, ...values },
-        ...prev.map((item) => (values.isDefault ? { ...item, isDefault: false } : item)),
-      ]);
-      message.success("Address added");
+  const handleSubmit = async (values: AddressFormValues) => {
+    if (!token) {
+      message.error("Please sign in to continue");
+      return;
     }
-    setModalOpen(false);
-    setEditingAddress(null);
+
+    try {
+      if (editingAddress) {
+        if (!editingAddress._id) {
+          message.error("Address id not found");
+          return;
+        }
+        await updateAddress({ addressId: editingAddress._id, ...values });
+        message.success("Address updated");
+      } else {
+        await createAddress(values);
+        message.success("Address added");
+      }
+      setModalOpen(false);
+      setEditingAddress(null);
+    } catch (error) {
+      message.error("Something went wrong");
+    }
   };
+
+  const isBusy = isCreating || isUpdating || isDeleting;
 
   return (
     <div className="space-y-6 pt-5">
@@ -94,26 +88,31 @@ const AddressManager = () => {
             Manage delivery locations for faster checkout and easy returns.
           </Text>
         </div>
-        <Button type="primary" className="bg-[color:var(--color-accent)] w-full sm:w-auto" onClick={handleAdd}>
+        <Button
+          type="primary"
+          className="bg-[color:var(--color-accent)] w-full sm:w-auto"
+          onClick={handleAdd}
+          loading={isBusy}
+        >
           Add New Address
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {sortedAddresses.map((address) => (
-          <AddressCard key={address.id} address={address} onEdit={handleEdit} onDelete={handleDelete} />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center py-10">
+          <Spin />
+        </div>
+      ) : sortedAddresses.length === 0 ? (
+        <Empty description="No addresses yet" />
+      ) : (
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {sortedAddresses.map((address) => (
+            <AddressCard key={address._id || `${address.address1}-${address.pinCode}`} address={address} onEdit={handleEdit} onDelete={handleDelete}  />
+          ))}
+        </div>
+      )}
 
-      <AddressFormModal
-        open={modalOpen}
-        initialValues={editingAddress}
-        onCancel={() => {
-          setModalOpen(false);
-          setEditingAddress(null);
-        }}
-        onSubmit={handleSubmit}
-      />
+      <AddressFormModal open={modalOpen} initialValues={editingAddress} onCancel={() => { setModalOpen(false); setEditingAddress(null); }}onSubmit={handleSubmit}/>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { KEYS, URL_KEYS } from "../Constants";
-import type { ChangePasswordPayload, ChangePasswordResponse, ContactUsPayload, ContactUsResponse, CreateRatingPayload, CreateRatingResponse, ForgetPasswordPayload, ForgetPasswordResponse, LoginPayload, LoginResponse, ResetForgetPasswordPayload, ResetForgetPasswordResponse, SignupPayload, SignupResponse, UpdateUserPayload, UpdateUserResponse, VerifyOtpPayload, VerifyOtpResponse,} from "../Types";
-import { Post, Put } from "./Methods/Index";
+import type { ChangePasswordPayload, ChangePasswordResponse, ContactUsPayload, ContactUsResponse, CreateAddressPayload, CreateAddressResponse, CreateRatingPayload, CreateRatingResponse, DeleteAddressResponse, ForgetPasswordPayload, ForgetPasswordResponse, LoginPayload, LoginResponse, ResetForgetPasswordPayload, ResetForgetPasswordResponse, SignupPayload, SignupResponse, UpdateAddressPayload, UpdateAddressResponse, UpdateUserPayload, UpdateUserResponse, VerifyOtpPayload, VerifyOtpResponse,} from "../Types";
+import { Delete, Post, Put } from "./Methods/Index";
 import { useMutations, type AppMutationOptions } from "./ReactQuery/Index";
 
 export const Mutations = {
@@ -20,4 +20,12 @@ export const Mutations = {
 
   // ************ User ***********
   useUpdateUser: (options?: AppMutationOptions<UpdateUserResponse, UpdateUserPayload>) =>useMutations<UpdateUserPayload, UpdateUserResponse>([KEYS.USER.UPDATE_USER],(input) => Put<UpdateUserPayload, UpdateUserResponse>(URL_KEYS.USER.UPDATE_USER, input),options,),
+
+  // ************ Address ***********
+  useCreateAddress: (token?: string, options?: AppMutationOptions<CreateAddressResponse, CreateAddressPayload>) =>
+    useMutations<CreateAddressPayload, CreateAddressResponse>([KEYS.ADDRESS.ADD_ADDRESS], (input) => Post<CreateAddressPayload, CreateAddressResponse>(URL_KEYS.ADDRESS.ADD_ADDRESS, input, token), { invalidateQueryKeys: [[KEYS.ADDRESS.GET_ADDRESSES]], ...options },),
+  useUpdateAddress: (token?: string, options?: AppMutationOptions<UpdateAddressResponse, UpdateAddressPayload>) =>
+    useMutations<UpdateAddressPayload, UpdateAddressResponse>([KEYS.ADDRESS.UPDATE_ADDRESS], (input) => Put<UpdateAddressPayload, UpdateAddressResponse>(URL_KEYS.ADDRESS.UPDATE_ADDRESS, input, token), { invalidateQueryKeys: [[KEYS.ADDRESS.GET_ADDRESSES]], ...options },),
+  useDeleteAddress: (token?: string, options?: AppMutationOptions<DeleteAddressResponse, { id: string }>) =>
+    useMutations<{ id: string }, DeleteAddressResponse>([KEYS.ADDRESS.DELETE_ADDRESS], ({ id }) => Delete<DeleteAddressResponse, undefined>(`${URL_KEYS.ADDRESS.DELETE_ADDRESS}/${id}`, undefined, token), { invalidateQueryKeys: [[KEYS.ADDRESS.GET_ADDRESSES]], ...options },),
 };

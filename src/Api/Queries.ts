@@ -1,5 +1,5 @@
 import { KEYS, URL_KEYS } from "../Constants";
-import type { BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleBlogApiResponse, SingleProductApiResponse, SingleUserApiResponse, TopbarApiResponse } from "../Types";
+import type { AddressesApiResponse, AddressesQueryParams, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleAddressApiResponse, SingleBlogApiResponse, SingleProductApiResponse, SingleUserApiResponse, TopbarApiResponse } from "../Types";
 import { Get } from "./Methods/Index";
 import { useQueries } from "./ReactQuery/Index";
 
@@ -32,4 +32,10 @@ export const Queries = {
   // ************ Blog ***********
   useGetBlogs: (params?: BlogsQueryParams) => useQueries<BlogsApiResponse>([KEYS.BLOG.GET_BLOGS, params], () => Get<BlogsApiResponse>(URL_KEYS.BLOG.GET_BLOGS, params),),
   useGetBlogById: (id?: string) => useQueries<SingleBlogApiResponse>([KEYS.BLOG.GET_BLOG_BY_ID, id], () => Get<SingleBlogApiResponse>(`${URL_KEYS.BLOG.GET_BLOG_BY_ID}/${id}`), { enabled: !!id },),
+
+  // ************ Address ***********
+  useGetAddresses: (params?: AddressesQueryParams, token?: string) =>
+    useQueries<AddressesApiResponse>([KEYS.ADDRESS.GET_ADDRESSES, params, token], () => Get<AddressesApiResponse>(URL_KEYS.ADDRESS.GET_ADDRESSES, params, undefined, token), { enabled: !!token },),
+  useGetAddressById: (id?: string, token?: string) =>
+    useQueries<SingleAddressApiResponse>([KEYS.ADDRESS.GET_ADDRESS_BY_ID, id, token], () => Get<SingleAddressApiResponse>(`${URL_KEYS.ADDRESS.GET_ADDRESS_BY_ID}/${id}`, undefined, undefined, token), { enabled: !!id && !!token },),
 };

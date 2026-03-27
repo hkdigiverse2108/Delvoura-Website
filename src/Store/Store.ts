@@ -3,6 +3,7 @@ import authReducer from "./Slices/AuthSlice";
 import productReducer from "./Slices/ProductSlice";
 import scentReducer from "./Slices/ScentSlice";
 import seasonReducer from "./Slices/SeasonSlice";
+import addressReducer from "./Slices/AddressSlice";
 
 const Store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const Store = configureStore({
     product: productReducer,
     scent: scentReducer,
     season: seasonReducer,
+    address: addressReducer,
   },
 });
 

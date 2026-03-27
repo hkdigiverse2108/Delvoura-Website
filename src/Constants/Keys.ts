@@ -57,4 +57,13 @@ export const KEYS = {
   CONTACT_US: {
     ADD: "contact-us-add",
   },
+
+  //========Address=========
+  ADDRESS: {
+    GET_ADDRESSES: "get-addresses",
+    GET_ADDRESS_BY_ID: "get-address-by-id",
+    ADD_ADDRESS: "add-address",
+    UPDATE_ADDRESS: "update-address",
+    DELETE_ADDRESS: "delete-address",
+  },
 } as const;

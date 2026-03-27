@@ -1,5 +1,5 @@
 import { KEYS, URL_KEYS } from "../Constants";
-import type { ChangePasswordPayload, ChangePasswordResponse, ContactUsPayload, ContactUsResponse, CreateAddressPayload, CreateAddressResponse, CreateOrderPayload, CreateOrderResponse, CreateRatingPayload, CreateRatingResponse, DeleteAddressResponse, ForgetPasswordPayload, ForgetPasswordResponse, LoginPayload, LoginResponse, ResetForgetPasswordPayload, ResetForgetPasswordResponse, SignupPayload, SignupResponse, UpdateAddressPayload, UpdateAddressResponse, UpdateOrderShippingPayload, UpdateOrderShippingResponse, UpdateUserPayload, UpdateUserResponse, VerifyOtpPayload, VerifyOtpResponse,} from "../Types";
+import type { ChangePasswordPayload, ChangePasswordResponse, ContactUsPayload, ContactUsResponse, CreateAddressPayload, CreateAddressResponse, CreateNewsletterPayload, CreateNewsletterResponse, CreateOrderPayload, CreateOrderResponse, CreateRatingPayload, CreateRatingResponse, DeleteAddressResponse, ForgetPasswordPayload, ForgetPasswordResponse, LoginPayload, LoginResponse, ResetForgetPasswordPayload, ResetForgetPasswordResponse, SignupPayload, SignupResponse, UpdateAddressPayload, UpdateAddressResponse, UpdateOrderShippingPayload, UpdateOrderShippingResponse, UpdateUserPayload, UpdateUserResponse, VerifyOtpPayload, VerifyOtpResponse,} from "../Types";
 import { Delete, Post, Put } from "./Methods/Index";
 import { useMutations, type AppMutationOptions } from "./ReactQuery/Index";
 
@@ -29,4 +29,8 @@ export const Mutations = {
   // ************ Order ***********
   useCreateOrder: (token?: string, options?: AppMutationOptions<CreateOrderResponse, CreateOrderPayload>) =>useMutations<CreateOrderPayload, CreateOrderResponse>([KEYS.ORDER.ADD_ORDER], (input) => Post<CreateOrderPayload, CreateOrderResponse>(URL_KEYS.ORDER.ADD_ORDER, input, token), { invalidateQueryKeys: [[KEYS.ORDER.GET_ORDERS]], ...options },),
   useUpdateOrderShipping: (token?: string, options?: AppMutationOptions<UpdateOrderShippingResponse, UpdateOrderShippingPayload>) =>useMutations<UpdateOrderShippingPayload, UpdateOrderShippingResponse>([KEYS.ORDER.UPDATE_ORDER_SHIPPING], (input) => Put<UpdateOrderShippingPayload, UpdateOrderShippingResponse>(URL_KEYS.ORDER.UPDATE_ORDER_SHIPPING, input, token), { invalidateQueryKeys: [[KEYS.ORDER.GET_ORDERS]], ...options },),
+
+  // ************ Newsletter ***********
+  useCreateNewsletter: (options?: AppMutationOptions<CreateNewsletterResponse, CreateNewsletterPayload>) =>
+    useMutations<CreateNewsletterPayload, CreateNewsletterResponse>([KEYS.NEWSLETTER.ADD_NEWSLETTER], (input) => Post<CreateNewsletterPayload, CreateNewsletterResponse>(URL_KEYS.NEWSLETTER.ADD, input), options),
 };

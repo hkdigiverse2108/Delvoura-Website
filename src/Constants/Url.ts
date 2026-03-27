@@ -74,4 +74,9 @@ export const URL_KEYS = {
         ADD_ORDER: "/order/add",
         UPDATE_ORDER_SHIPPING: "/order/shipping-address"
     },
+
+    //==============NEWSLETTER===============
+    NEWSLETTER: {
+        ADD: "/newsletter/add"
+    },
 } as const

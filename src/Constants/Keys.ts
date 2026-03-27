@@ -74,4 +74,9 @@ export const KEYS = {
     ADD_ORDER: "add-order",
     UPDATE_ORDER_SHIPPING: "update-order-shipping",
   },
+
+  //========Newsletter=========
+  NEWSLETTER: {
+    ADD_NEWSLETTER: "add-newsletter",
+  },
 } as const;

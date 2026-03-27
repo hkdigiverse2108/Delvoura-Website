@@ -67,6 +67,10 @@ export const ContactUsSchema = Yup.object({
   }),
 });
 
+export const NewsletterSchema = Yup.object({
+  email: Validation("string", "Email", { extraRules: (s) => s.email("Invalid email address") }),
+});
+
 export const ProfileInfoSchema = Yup.object({
   firstName: Validation("string", "First name"),
   lastName: Validation("string", "Last name"),

@@ -1,6 +1,10 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { Input, Modal, Typography } from "antd";
-import { useMemo, useState } from "react";
+import { Modal, Typography } from "antd";
+import { Form as FormikForm, Formik, type FormikHelpers } from "formik";
+import { CommonEmailInput, notifyError, notifySuccess } from "../../Attribute";
+import { Mutations } from "../../Api";
+import type { CreateNewsletterPayload } from "../../Types";
+import { NewsletterSchema } from "../../Utils/ValidationSchemas";
 
 type NewsletterModalProps = {
   open: boolean;
@@ -10,12 +14,26 @@ type NewsletterModalProps = {
 const { Title, Text } = Typography;
 
 const NewsletterModal = ({ open, onClose }: NewsletterModalProps) => {
-  const [email, setEmail] = useState("");
-  const isDisabled = useMemo(() => email.trim().length === 0, [email]);
+  const { mutate: createNewsletter, isPending } = Mutations.useCreateNewsletter();
 
-  const handleSubmit = () => {
-    if (isDisabled) return;
-    // handle email submission logic here
+  const handleSubmit = (values: CreateNewsletterPayload, helpers: FormikHelpers<CreateNewsletterPayload>) => {
+    createNewsletter(
+      { email: values.email.toLowerCase().trim() },
+      {
+        onSuccess: () => {
+          notifySuccess("Subscribed successfully");
+          helpers.resetForm({ values: { email: "" } });
+          helpers.setTouched({});
+          helpers.setStatus(undefined);
+          onClose();
+        },
+        onError: (err) => {
+          const message = err instanceof Error ? err.message : "Something went wrong";
+          notifyError(message);
+          helpers.setStatus(message);
+        },
+      }
+    );
   };
 
   return (
@@ -35,12 +53,17 @@ const NewsletterModal = ({ open, onClose }: NewsletterModalProps) => {
         </Text>
 
         <div className="mt-8 w-full max-w-md">
-          <Input size="large" value={email} onChange={(e) => setEmail(e.target.value)} onPressEnter={handleSubmit} placeholder="Enter your email address" className="h-12 rounded-full !border !bg-[color:var(--color-card)] !pl-5 !pr-5 !text-sm !text-[color:var(--color-text)] shadow-[0_16px_30px_-24px_rgba(15,23,42,0.35)]" />
-          <br />
-          <br />
-          <button type="button" onClick={handleSubmit} disabled={isDisabled} className="mt-3 h-11 w-full rounded-[15px] border border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-sm font-semibold text-[color:var(--color-text-on-dark)] shadow-[0_18px_32px_-24px_rgba(15,23,42,0.55)] transition hover:translate-y-[-1px] hover:bg-[color:var(--color-accent)] hover:shadow-[0_20px_34px_-24px_rgba(15,23,42,0.7)] disabled:cursor-not-allowed disabled:opacity-60" >
-            Subscribe
-          </button>
+          <Formik<CreateNewsletterPayload> initialValues={{ email: "" }} validationSchema={NewsletterSchema} onSubmit={handleSubmit}>
+            {({ values, errors, touched, status, handleChange, handleBlur, handleSubmit }) => (
+              <FormikForm onSubmit={handleSubmit}>
+                <CommonEmailInput  name="email"  label="Email"  placeholder="Enter your email address"  value={values.email}  onChange={handleChange}  onBlur={handleBlur}  error={touched.email ? errors.email : undefined}  touched={!!touched.email}  hideLabel  inputClassName="h-12 rounded-full !border !border-[color:var(--color-border)] !bg-[color:var(--color-card)] !pl-5 !pr-5 !text-sm !text-[color:var(--color-text)] shadow-[0_16px_30px_-24px_rgba(15,23,42,0.35)] hover:!border-[#ff4d4f] focus:!border-[#ff4d4f] focus:!shadow-none" /> <br />
+                {status ? <div className="mt-2 text-sm text-red-500">{status}</div> : null}
+                <button type="submit" disabled={isPending || !values.email.trim()} className="mt-6 h-11 w-full rounded-[15px] border border-[color:var(--color-accent)] bg-[color:var(--color-accent)] text-sm font-semibold text-[color:var(--color-text-on-dark)] shadow-[0_18px_32px_-24px_rgba(15,23,42,0.55)] transition hover:translate-y-[-1px] hover:bg-[color:var(--color-accent)] hover:shadow-[0_20px_34px_-24px_rgba(15,23,42,0.7)] disabled:cursor-not-allowed disabled:opacity-60" style={{color:"white"}}>
+                  {isPending ? "Subscribing..." : "Subscribe"}
+                </button>
+              </FormikForm>
+            )}
+          </Formik>
         </div>
       </div>
     </Modal>

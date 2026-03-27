@@ -9,6 +9,10 @@ export type CommonEmailInputProps = {
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
   error?: string;
   touched?: boolean;
+  hideLabel?: boolean;
+  containerClassName?: string;
+  labelClassName?: string;
+  inputClassName?: string;
 };
 
 export type CommonPasswordInputProps = {

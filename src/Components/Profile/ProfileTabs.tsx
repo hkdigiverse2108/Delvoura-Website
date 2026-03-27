@@ -9,19 +9,24 @@ import { UserOutlined, HomeOutlined, ShoppingOutlined, LockOutlined } from "@ant
 import { useAppDispatch, useAppSelector } from "../../Store/Hooks";
 import { Queries } from "../../Api";
 import { setAddresses } from "../../Store/Slices/AddressSlice";
-import type { AddressItem } from "../../Types";
+import { setOrders } from "../../Store/Slices/OrderSlice";
+import type { AddressItem, OrderItem } from "../../Types";
 
 const ProfileTabs = () => {
   const [tabPosition, setTabPosition] = useState<"left" | "top">("left");
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useAppDispatch();
   const { user: storeUser, token } = useAppSelector((state) => state.auth);
-  //Users Data
-  const { data: userData } = Queries.useGetSingleUser( ((storeUser as { _id?: string } | null)?._id), );
+  // Users data fetch (profile info)
+  const { data: userData } = Queries.useGetSingleUser(((storeUser as { _id?: string } | null)?._id));
 
-  //Address
+  // Address fetch (address book)
   const { data: addressData, isLoading: isAddressLoading } = Queries.useGetAddresses(undefined, token ?? undefined);
   const addresses = useAppSelector((state) => state.address.items);
+
+  // Order fetch (my orders)
+  const { data: orderData, isLoading: isOrderLoading } = Queries.useGetOrders(undefined, token ?? undefined);
+  const orders = useAppSelector((state) => state.order.items);
   
   const resolveUser = (input: unknown) => {
     if (!input) return null;
@@ -50,6 +55,23 @@ const ProfileTabs = () => {
   useEffect(() => {
     dispatch(setAddresses(resolvedAddresses));
   }, [dispatch, resolvedAddresses]);
+
+  const resolveOrderList = (input: unknown): OrderItem[] => {
+    if (!input) return [];
+    const root = (input as { data?: unknown })?.data ?? input;
+    if (Array.isArray(root)) return root;
+    const data = root as { order_data?: unknown; orders?: unknown; data?: unknown };
+    if (Array.isArray(data.order_data)) return data.order_data;
+    if (Array.isArray(data.orders)) return data.orders;
+    if (Array.isArray(data.data)) return data.data;
+    return [];
+  };
+
+  const resolvedOrders = useMemo(() => resolveOrderList(orderData), [orderData]);
+
+  useEffect(() => {
+    dispatch(setOrders(resolvedOrders));
+  }, [dispatch, resolvedOrders]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -97,7 +119,7 @@ const ProfileTabs = () => {
                 <ShoppingOutlined /> My Orders
               </span>
             ),
-            children: <MyOrders />,
+            children: <MyOrders orders={orders} isLoading={isOrderLoading} />,
           },
           {
             key: "change-password",

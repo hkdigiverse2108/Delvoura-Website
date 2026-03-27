@@ -66,4 +66,12 @@ export const URL_KEYS = {
         UPDATE_ADDRESS: "/address/edit",
         DELETE_ADDRESS: "/address"
     },
+
+    //==============ORDER===============
+    ORDER: {
+        GET_ORDERS: "/order",
+        GET_ORDER_BY_ID: "/order",
+        ADD_ORDER: "/order/add",
+        UPDATE_ORDER_SHIPPING: "/order/shipping-address"
+    },
 } as const

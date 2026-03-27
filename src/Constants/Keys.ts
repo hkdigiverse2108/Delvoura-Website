@@ -66,4 +66,12 @@ export const KEYS = {
     UPDATE_ADDRESS: "update-address",
     DELETE_ADDRESS: "delete-address",
   },
+
+  //========Order=========
+  ORDER: {
+    GET_ORDERS: "get-orders",
+    GET_ORDER_BY_ID: "get-order-by-id",
+    ADD_ORDER: "add-order",
+    UPDATE_ORDER_SHIPPING: "update-order-shipping",
+  },
 } as const;

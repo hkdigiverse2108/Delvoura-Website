@@ -4,6 +4,7 @@ import productReducer from "./Slices/ProductSlice";
 import scentReducer from "./Slices/ScentSlice";
 import seasonReducer from "./Slices/SeasonSlice";
 import addressReducer from "./Slices/AddressSlice";
+import orderReducer from "./Slices/OrderSlice";
 
 const Store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const Store = configureStore({
     scent: scentReducer,
     season: seasonReducer,
     address: addressReducer,
+    order: orderReducer,
   },
 });
 

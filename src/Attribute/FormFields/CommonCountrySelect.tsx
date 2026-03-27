@@ -1,16 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CommonCountrySelectProps } from "../../Types";
 
-export const CommonCountrySelect = ({
-  name,
-  label,
-  placeholder,
-  value,
-  onChange,
-  onBlur,
-  error,
-  touched,
-}: CommonCountrySelectProps) => {
+export const CommonCountrySelect = ({ name, label, placeholder, value, onChange, onBlur, error, touched,}: CommonCountrySelectProps) => {
   const hasError = touched && !!error;
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -35,35 +26,13 @@ export const CommonCountrySelect = ({
     <div>
       <label className="mb-2 block text-sm text-[color:var(--color-text)]">{label}</label>
       <div>
-        <div
-          className={`delvoura-country-native ${open ? "is-open" : ""}`}
-          ref={wrapperRef}
-        >
-          <button
-            type="button"
-            className="delvoura-country-trigger"
-            onClick={() => setOpen((prev) => !prev)}
-            onBlur={() => {
-              onBlur?.({ target: { name } } as any);
-            }}
-            aria-haspopup="listbox"
-            aria-expanded={open}
-            name={name}
-            style={{ borderColor: hasError ? "#ff4d4f" : undefined }}
-          >
+        <div className={`delvoura-country-native ${open ? "is-open" : ""}`} ref={wrapperRef} >
+          <button  type="button"  className="delvoura-country-trigger"  onClick={() => setOpen((prev) => !prev)}  onBlur={() => { onBlur?.({ target: { name } } as any); }} aria-haspopup="listbox" aria-expanded={open} name={name} style={{ borderColor: hasError ? "#ff4d4f" : undefined }} >
             <span className={resolvedValue ? "" : "is-placeholder"}>{displayValue}</span>
           </button>
           {open && (
             <ul className="delvoura-country-menu" role="listbox" aria-label={label}>
-              <li
-                role="option"
-                aria-selected={resolvedValue === "India"}
-                className="delvoura-country-option"
-                onClick={() => {
-                  onChange?.("India");
-                  setOpen(false);
-                }}
-              >
+              <li role="option" aria-selected={resolvedValue === "India"} className="delvoura-country-option" onClick={() => { onChange?.("India"); setOpen(false); }} >
                 India
               </li>
             </ul>

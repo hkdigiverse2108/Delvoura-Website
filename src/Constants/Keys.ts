@@ -79,4 +79,13 @@ export const KEYS = {
   NEWSLETTER: {
     ADD_NEWSLETTER: "add-newsletter",
   },
+
+  //========Policy=========
+  POLICY: {
+    GET_TERMS_OF_SERVICE: "get-terms-of-service",
+    GET_TERMS_CONDITIONS: "get-terms-conditions",
+    GET_REFUND_POLICY: "get-refund-policy",
+    GET_PRIVACY_POLICY: "get-privacy-policy",
+    GET_RETURN_EXCHANGE: "get-return-exchange",
+  },
 } as const;

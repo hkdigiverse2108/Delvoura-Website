@@ -2,9 +2,12 @@ import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
 import { InstagramScrollingSection, OfferBar } from "../../Components/common";
 import { useEffect, useState } from "react";
+import { Queries } from "../../Api";
 
 const RefundPolicy = () => {
       const [hideOfferBar, setHideOfferBar] = useState(false);
+      const { data: refundData, isLoading: isRefundLoading } = Queries.useGetRefundPolicy();
+      const refundContent = (refundData as { data?: { content?: string } })?.data?.content ?? null;
 
 
     //hide offerbar
@@ -28,39 +31,23 @@ const RefundPolicy = () => {
 
       <section className="delvoura-container py-12">
         <div className="rounded-2xl border border-[color:var(--color-border-dark)] bg-[color:var(--color-card)] p-8 shadow-sm">
-          <h2 className="text-2xl font-semibold tracking-wide">
-            Refund Policy
-          </h2>
-          <p className="mt-4 text-base text-[color:var(--color-text-muted)]">
-            Refunds are issued only for damaged, defective, or incorrect items.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Report issues within 24 hours of delivery with photos and an unboxing video.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Once approved, refunds are processed to the original payment method.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Refund timelines vary by bank, typically 5-10 business days.
-          </p>
-          <h3 className="mt-6 text-sm font-semibold uppercase tracking-[0.2em]">
-            Important Notes
-          </h3>
-          <p className="mt-2 text-base text-[color:var(--color-text-muted)]">
-            Items must be unused and in original packaging for claims to be valid.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Fragrance preferences are subjective, so refunds are not available for smell changes.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            For missing items, contact us with your order ID and unboxing details.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            We may request additional information to resolve the claim quickly.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Need help? Write to support@delvoura.com.
-          </p>
+          {isRefundLoading && (
+            <p className="mt-4 text-base text-[color:var(--color-text-muted)]">
+              Loading refund policy...
+            </p>
+          )}
+          {!isRefundLoading && refundContent && (
+            <div
+              className="refund-content mt-6 text-[color:var(--color-text-muted)] [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-[color:var(--color-text)] [&_h2]:mt-6 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-[color:var(--color-text)] [&_h3]:mt-5 [&_p]:text-base [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_li]:text-base [&_li]:leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: refundContent }}
+            />
+          )}
+          {!isRefundLoading && !refundContent && (
+            <div className="delvoura-product-empty-state mt-8 flex flex-col items-center justify-center gap-2 text-center text-sm text-[color:var(--color-text-muted)]">
+              <img src="/assets/images/order/empty.png" alt="No refund policy" className="mx-auto w-40 opacity-80" />
+              <div>Refund policy content is not available right now.</div>
+            </div>
+          )}
         </div>
       </section>
       <InstagramScrollingSection />

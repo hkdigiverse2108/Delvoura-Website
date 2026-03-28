@@ -2,9 +2,12 @@ import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
 import { InstagramScrollingSection, OfferBar } from "../../Components/common";
 import { useEffect, useState } from "react";
+import { Queries } from "../../Api";
 
 const ReturnExchangePolicy = () => {
       const [hideOfferBar, setHideOfferBar] = useState(false);
+      const { data: returnData, isLoading: isReturnLoading } = Queries.useGetReturnExchange();
+      const returnContent = (returnData as { data?: { content?: string } })?.data?.content ?? null;
 
 
     //hide offerbar
@@ -28,36 +31,24 @@ const ReturnExchangePolicy = () => {
 
       <section className="delvoura-container py-12">
         <div className="rounded-2xl border border-[color:var(--color-border-dark)] bg-[color:var(--color-card)] p-8 shadow-sm">
-          <h2 className="text-2xl font-semibold tracking-wide">
-            Returns & Exchanges
-          </h2>
-          <p className="mt-4 text-base text-[color:var(--color-text-muted)]">
-            We accept returns only for damaged or incorrect items delivered.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Contact support within 24 hours with an unboxing video and clear photos.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            If approved, we will arrange a replacement or offer a refund.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Exchanges are subject to stock availability of the same product.
-          </p>
-          <h3 className="mt-6 text-sm font-semibold uppercase tracking-[0.2em]">
-            Eligibility
-          </h3>
-          <p className="mt-2 text-base text-[color:var(--color-text-muted)]">
-            Items must be unused, sealed, and returned in original packaging.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Requests raised after 24 hours may not be accepted.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            Courier damage must be reported at the time of delivery for faster resolution.
-          </p>
-          <p className="text-base text-[color:var(--color-text-muted)]">
-            For any questions, reach us at support@delvoura.com.
-          </p>
+  
+          {isReturnLoading && (
+            <p className="mt-4 text-base text-[color:var(--color-text-muted)]">
+              Loading returns & exchanges...
+            </p>
+          )}
+          {!isReturnLoading && returnContent && (
+            <div
+              className="return-content mt-6 text-[color:var(--color-text-muted)] [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-[color:var(--color-text)] [&_h2]:mt-6 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-[color:var(--color-text)] [&_h3]:mt-5 [&_p]:text-base [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_li]:text-base [&_li]:leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: returnContent }}
+            />
+          )}
+          {!isReturnLoading && !returnContent && (
+            <div className="delvoura-product-empty-state mt-8 flex flex-col items-center justify-center gap-2 text-center text-sm text-[color:var(--color-text-muted)]">
+              <img src="/assets/images/order/empty.png" alt="No returns & exchanges" className="mx-auto w-40 opacity-80" />
+              <div>Returns & exchanges content is not available right now.</div>
+            </div>
+          )}
         </div>
       </section>
       <InstagramScrollingSection />

@@ -1,5 +1,5 @@
 import { KEYS, URL_KEYS } from "../Constants";
-import type { AddressesApiResponse, AddressesQueryParams, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, OrdersApiResponse, OrdersQueryParams, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TopbarApiResponse } from "../Types";
+import type { AddressesApiResponse, AddressesQueryParams, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, OrdersApiResponse, OrdersQueryParams, PrivacyPolicyApiResponse, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, RefundPolicyApiResponse, ReturnExchangeApiResponse, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TermsConditionsApiResponse, TermsServiceApiResponse, TopbarApiResponse } from "../Types";
 import { Get } from "./Methods/Index";
 import { useQueries } from "./ReactQuery/Index";
 
@@ -28,6 +28,13 @@ export const Queries = {
 
   // ************ Topbar ***********
   useGetTopbar: () => useQueries<TopbarApiResponse>([KEYS.TOPBAR.GET_TOPBAR], () => Get<TopbarApiResponse>(URL_KEYS.TOPBAR.GET_TOPBAR),),
+
+  // ************ Policy ***********
+  useGetTermsService: () => useQueries<TermsServiceApiResponse>([KEYS.POLICY.GET_TERMS_OF_SERVICE], () => Get<TermsServiceApiResponse>(URL_KEYS.POLICY.GET_TERMS_OF_SERVICE),),
+  useGetTermsConditions: () => useQueries<TermsConditionsApiResponse>([KEYS.POLICY.GET_TERMS_CONDITIONS], () => Get<TermsConditionsApiResponse>(URL_KEYS.POLICY.GET_TERMS_CONDITIONS),),
+  useGetRefundPolicy: () => useQueries<RefundPolicyApiResponse>([KEYS.POLICY.GET_REFUND_POLICY], () => Get<RefundPolicyApiResponse>(URL_KEYS.POLICY.GET_REFUND_POLICY),),
+  useGetPrivacyPolicy: () => useQueries<PrivacyPolicyApiResponse>([KEYS.POLICY.GET_PRIVACY_POLICY], () => Get<PrivacyPolicyApiResponse>(URL_KEYS.POLICY.GET_PRIVACY_POLICY),),
+  useGetReturnExchange: () => useQueries<ReturnExchangeApiResponse>([KEYS.POLICY.GET_RETURN_EXCHANGE], () => Get<ReturnExchangeApiResponse>(URL_KEYS.POLICY.GET_RETURN_EXCHANGE),),
 
   // ************ Blog ***********
   useGetBlogs: (params?: BlogsQueryParams) => useQueries<BlogsApiResponse>([KEYS.BLOG.GET_BLOGS, params], () => Get<BlogsApiResponse>(URL_KEYS.BLOG.GET_BLOGS, params),),

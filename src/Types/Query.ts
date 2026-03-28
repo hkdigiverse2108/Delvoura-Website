@@ -204,3 +204,74 @@ export type TopbarApiResponse = {
   message?: string;
   data?: TopbarItem | { topbarItems?: string[]; topbar_data?: TopbarItem[] };
 };
+
+//============Policy type==============
+export type TermsServiceItem = {
+  _id?: string;
+  content?: string;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type TermsServiceApiResponse = {
+  status?: number;
+  message?: string;
+  data?: TermsServiceItem | { termsService?: TermsServiceItem };
+};
+
+export type TermsConditionsItem = {
+  _id?: string;
+  content?: string;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type TermsConditionsApiResponse = {
+  status?: number;
+  message?: string;
+  data?: TermsConditionsItem | { termsConditions?: TermsConditionsItem };
+};
+
+export type RefundPolicyItem = {
+  _id?: string;
+  content?: string;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type RefundPolicyApiResponse = {
+  status?: number;
+  message?: string;
+  data?: RefundPolicyItem | { refundPolicy?: RefundPolicyItem };
+};
+
+export type PrivacyPolicyItem = {
+  _id?: string;
+  content?: string;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type PrivacyPolicyApiResponse = {
+  status?: number;
+  message?: string;
+  data?: PrivacyPolicyItem | { privacyPolicy?: PrivacyPolicyItem };
+};
+
+export type ReturnExchangeItem = {
+  _id?: string;
+  content?: string;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ReturnExchangeApiResponse = {
+  status?: number;
+  message?: string;
+  data?: ReturnExchangeItem | { returnExchange?: ReturnExchangeItem };
+};

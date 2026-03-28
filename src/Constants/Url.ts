@@ -79,4 +79,13 @@ export const URL_KEYS = {
     NEWSLETTER: {
         ADD: "/newsletter/add"
     },
+
+    //==============POLICY===============
+    POLICY: {
+        GET_TERMS_OF_SERVICE: "/terms-of-service",
+        GET_TERMS_CONDITIONS: "/terms-conditions",
+        GET_REFUND_POLICY: "/refund-policy",
+        GET_PRIVACY_POLICY: "/privacy-policy",
+        GET_RETURN_EXCHANGE: "/return-exchange"
+    },
 } as const

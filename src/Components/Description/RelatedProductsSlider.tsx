@@ -176,8 +176,18 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
               <Title level={3} className="!mb-1 !mt-0">{selectedProduct.name} | Eau De Parfum</Title>
               <div className="delvoura-select-options-rating"><Rate disabled value={Number(selectedProduct.ratingSummary?.avgRating || 0)} /><span>({selectedProduct.ratingSummary?.ratingCount || 0})</span></div>
               <div className="delvoura-select-options-price-row">
-                <span className="delvoura-select-options-price">Rs. {getPrice(selectedProduct, selectedVariant)}</span>
-                {selectedProduct.mrp && <span className="delvoura-select-options-price-old">Rs. {selectedProduct.mrp}</span>}
+                {(() => {
+                  const variants = selectedProduct.variants as any[] | undefined;
+                  const selected = variants?.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant);
+                  const price = typeof selected === "object" ? selected?.price ?? 0 : selectedProduct.price ?? 0;
+                  const mrp = typeof selected === "object" ? selected?.mrp ?? selectedProduct.mrp : selectedProduct.mrp;
+                  return (
+                    <>
+                      <span className="delvoura-select-options-price">Rs. {price}</span>
+                      {mrp && mrp !== price && <span className="delvoura-select-options-price-old">Rs. {mrp}</span>}
+                    </>
+                  );
+                })()}
               </div>
               <Text className="delvoura-select-options-tax">Inclusive of all taxes</Text>
               <div className="delvoura-select-options-sizes">{(selectedProduct.variants?.length ? selectedProduct.variants : ["50 ml"]).map((v: any) => {

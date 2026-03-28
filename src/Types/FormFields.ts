@@ -35,6 +35,7 @@ export type CommonTextInputProps = {
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
   error?: string;
   touched?: boolean;
+  inputClassName?: string;
 };
 
 export type CommonPinCodeInputProps = {

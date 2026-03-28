@@ -155,13 +155,16 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                   const variants = selectedProduct.variants as any[] | undefined;
                   const selected = variants?.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant);
                   const price = typeof selected === "object" ? selected?.price ?? 0 : selectedProduct.price ?? 0;
+                  const mrp = typeof selected === "object" ? selected?.mrp ?? selectedProduct.mrp : selectedProduct.mrp;
                   return (
-                    <span className="delvoura-select-options-price">Rs. {price}</span>
+                    <>
+                      <span className="delvoura-select-options-price">Rs. {price}</span>
+                      {mrp && mrp !== price && (
+                        <span className="delvoura-select-options-price-old">Rs. {mrp}</span>
+                      )}
+                    </>
                   );
                 })()}
-                {selectedProduct.mrp && (
-                  <span className="delvoura-select-options-price-old">Rs. {selectedProduct.mrp}</span>
-                )}
               </div>
               <Text className="delvoura-select-options-tax">Inclusive of all taxes</Text>
 

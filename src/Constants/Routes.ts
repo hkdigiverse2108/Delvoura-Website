@@ -20,6 +20,8 @@ export const ROUTES = {
     //==============BLOG===============
     BLOG: "/blog",
     BLOG_DETAILS: "/blog/:id",
+    //==============CHECKOUT===============
+    CHECKOUT: "/checkout",
 
     //==============AUTH===============
     AUTH : {

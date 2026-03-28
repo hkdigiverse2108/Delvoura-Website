@@ -13,6 +13,7 @@ import TermsOfService from "../Pages/Terms of Service/Index";
 import ProfilePage from "../Pages/Profile/Index";
 import BlogPage from "../Pages/Blog/Index";
 import BlogDetailsPage from "../Pages/Blog/Details";
+import CheckoutPage from "../Pages/Checkout/Index";
 
 export const PageRoutes = [
   { path: ROUTES.HERO, element: <Hero /> },
@@ -28,6 +29,7 @@ export const PageRoutes = [
   { path: ROUTES.PROFILE, element: <ProfilePage /> },
   { path: ROUTES.BLOG, element: <BlogPage /> },
   { path: ROUTES.BLOG_DETAILS, element: <BlogDetailsPage /> },
+  { path: ROUTES.CHECKOUT, element: <CheckoutPage /> },
 ];
 
 export const AuthRoutes = [

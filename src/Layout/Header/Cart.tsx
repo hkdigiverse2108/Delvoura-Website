@@ -28,6 +28,7 @@ const Cart = () => {
 
   const cartCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.qty, 0), [cartItems]);
   const subtotal = useMemo(() => cartItems.reduce((sum, item) => sum + item.price * item.qty, 0), [cartItems]);
+  const canCheckout = cartItems.length > 0;
 
   const updateQty = (id: string, size: string, delta: number) => {
     const next = cartItems
@@ -171,8 +172,16 @@ const Cart = () => {
                 <span>Subtotal</span>
                 <span>Rs. {subtotal}</span>
               </div>
-              <button type="button" className="delvoura-checkout-btn mt-4 w-full rounded-2xl bg-[color:var(--color-accent)] py-3 text-sm font-semibold transition hover:brightness-110" > 
-                <span className="text-white">Checkout</span> 
+              <button
+                type="button"
+                disabled={!canCheckout}
+                onClick={() => {
+                  if (!canCheckout) return;
+                  setIsOpen(false);
+                  navigate(ROUTES.CHECKOUT);
+                }}
+                className="delvoura-checkout-btn mt-5 w-full rounded-2xl bg-[color:var(--color-accent)] py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50" style={{ color: "white" }}>
+                Checkout
               </button>
             </div>
           </div>

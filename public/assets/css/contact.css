@@ -36,6 +36,105 @@
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
 }
 
+/* Checkout focus style to match contact/auth (red accent, no blue ring) */
+.checkout-page .ant-input:focus,
+.checkout-page .ant-input-focused,
+.checkout-page .ant-input-affix-wrapper:focus,
+.checkout-page .ant-input-affix-wrapper-focused,
+.checkout-page .ant-input-group .ant-input:focus,
+.checkout-page .ant-input-group .ant-input-focused {
+  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
+}
+
+.checkout-page .ant-input:hover,
+.checkout-page .ant-input-affix-wrapper:hover,
+.checkout-page .ant-input-group .ant-input:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent) !important;
+}
+
+/* Country select (custom) for checkout page */
+.checkout-page .delvoura-country-native {
+  position: relative;
+  outline: none;
+}
+
+.checkout-page .delvoura-country-trigger {
+  width: 100%;
+  text-align: left;
+  border-radius: 12px;
+  min-height: 44px;
+  height: 44px;
+  padding: 0 40px 0 12px;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  color: var(--color-text);
+  outline: none;
+  box-shadow: none;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.checkout-page .delvoura-country-trigger::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--color-text-muted);
+  border-bottom: 2px solid var(--color-text-muted);
+  transform: translateY(-60%) rotate(45deg);
+}
+
+.checkout-page .delvoura-country-trigger .is-placeholder {
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+
+.checkout-page .delvoura-country-native:hover .delvoura-country-trigger {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
+}
+
+.checkout-page .delvoura-country-native.is-open .delvoura-country-trigger {
+  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+
+.checkout-page .delvoura-country-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 6px;
+  box-shadow: 0 10px 24px -16px color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.checkout-page .delvoura-country-option {
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.checkout-page .delvoura-country-option:hover,
+.checkout-page .delvoura-country-option[aria-selected="true"] {
+  background: color-mix(in srgb, var(--color-accent) 15%, white);
+}
+
+/* Address picker focus cleanup (remove black outline) */
+.checkout-page .delvoura-address-card:focus,
+.checkout-page .delvoura-address-card:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .delvoura-contact-content .ant-input:hover,
 .delvoura-contact-content .ant-input-affix-wrapper:hover,
 .delvoura-contact-content .ant-input-group .ant-input:hover {
@@ -69,6 +168,32 @@
   background: var(--color-card) !important;
   color: var(--color-text) !important;
   padding: 0 12px !important;
+}
+
+/* Checkout phone country select background */
+.checkout-page .delvoura-contact-select .ant-select-selector {
+  background: #ffffff !important;
+}
+
+.checkout-page .ant-input-group-addon {
+  background: #ffffff !important;
+}
+
+.checkout-page .ant-input-group {
+  background: #ffffff !important;
+}
+
+/* Ensure phone group has full border in checkout */
+.checkout-page .ant-input-group {
+  border: 1px solid var(--color-border) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.checkout-page .ant-input-group .ant-input,
+.checkout-page .ant-input-group-addon {
+  border: 0 !important;
+  box-shadow: none !important;
 }
 
 .delvoura-contact-select {

@@ -98,4 +98,5 @@ export type CommonOtpInputProps = {
 
 export type CollectionMenuProps = {
   isMobile?: boolean;
+  onNavigate?: () => void;
 };

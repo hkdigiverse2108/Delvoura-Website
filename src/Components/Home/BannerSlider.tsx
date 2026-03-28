@@ -26,8 +26,8 @@ const BannerSlider = () => {
       <Carousel ref={carouselRef} autoplay dots className="w-full">
         {slides.map((slide) => (
           <div key={slide.src} className="w-full">
-            <div className="relative h-[50vh] w-full overflow-hidden sm:h-[70vh] lg:h-[50vh]">
-              <img src={slide.src} alt={slide.alt} className="h-full w-full object-cover object-center" loading="eager"/>
+            <div className="delvoura-banner-frame relative h-[50vh] w-full overflow-hidden sm:h-[70vh] lg:h-[50vh]">
+              <img src={slide.src} alt={slide.alt} className="delvoura-banner-image h-full w-full object-cover object-center" loading="eager"/>
               <div  className="pointer-events-none absolute inset-0"  style={{  background:  "color-mix(in srgb, var(--color-primary) 10%, transparent)",  }} />
             </div>
           </div>

@@ -19,7 +19,7 @@ const staticSections = [
   },
 ];
 
-const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
+const CollectionMenu = ({ isMobile = false, onNavigate }: CollectionMenuProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
   
   const goToCollections = (filters: any) => {
     setOpen(false);
+    onNavigate?.();
     sessionStorage.setItem("dv_collection_filters", JSON.stringify(filters));
     window.dispatchEvent(new CustomEvent("dv:collection-filters", { detail: filters }));
     navigate(ROUTES.COLLECTIONS_ALL, { state: { filters, _nav: Date.now() } });
@@ -69,8 +70,7 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
           <span className={`transition-transform ${open ? "rotate-180" : ""}`}>▾</span>
         </button>
 
-        {open && (
-          <div className="flex flex-col gap-5">
+        <div className={`delvoura-mobile-dropdown flex flex-col gap-5 ${open ? "is-open" : ""}`} aria-hidden={!open}>
             {staticSections.map((section, i) => (
               <div key={i}>
                 {section.title && (
@@ -128,8 +128,7 @@ const CollectionMenu = ({ isMobile = false }: CollectionMenuProps) => {
                   })}
               </div>
             </div>
-          </div>
-        )}
+        </div>
       </div>
     );
   }

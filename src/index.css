@@ -83,6 +83,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Normalize font weights: bold -> medium, light -> regular */
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-bold,
+.font-semibold,
+.font-extrabold,
+.font-black {
+  font-weight: 500 !important;
+}
+
+.font-light,
+.font-extralight {
+  font-weight: 400 !important;
+}
+
 .delvoura-container {
   width: 90%;
   margin-inline: auto;

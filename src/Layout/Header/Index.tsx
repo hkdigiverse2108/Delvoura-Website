@@ -29,7 +29,7 @@ const Header = () => {
     <ConfigProvider theme={{ token: { colorPrimary: "var(--color-accent)", colorBorder: "var(--color-border)", colorText: "var(--color-text)",}, }}>
       <header className="delvoura-header-theme delvoura-header-shell  sticky top-0 z-50 border-b border-[var(--color-border)]" style={{ background: "var(--color-card)" }}>
         <div className="delvoura-container py-4">
-          <div className="flex items-center justify-between gap-3 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-3">
+          <div className="delvoura-header-row flex items-center justify-between gap-3 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-3">
             <div className="flex items-center gap-3">
               <div className="md:hidden">
                 <MobileSidebar />
@@ -40,13 +40,17 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="hidden items-center justify-center md:flex">
-              <img src="/assets/images/logo/logo-white.png" alt="Delvoura" className="h-8 w-auto"/>
+            <div className="flex items-center justify-center">
+              <div className="md:hidden w-full flex justify-center">
+                <SearchBarWithModel showOnMobile buttonClassName="delvoura-mobile-search-btn" />
+              </div>
+              <div className="hidden md:flex items-center justify-center">
+                <img src="/assets/images/logo/logo-white.png" alt="Delvoura" className="h-8 w-auto"/>
+              </div>
             </div>
 
             <div className="flex items-center justify-end gap-4">
-              <div className="flex items-center gap-3 md:hidden ">
-                <SearchBarWithModel />
+              <div className="flex items-center gap-3 md:hidden">
                 <Cart />
               </div>
 

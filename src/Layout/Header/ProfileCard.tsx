@@ -17,7 +17,7 @@ const getInitials = (fullName: string) => {
   return `${first}${last}`.toUpperCase() || "U";
 };
 
-const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataProp,}: ProfileCardProps) => {
+const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataProp, onNavigate,}: ProfileCardProps) => {
   const dispatch = useAppDispatch();
   const { user: storeUser, isAuthenticated } = useAppSelector((state) => state.auth);
   const { data: fetchedUserData } = Queries.useGetSingleUser(((userProp ?? storeUser) as { _id?: string } | null)?._id);
@@ -53,22 +53,14 @@ const ProfileCard = ({ variant = "desktop", user: userProp, userData: userDataPr
           <span className={`transition-transform ${open ? "rotate-180" : ""}`}>▾</span>
         </button>
 
-        {open && (
-          <div className="mt-3 flex flex-col gap-2 rounded-xl bg-[color:var(--color-card)] p-3" style={{ border: "1px solid var(--color-border)" }}>
-            <button
-              className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold"
-              onClick={() => {
-                setOpen(false);
-                navigate(ROUTES.PROFILE);
-              }}
-            >
+        <div className={`delvoura-mobile-dropdown mt-3 flex flex-col gap-2 rounded-xl bg-[color:var(--color-card)] p-3 ${open ? "is-open" : ""}`} style={{ border: "1px solid var(--color-border)" }} aria-hidden={!open}>
+            <button className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold" onClick={() => { setOpen(false); onNavigate?.(); navigate(ROUTES.PROFILE); }} >
               Profile
             </button>
-            <button className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold text-[color:var(--color-accent)]" onClick={() => setLogoutOpen(true)}>
+            <button className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-4 py-3 text-left text-sm font-semibold text-[color:var(--color-accent)]" onClick={() => { onNavigate?.(); setLogoutOpen(true); }}>
               Logout
             </button>
-          </div>
-        )}
+        </div>
         <LogoutConfirmModel open={logoutOpen} onCancel={() => setLogoutOpen(false)} onConfirm={() => { dispatch(setSignOut()); setLogoutOpen(false); }}
         />
       </div>

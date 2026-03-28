@@ -69,7 +69,7 @@ const Cart = () => {
       </button>
 
       <Drawer open={isOpen} onClose={() => setIsOpen(false)} placement="right" width={420} mask closable={false} bodyStyle={{ padding: 0, background: "transparent" }} maskStyle={{ backgroundColor: "color-mix(in srgb, var(--color-primary) 35%, transparent)", backdropFilter: "blur(6px)" }} contentWrapperStyle={{ borderRadius: "22px 0 0 22px", overflow: "hidden", height: "100vh" }} rootClassName="delvoura-cart-drawer delvoura-light-surface">
-        <div className="h-full p-2.5">
+        <div className="delvoura-cart-shell h-full p-2.5">
           <div
             id="delvoura-cart-drawer"
             className="flex h-full flex-col overflow-hidden rounded-2xl bg-[color:var(--color-surface-dark)] text-[color:var(--color-text-on-dark)]"
@@ -166,7 +166,7 @@ const Cart = () => {
               )}
             </div>
 
-            <div className="border-t border-[color:var(--color-border-dark)] bg-[color:var(--color-surface-dark)] px-5 py-4">
+            <div className="delvoura-cart-footer border-t border-[color:var(--color-border-dark)] bg-[color:var(--color-surface-dark)] px-5 py-4">
               <div className="mt-2 mb-3 flex items-center justify-between text-base font-semibold">
                 <span>Subtotal</span>
                 <span>Rs. {subtotal}</span>

@@ -1,6 +1,7 @@
 .profile-page .profile-content {
   position: relative;
   min-height: calc(100vh - 220px);
+  overflow-x: hidden;
 }
 
 .profile-page .profile-content .ant-card {
@@ -298,12 +299,16 @@
   top: 0;
   z-index: 2;
   background: #fff;
+  overflow: hidden;
 }
 
 .profile-page .profile-content .ant-tabs-top > .ant-tabs-nav .ant-tabs-nav-wrap {
   overflow-x: auto;
   scrollbar-width: none;
-  padding-right: 16px;
+  padding-right: 0;
+  flex: 0 0 auto;
+  width: max-content;
+  max-width: 100%;
 }
 
 .profile-page .profile-content .ant-tabs-top > .ant-tabs-nav .ant-tabs-nav-wrap::-webkit-scrollbar {
@@ -325,13 +330,19 @@
 
 .profile-page .profile-content .ant-tabs-top > .ant-tabs-nav .ant-tabs-nav-list {
   flex-wrap: nowrap;
-  padding-right: 16px;
+  padding-right: 0;
+  flex: 0 0 auto;
+  width: max-content;
 }
 
 .profile-page .profile-content .ant-tabs-top > .ant-tabs-nav .ant-tabs-tab {
   border-radius: 10px;
   padding: 10px 14px;
-  /* margin: 0 6px 6px 0; */
+  margin: 0 8px 0 0;
+}
+
+.profile-page .profile-content .ant-tabs-top > .ant-tabs-nav .ant-tabs-tab:last-of-type {
+  margin-right: 0;
 }
 
 .profile-page .profile-content .profile-settings-tabs.ant-tabs-top {
@@ -721,4 +732,9 @@
 
 .profile-section-title {
   font-weight: 600;
+}
+
+.profile-sidebar .anticon,
+.profile-sidebar-icon {
+  color: inherit !important;
 }

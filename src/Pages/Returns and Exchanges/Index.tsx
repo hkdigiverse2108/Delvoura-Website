@@ -1,6 +1,6 @@
 import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
-import { InstagramScrollingSection, OfferBar } from "../../Components/common";
+import { EmptyState, InstagramScrollingSection, OfferBar } from "../../Components/common";
 import { useEffect, useState } from "react";
 import { Queries } from "../../Api";
 
@@ -44,10 +44,7 @@ const ReturnExchangePolicy = () => {
             />
           )}
           {!isReturnLoading && !returnContent && (
-            <div className="delvoura-product-empty-state mt-8 flex flex-col items-center justify-center gap-2 text-center text-sm text-[color:var(--color-text-muted)]">
-              <img src="/assets/images/order/empty.png" alt="No returns & exchanges" className="mx-auto w-40 opacity-80" />
-              <div>Returns & exchanges content is not available right now.</div>
-            </div>
+            <EmptyState  className="mt-8"  message="Returns & exchanges content is not available right now."  imageAlt="No returns & exchanges"  imageClassName="mx-auto w-40 opacity-80"   />
           )}
         </div>
       </section>

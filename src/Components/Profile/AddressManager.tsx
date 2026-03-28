@@ -5,6 +5,7 @@ import type { AddressData } from "./AddressCard";
 import AddressFormModal, { type AddressFormValues } from "./AddressFormModal";
 import { Mutations } from "../../Api";
 import { useAppSelector } from "../../Store/Hooks";
+import { EmptyState } from "../common";
 
 const { Title, Text } = Typography;
 
@@ -103,10 +104,7 @@ const AddressManager = ({ addresses, isLoading }: AddressManagerProps) => {
           <Spin />
         </div>
       ) : sortedAddresses.length === 0 ? (
-        <div className="text-center text-sm text-[color:var(--color-text-muted)]">
-          <img src="/assets/images/order/empty.png" alt="No addresses" className="mx-auto mb-3 w-40 opacity-80" />
-          <div>No addresses yet</div>
-        </div>
+        <EmptyState message="No addresses yet" imageAlt="No addresses" />
       ) : (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {sortedAddresses.map((address) => (

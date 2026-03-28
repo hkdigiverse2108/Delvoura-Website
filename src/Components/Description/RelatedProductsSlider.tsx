@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
 import type { ProductItem } from "../../Types";
 import { useFeaturedProducts, useAddToCart } from "../../Utils/Hooks";
+import { EmptyState } from "../common";
 
 const { Title, Text } = Typography;
 
@@ -132,14 +133,13 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
         
         <div className="delvoura-related-carousel">
           {isLoadingProducts || products.length === 0 ? (
-            <div className="delvoura-product-empty-state">
-              {isLoadingProducts ? <Spin indicator={<LoadingOutlined style={{ fontSize: 32, color: "var(--color-text-muted)" }} spin />} /> : (
-                <div className="text-center text-sm text-[color:var(--color-text-muted)]">
-                  <img src="/assets/images/order/empty.png" alt="No featured products" className="mx-auto mb-3 w-40 opacity-80" />
-                  <div>No featured products found</div>
-                </div>
-              )}
-            </div>
+            isLoadingProducts ? (
+              <div className="delvoura-product-empty-state">
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 32, color: "var(--color-text-muted)" }} spin />} />
+              </div>
+            ) : (
+              <EmptyState message="No featured products found" imageAlt="No featured products" />
+            )
           ) : (
             <>
               <div ref={trackRef} className="delvoura-related-track">{products.map((product, idx) => <div key={product._id || `${product.name}-${idx}`} className="delvoura-related-slide" ref={idx === 0 ? cardRef : null}><ProductCard product={product} /></div>)}</div>

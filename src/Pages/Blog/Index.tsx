@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
-import { InstagramScrollingSection, OfferBar } from "../../Components/common";
+import { EmptyState, InstagramScrollingSection, OfferBar } from "../../Components/common";
 import BannerSlider from "../../Components/Home/BannerSlider";
 import { BlogCardGrid } from "../../Components/Blog";
 import Pagination from "../../Components/common/Pagination";
@@ -69,12 +69,7 @@ const BlogPage = () => {
         ) : posts.length ? (
           <BlogCardGrid posts={posts} />
         ) : (
-          <div className="delvoura-product-empty-state">
-            <div className="text-center text-sm text-[color:var(--color-text-muted)]">
-              <img src="/assets/images/order/empty.png" alt="No blogs" className="mx-auto mb-3 w-40 opacity-80" />
-              <div>No blogs found.</div>
-            </div>
-          </div>
+          <EmptyState message="No blogs found." imageAlt="No blogs" />
         )}
         {totalPosts > 0 && (
           <div className="mt-10 flex justify-center">

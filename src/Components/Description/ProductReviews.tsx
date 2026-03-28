@@ -7,6 +7,7 @@ import { FilterOutlined } from "@ant-design/icons";
 import type { CreateRatingPayload, ProductReviewsProps, RatingItem } from "../../Types";
 import { ProductReviewSchema } from "../../Utils/ValidationSchemas";
 import { KEYS } from "../../Constants";
+import { EmptyState } from "../common";
 
 
 const ProductReviews = ({ productId, ratingSummary }: ProductReviewsProps) => {
@@ -141,10 +142,7 @@ const ProductReviews = ({ productId, ratingSummary }: ProductReviewsProps) => {
             </div>
           ) : null}
           {!isLoading && sortedReviews.length === 0 ? (
-            <div className="delvoura-review-empty py-10 text-center text-sm text-[color:var(--color-text-muted)] flex flex-col items-center gap-2">
-              <img src="/assets/images/order/empty.png" alt="No reviews" className="w-40 opacity-80" />
-              <div>No reviews yet</div>
-            </div>
+            <EmptyState className="delvoura-review-empty py-10" message="No reviews yet" imageAlt="No reviews" imageClassName="w-40 opacity-80"   />
           ) : null}
           {!isLoading && sortedReviews.map((review, index) => {
             const name = `${review.firstName || ""} ${review.lastName || ""}`.trim() || "Anonymous";

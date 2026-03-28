@@ -134,7 +134,7 @@ const SearchFilterBar = ({ filters, onChange }: SearchFilterBarProps) => {
               <div className="delvoura-filter-title">Scents</div>
               <div className="delvoura-filter-chips">
                 {scents.length === 0 ? (
-                  <span className="text-sm text-[color:var(--color-text-muted)]">No scents available</span>
+                  <span className="text-sm text-[color:var(--color-text-muted)] text-gray-400">No scents available</span>
                 ) : (
                   scents.map((scent) => (
                     <button key={scent._id || scent.name} type="button" className={`delvoura-filter-chip ${filters.scent === scent._id ? "is-active" : ""}`} onClick={() => scent._id && toggleFilter("scent", scent._id)}>
@@ -149,7 +149,7 @@ const SearchFilterBar = ({ filters, onChange }: SearchFilterBarProps) => {
               <div className="delvoura-filter-title">Seasons</div>
               <div className="delvoura-filter-chips">
                 {seasons.length === 0 ? (
-                  <span className="text-sm text-[color:var(--color-text-muted)]">No seasons available</span>
+                  <span className="text-sm text-[color:var(--color-text-muted)]  text-gray-400">No seasons available</span>
                 ) : (
                   seasons.map((season) => (
                     <button key={season._id || season.name} type="button" className={`delvoura-filter-chip ${filters.season === season._id ? "is-active" : ""}`} onClick={() => season._id && toggleFilter("season", season._id)}>

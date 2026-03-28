@@ -10,6 +10,7 @@ import { setSeasons } from "../../Store/Slices/SeasonSlice";
 import type { ProductsQueryParams, ProductItem, ScentItem, SeasonItem, SearchBarWithModalProps } from "../../Types";
 import { ROUTES } from "../../Constants";
 import { useNavigate } from "react-router-dom";
+import { EmptyState } from "../../Components/common";
 
 const { Title, Text } = Typography;
 
@@ -155,12 +156,7 @@ const SearchBarWithModal = ({ buttonClassName = "", showOnMobile = false, button
     }
     if (filteredProducts.length === 0) {
       return (
-        <div className="mt-8 flex items-center justify-center min-h-96">
-          <div className="text-center text-sm text-[color:var(--color-text-muted)]">
-            <img src="/assets/images/order/empty.png" alt="No products" className="mx-auto mb-3 w-40 opacity-80" />
-            <div>No products found</div>
-          </div>
-        </div>
+        <EmptyState className="mt-8 min-h-96 flex items-center justify-center" message="No products found" imageAlt="No products"/>
       );
     }
     return (

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
 import type { ProductItem } from "../../Types";
 import { useAddToCart } from "../../Utils/Hooks";
+import { EmptyState } from "../common";
 
 const { Title, Text } = Typography;
 
@@ -57,14 +58,13 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
       <div className="delvoura-container">
         <div className="delvoura-product-grid grid gap-6">
           {isLoading || products.length === 0 ? (
-            <div className="delvoura-product-empty-state">
-              {isLoading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "var(--color-text-muted)" }} spin />} /> : (
-                <div className="text-center text-sm text-[color:var(--color-text-muted)]">
-                  <img src="/assets/images/order/empty.png" alt="No products" className="mx-auto mb-3 w-40 opacity-80" />
-                  <div>No products found</div>
-                </div>
-              )}
-            </div>
+            isLoading ? (
+              <div className="delvoura-product-empty-state">
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 36, color: "var(--color-text-muted)" }} spin />} />
+              </div>
+            ) : (
+              <EmptyState message="No products found" imageAlt="No products" />
+            )
           ) : (
             products.map((product, idx) => (
             <article key={product._id || `${product.name}-${idx}`} className="delvoura-product-card cursor-pointer" onClick={() => navigate(ROUTES.getProductDetails(product._id || ""))}>

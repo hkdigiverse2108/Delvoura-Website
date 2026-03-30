@@ -20,6 +20,11 @@ const formatDate = (value?: string) => {
 
 // show blog upload time 
 const BlogCardGrid = ({ posts = [] }: BlogCardGridProps) => {
+  const stripHtml = (value?: string) => {
+    if (!value) return "";
+    return value.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
+  };
+
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {posts.map((post, index) => (
@@ -41,7 +46,7 @@ const BlogCardGrid = ({ posts = [] }: BlogCardGridProps) => {
               </p>
               <h2 className="text-base font-semibold leading-6">{post.title}</h2>
               <p className="line-clamp-3 text-sm leading-6 text-[color:var(--color-text-muted)]">
-                {post.content}
+                {stripHtml(post.content)}
               </p>
               <div className="flex items-center justify-between pt-2">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.35em] text-[color:var(--color-accent)]">

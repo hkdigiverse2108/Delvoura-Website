@@ -1,5 +1,5 @@
-import { KEYS, URL_KEYS } from "../Constants";
-import type { AddressesApiResponse, AddressesQueryParams, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, OrdersApiResponse, OrdersQueryParams, PrivacyPolicyApiResponse, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, RefundPolicyApiResponse, ReturnExchangeApiResponse, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TermsConditionsApiResponse, TermsServiceApiResponse, TopbarApiResponse } from "../Types";
+  import { KEYS, URL_KEYS } from "../Constants";
+import type { AddressesApiResponse, AddressesQueryParams, BannerApiResponse, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, OrdersApiResponse, OrdersQueryParams, PrivacyPolicyApiResponse, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, RefundPolicyApiResponse, ReturnExchangeApiResponse, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TermsConditionsApiResponse, TermsServiceApiResponse, TopbarApiResponse } from "../Types";
 import { Get } from "./Methods/Index";
 import { useQueries } from "./ReactQuery/Index";
 
@@ -39,6 +39,9 @@ export const Queries = {
   // ************ Blog ***********
   useGetBlogs: (params?: BlogsQueryParams) => useQueries<BlogsApiResponse>([KEYS.BLOG.GET_BLOGS, params], () => Get<BlogsApiResponse>(URL_KEYS.BLOG.GET_BLOGS, params),),
   useGetBlogById: (id?: string) => useQueries<SingleBlogApiResponse>([KEYS.BLOG.GET_BLOG_BY_ID, id], () => Get<SingleBlogApiResponse>(`${URL_KEYS.BLOG.GET_BLOG_BY_ID}/${id}`), { enabled: !!id },),
+
+  // ************ Banner ***********
+  useGetBanner: () => useQueries<BannerApiResponse>([KEYS.BANNER.GET_BANNER], () => Get<BannerApiResponse>(URL_KEYS.BANNER.GET_BANNER),),
 
   // ************ Address ***********
   useGetAddresses: (params?: AddressesQueryParams, token?: string) =>  useQueries<AddressesApiResponse>([KEYS.ADDRESS.GET_ADDRESSES, params, token], () => Get<AddressesApiResponse>(URL_KEYS.ADDRESS.GET_ADDRESSES, params, undefined, token), { enabled: !!token },),

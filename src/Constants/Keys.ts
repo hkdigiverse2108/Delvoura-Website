@@ -88,4 +88,9 @@ export const KEYS = {
     GET_PRIVACY_POLICY: "get-privacy-policy",
     GET_RETURN_EXCHANGE: "get-return-exchange",
   },
+
+  //========Banner=========
+  BANNER: {
+    GET_BANNER: "get-banner",
+  },
 } as const;

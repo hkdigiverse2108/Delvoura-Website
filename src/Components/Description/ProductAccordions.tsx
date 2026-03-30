@@ -8,13 +8,19 @@ type ProductAccordionsProps = {
 
 const ProductAccordions = ({ product }: ProductAccordionsProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const renderHtml = (html?: string, fallback?: string) => {
+    if (html) {
+      return <div className="delvoura-html" dangerouslySetInnerHTML={{ __html: html }} />;
+    }
+    return <p>{fallback}</p>;
+  };
   const accordionData = useMemo(
     () => [
       {
         title: "Product Description",
         content: (
           <div className="delvoura-accordion-body">
-            <p>{product?.description || "No description available."}</p>
+            {renderHtml(product?.description, "No description available.")}
           </div>
         ),
       },
@@ -22,7 +28,7 @@ const ProductAccordions = ({ product }: ProductAccordionsProps) => {
         title: "Usage Tips",
         content: (
           <div className="delvoura-accordion-body">
-            <p>{product?.usageTips || "No usage tips available."}</p>
+            {renderHtml(product?.usageTips, "No usage tips available.")}
           </div>
         ),
       },
@@ -45,7 +51,7 @@ const ProductAccordions = ({ product }: ProductAccordionsProps) => {
             <div className="brand-info">
               <div className="brand-name">{product?.name || "Delvoura"}</div>
               <div className="brand-details">
-                {product?.brandManufacturerInfo || "No brand information available."}
+                {renderHtml(product?.brandManufacturerInfo, "No brand information available.")}
               </div>
             </div>
           </div>

@@ -187,6 +187,28 @@ textarea {
   transform: translateY(0);
 }
 
+.delvoura-hero-banner,
+.delvoura-hero-banner .ant-carousel,
+.delvoura-hero-banner .slick-slider,
+.delvoura-hero-banner .slick-list,
+.delvoura-hero-banner .slick-track,
+.delvoura-hero-banner .slick-slide,
+.delvoura-hero-banner .slick-slide > div {
+  height: 100%;
+}
+
+.delvoura-hero-banner .delvoura-banner-frame {
+  height: 100vh;
+  aspect-ratio: auto;
+}
+
+.delvoura-hero-banner .delvoura-slider-nav {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) translateY(-50%);
+  z-index: 20;
+}
+
 /*
 Primary Dark:             #111111
 Secondary Surface:        #292929

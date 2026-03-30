@@ -21,18 +21,11 @@ const BlogDetails = ({ post, onBack, backTo = ROUTES.BLOG }: BlogDetailsProps) =
           <div className="absolute inset-0 bg-black/45" />
           <div className="absolute left-4 top-4 z-20">
             {onBack ? (
-              <button
-                type="button"
-                className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur"
-                onClick={onBack}
-              >
+              <button type="button" className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur" onClick={onBack} >
                 Back to Blog
               </button>
             ) : (
-              <Link
-                to={backTo}
-                className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur"
-              >
+              <Link to={backTo} className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur" >
                 Back to Blog
               </Link>
             )}
@@ -52,7 +45,7 @@ const BlogDetails = ({ post, onBack, backTo = ROUTES.BLOG }: BlogDetailsProps) =
 
         <div className="space-y-5 px-8 py-10 text-[color:var(--color-text-muted)]">
           {post.content ? (
-            <p className="text-base leading-7">{post.content}</p>
+            <div className="delvoura-html text-base leading-7" dangerouslySetInnerHTML={{ __html: post.content }} />
           ) : (
             <p className="text-base leading-7">Content coming soon.</p>
           )}

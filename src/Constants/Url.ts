@@ -88,4 +88,9 @@ export const URL_KEYS = {
         GET_PRIVACY_POLICY: "/privacy-policy",
         GET_RETURN_EXCHANGE: "/return-exchange"
     },
+
+    //==============BANNER===============
+    BANNER: {
+        GET_BANNER: "/banner"
+    },
 } as const

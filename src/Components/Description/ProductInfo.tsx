@@ -71,7 +71,12 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="delvoura-info-block">
         <div className="delvoura-product-inspired">
           {product?.scentStory ? (
-            <>Inspired by <strong>{product.scentStory}</strong></>
+            <span>
+              Inspired by{" "}
+              <strong>
+                <span dangerouslySetInnerHTML={{ __html: product.scentStory }} />
+              </strong>
+            </span>
           ) : (
             <>Inspired by <strong>{product?.name || "Delvoura"}</strong></>
           )}

@@ -2,7 +2,8 @@ import { Button, Spin, Typography, message } from "antd";
 import { useMemo, useState } from "react";
 import AddressCard from "./AddressCard";
 import type { AddressData } from "./AddressCard";
-import AddressFormModal, { type AddressFormValues } from "./AddressFormModal";
+import AddressFormModal from "./AddressFormModal";
+import type { AddressFormValues } from "../../Types";
 import { Mutations } from "../../Api";
 import { useAppSelector } from "../../Store/Hooks";
 import { EmptyState } from "../common";
@@ -89,12 +90,7 @@ const AddressManager = ({ addresses, isLoading }: AddressManagerProps) => {
             Manage delivery locations for faster checkout and easy returns.
           </Text>
         </div>
-        <Button
-          type="primary"
-          className="bg-[color:var(--color-accent)] w-full sm:w-auto"
-          onClick={handleAdd}
-          loading={isBusy}
-        >
+        <Button type="primary" className="bg-[color:var(--color-accent)] w-full sm:w-auto" onClick={handleAdd} loading={isBusy}>
           Add New Address
         </Button>
       </div>

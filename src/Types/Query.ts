@@ -275,3 +275,22 @@ export type ReturnExchangeApiResponse = {
   message?: string;
   data?: ReturnExchangeItem | { returnExchange?: ReturnExchangeItem };
 };
+
+//============Banner type==============
+export type BannerItem = {
+  _id?: string;
+  bannerImages?: string[];
+  isActive?: boolean;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type BannerApiResponse = {
+  status?: number;
+  message?: string;
+  data?:
+    | BannerItem
+    | BannerItem[]
+    | { banner_data?: BannerItem[]; banners?: BannerItem[] };
+};

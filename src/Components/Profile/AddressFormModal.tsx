@@ -4,17 +4,8 @@ import { useMemo } from "react";
 import type { AddressData } from "./AddressCard";
 import { CommonCountrySelect, CommonPinCodeInput, CommonTextInput } from "../../Attribute";
 import { AddressSchema } from "../../Utils/ValidationSchemas";
+import type { AddressFormValues } from "../../Types";
 
-export type AddressFormValues = {
-  country: string;
-  address1: string;
-  address2?: string;
-  city: string;
-  state: string;
-  pinCode: string;
-  isDefault?: boolean;
-  isActive?: boolean;
-};
 
 interface AddressFormModalProps {
   open: boolean;

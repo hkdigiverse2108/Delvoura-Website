@@ -93,4 +93,19 @@ export const URL_KEYS = {
     BANNER: {
         GET_BANNER: "/banner"
     },
+
+    //==============PAYMENT===============
+    PAYMENT: {
+        RAZORPAY_CREATE: "/razorpay/pay",
+        RAZORPAY_VERIFY: "/razorpay/verify",
+        RAZORPAY_ORDER_STATUS: "/razorpay/order",
+        RAZORPAY_ORDER_STATUS_BY_ORDER: "/razorpay/order/by-order",
+        PHONEPE_CREATE: "/phonepe/pay",
+        PHONEPE_ORDER_STATUS: "/phonepe/order"
+    },
+
+    //==============SETTINGS===============
+    SETTINGS: {
+        GET_SETTINGS: "/settings"
+    },
 } as const

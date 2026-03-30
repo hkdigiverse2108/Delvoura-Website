@@ -14,7 +14,7 @@ const OfferBar = ({ className = "" }: { className?: string }) => {
 
   return (
     <div className={`fixed left-0 right-0 top-0 z-[500] mt-3 ${className}`}>
-      <div className="delvoura-container h-auto rounded-xl bg-[#111111] px-2 py-3 text-center text-[13px] text-sm-[10px] font-medium tracking-[0.08em] text-[#ffffff]"  style={{  boxShadow: "none",  }}  >
+      <div className="delvoura-container h-auto rounded-xl bg-[#111111] px-2 py-3 text-center text-[14px] sm:text-[13px] font-light tracking-[0.02em] text-[#ffffff]"  style={{  boxShadow: "none",  }}  >
         {items.map((item, index) => (
           <span key={`${item}-${index}`}>
             {item}

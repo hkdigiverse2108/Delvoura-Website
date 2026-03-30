@@ -1,193 +1,85 @@
-import { type ChangeEvent, useMemo, useState } from "react";
-import {
-  CommonCountrySelect,
-  CommonEmailInput,
-  CommonPhoneInput,
-  CommonPinCodeInput,
-  CommonTextInput,
-} from "../../Attribute";
+import { useEffect } from "react";
+import { useFormikContext } from "formik";
+import { CommonCountrySelect, CommonEmailInput, CommonPhoneInput, CommonPinCodeInput, CommonTextInput, } from "../../Attribute";
 import AddressPicker from "./AddressPicker";
+import type { AddressItem, CheckoutFormValues } from "../../Types";
 
-const CheckoutForm = () => {
-  const [formValues, setFormValues] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    countryCode: "+91",
-    country: "India",
-    state: "",
-    city: "",
-    pinCode: "",
-    address1: "",
-    landmark: "",
-  });
-  const [selectedAddressId, setSelectedAddressId] = useState("home");
-  const [saveAddress, setSaveAddress] = useState(true);
-  const [showAddressForm, setShowAddressForm] = useState(false);
+type CheckoutFormProps = {
+  addresses: AddressItem[];
+  selectedAddressId: string | null;
+  onSelectAddress: (id: string) => void;
+  showAddressForm: boolean;
+  onToggleAddressForm: () => void;
+  saveAddress: boolean;
+  onToggleSaveAddress: () => void;
+  canUseSavedAddresses: boolean;
+};
 
-  const addresses = useMemo(
-    () => [
-      {
-        id: "home",
-        label: "Home",
-        name: "Aarav Mehta",
-        phone: "+91 98765 43210",
-        line1: "34/1 Park View Apartments",
-        line2: "Indiranagar, Bengaluru, Karnataka 560038",
-      },
-      {
-        id: "office",
-        label: "Office",
-        name: "Aarav Mehta",
-        phone: "+91 99887 77665",
-        line1: "3rd Floor, Orion Business Park",
-        line2: "MG Road, Bengaluru, Karnataka 560001",
-      },
-    ],
-    []
-  );
+const CheckoutForm = ({ addresses, selectedAddressId, onSelectAddress, showAddressForm, onToggleAddressForm, saveAddress, onToggleSaveAddress, canUseSavedAddresses,}: CheckoutFormProps) => {
+  const { values, errors, touched, handleChange, handleBlur, setFieldValue } =
+    useFormikContext<CheckoutFormValues>();
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
-  };
+  const fullName = [values.firstName, values.lastName].filter(Boolean).join(" ").trim() || "Delivery Address";
+  const displayPhone = values.phone ? `${values.countryCode} ${values.phone}`.trim() : values.countryCode;
+
+  useEffect(() => {
+    if (showAddressForm) return;
+    if (!selectedAddressId) return;
+    const selectedAddress = addresses.find((item) => item._id === selectedAddressId);
+    if (!selectedAddress) return;
+
+    setFieldValue("country", selectedAddress.country ?? values.country ?? "India");
+    setFieldValue("state", selectedAddress.state ?? "");
+    setFieldValue("city", selectedAddress.city ?? "");
+    setFieldValue("pinCode", selectedAddress.pinCode ?? "");
+    setFieldValue("address1", selectedAddress.address1 ?? "");
+    setFieldValue("address2", selectedAddress.address2 ?? "");
+  }, [addresses, selectedAddressId, setFieldValue, showAddressForm, values.country]);
 
   return (
     <div className="space-y-6">
       <section className="rounded-2xl border border-[color:var(--color-border)] bg-white px-5 py-5">
         <h3 className="text-base font-semibold">Personal Information</h3>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          <CommonTextInput
-            name="firstName"
-            label="First Name"
-            placeholder="First name"
-            value={formValues.firstName}
-            onChange={handleChange}
-            onBlur={() => undefined}
-            touched={false}
-          />
-          <CommonTextInput
-            name="lastName"
-            label="Last Name"
-            placeholder="Last name"
-            value={formValues.lastName}
-            onChange={handleChange}
-            onBlur={() => undefined}
-            touched={false}
-          />
-          <CommonEmailInput
-            name="email"
-            label="Email"
-            placeholder="you@example.com"
-            value={formValues.email}
-            onChange={handleChange}
-            onBlur={() => undefined}
-            touched={false}
-          />
-          <CommonPhoneInput
-            name="phone"
-            label="Phone"
-            placeholder="Enter phone number"
-            value={formValues.phone}
-            onChange={handleChange}
-            onBlur={() => undefined}
-            touched={false}
-            countryValue={formValues.countryCode}
-            onCountryChange={(value: string) =>
-              setFormValues((prev) => ({ ...prev, countryCode: value }))
-            }
-          />
+          <CommonTextInput name="firstName" label="First Name" placeholder="First name" value={values.firstName} onChange={handleChange} onBlur={handleBlur} error={touched.firstName ? (errors.firstName as string) : undefined} touched={!!touched.firstName} />
+          <CommonTextInput  name="lastName"  label="Last Name"  placeholder="Last name"  value={values.lastName}  onChange={handleChange}  onBlur={handleBlur}  error={touched.lastName ? (errors.lastName as string) : undefined}  touched={!!touched.lastName} />
+          <CommonEmailInput name="email" label="Email" placeholder="you@example.com" value={values.email} onChange={handleChange} onBlur={handleBlur} error={touched.email ? (errors.email as string) : undefined} touched={!!touched.email} />
+          <CommonPhoneInput name="phone" label="Phone" placeholder="Enter phone number" value={values.phone} onChange={handleChange} onBlur={handleBlur} error={touched.phone ? (errors.phone as string) : undefined} touched={!!touched.phone} countryValue={values.countryCode} onCountryChange={(value: string) => setFieldValue("countryCode", value)} />
         </div>
       </section>
 
       <section className="rounded-2xl border border-[color:var(--color-border)] bg-white px-5 py-5">
         <div className="flex items-center justify-between">
           <h3 className="text-base font-semibold">Shipping Address</h3>
-          <button
-            type="button"
-            onClick={() => setShowAddressForm((prev) => !prev)}
-            className="cursor-pointer rounded-md border border-[color:var(--color-border)] px-3 py-1 text-xs font-semibold text-[color:var(--color-text)] hover:border-[color:var(--color-border)]"
-          >
-            {showAddressForm ? "Back to Saved Addresses" : "Use Different Address"}
-          </button>
+          {canUseSavedAddresses && (
+            <button
+              type="button"
+              onClick={onToggleAddressForm}
+              className="cursor-pointer rounded-md border border-[color:var(--color-border)] px-3 py-1 text-xs font-semibold text-[color:var(--color-text)] hover:border-[color:var(--color-border)]"
+            >
+              {showAddressForm ? "Back to Saved Addresses" : "Use Different Address"}
+            </button>
+          )}
         </div>
-        {!showAddressForm && (
+        {!showAddressForm && canUseSavedAddresses && (
           <div className="mt-4 space-y-3">
-            <AddressPicker
-              items={addresses}
-              selectedId={selectedAddressId}
-              onSelect={setSelectedAddressId}
-            />
+            <AddressPicker addresses={addresses} selectedId={selectedAddressId ?? ""} onSelect={onSelectAddress} fullName={fullName} phone={displayPhone || ""} />
           </div>
         )}
 
         {showAddressForm && (
           <>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <CommonCountrySelect
-                name="country"
-                label="Country"
-                placeholder="Select country"
-                value={formValues.country}
-                onChange={(value: string) => setFormValues((prev) => ({ ...prev, country: value }))}
-                onBlur={() => undefined}
-                touched={false}
-              />
-              <CommonTextInput
-                name="state"
-                label="State"
-                placeholder="State"
-                value={formValues.state}
-                onChange={handleChange}
-                onBlur={() => undefined}
-                touched={false}
-              />
-              <CommonTextInput
-                name="city"
-                label="City"
-                placeholder="City"
-                value={formValues.city}
-                onChange={handleChange}
-                onBlur={() => undefined}
-                touched={false}
-              />
-              <CommonPinCodeInput
-                name="pinCode"
-                label="Pin Code"
-                placeholder="Pin code"
-                value={formValues.pinCode}
-                onChange={handleChange}
-                onBlur={() => undefined}
-                touched={false}
-              />
-              <CommonTextInput
-                name="address1"
-                label="Address Line 1"
-                placeholder="Flat / House / Building"
-                value={formValues.address1}
-                onChange={handleChange}
-                onBlur={() => undefined}
-                touched={false}
-              />
-              <CommonTextInput
-                name="landmark"
-                label="Landmark"
-                placeholder="Landmark (optional)"
-                value={formValues.landmark}
-                onChange={handleChange}
-                onBlur={() => undefined}
-                touched={false}
-              />
+              <CommonCountrySelect name="country" label="Country" placeholder="Select country" value={values.country} onChange={(value: string) => setFieldValue("country", value)} onBlur={handleBlur} error={touched.country ? (errors.country as string) : undefined} touched={!!touched.country} />
+              <CommonTextInput name="state" label="State" placeholder="State" value={values.state} onChange={handleChange} onBlur={handleBlur} error={touched.state ? (errors.state as string) : undefined} touched={!!touched.state} />
+              <CommonTextInput name="city" label="City" placeholder="City" value={values.city} onChange={handleChange} onBlur={handleBlur} error={touched.city ? (errors.city as string) : undefined} touched={!!touched.city} />
+              <CommonPinCodeInput name="pinCode" label="Pin Code" placeholder="Pin code" value={values.pinCode} onChange={handleChange} onBlur={handleBlur} error={touched.pinCode ? (errors.pinCode as string) : undefined} touched={!!touched.pinCode} />
+              <CommonTextInput name="address1" label="Address Line 1" placeholder="Flat / House / Building" value={values.address1} onChange={handleChange} onBlur={handleBlur} error={touched.address1 ? (errors.address1 as string) : undefined} touched={!!touched.address1} />
+              <CommonTextInput name="address2" label="Landmark" placeholder="Landmark (optional)" value={values.address2} onChange={handleChange} onBlur={handleBlur} error={touched.address2 ? (errors.address2 as string) : undefined} touched={!!touched.address2} />
             </div>
 
             <label className="mt-5 flex items-center gap-3 text-sm text-[color:var(--color-text-muted)]">
-              <input
-                type="checkbox"
-                checked={saveAddress}
-                onChange={() => setSaveAddress((prev) => !prev)}
-                className="h-4 w-4 accent-[color:var(--color-accent)]"
-              />
+              <input type="checkbox" checked={saveAddress} onChange={onToggleSaveAddress} className="h-4 w-4 accent-[color:var(--color-accent)]" />
               Save this address for next time
             </label>
           </>
@@ -217,8 +109,7 @@ const CheckoutForm = () => {
             </div>
           </div>
           <div className="border-t border-[color:var(--color-border)] bg-white px-4 py-3 text-sm text-[color:var(--color-text-muted)]">
-            You'll be redirected to Razorpay Secure (UPI, Cards, Int'l Cards, Wallets) to
-            complete your purchase.
+            You'll be redirected to the selected payment gateway to complete your purchase.
           </div>
         </div>
       </section>

@@ -1,4 +1,4 @@
-.collection-scroll {
+﻿.collection-scroll {
   scrollbar-width: none;
 }
 
@@ -148,6 +148,28 @@
 
 .delvoura-collection-item.is-active span {
   color: var(--color-text) !important;
+}
+
+.delvoura-collection-scroll {
+  max-height: min(360px, 55vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  overscroll-behavior: contain;
+}
+
+.delvoura-collection-panel {
+  max-height: min(520px, 70vh);
+  overflow: hidden;
+}
+
+.delvoura-collection-panel-scroll {
+  max-height: min(520px, 70vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  padding-bottom: 18px;
+  overscroll-behavior: contain;
 }
 
 .delvoura-signature-box {
@@ -644,7 +666,21 @@ body.ant-modal-open::-webkit-scrollbar {
   overflow: auto;
 }
 
+.delvoura-modal-left {
+  scrollbar-width: none;
+}
+
+.delvoura-modal-left {
+  max-height: calc(80vh - 140px);
+  overflow: auto;
+}
+
 .delvoura-modal-right::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.delvoura-modal-left::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
@@ -652,6 +688,19 @@ body.ant-modal-open::-webkit-scrollbar {
 .delvoura-modal-right::-webkit-scrollbar-track,
 .delvoura-modal-right::-webkit-scrollbar-thumb {
   background: transparent;
+}
+
+.delvoura-modal-left::-webkit-scrollbar-track,
+.delvoura-modal-left::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+@media (max-width: 1024px) {
+  .delvoura-modal-left,
+  .delvoura-modal-right {
+    max-height: none;
+    height: auto;
+  }
 }
 
 .delvoura-search-modal .delvoura-modal-surface {
@@ -1051,6 +1100,10 @@ body.ant-modal-open::-webkit-scrollbar {
     border-radius: 16px !important;
     padding: 0 !important;
   }
+
+  .delvoura-collection-scroll {
+    max-height: min(260px, 40vh);
+  }
 }
 
 /* Mobile sidebar dropdown smooth open/close */
@@ -1061,6 +1114,7 @@ body.ant-modal-open::-webkit-scrollbar {
   transform: translateY(-4px);
   transition: max-height 0.25s ease, opacity 0.2s ease, transform 0.2s ease;
   pointer-events: none;
+  padding-bottom: 12px;
 }
 
 .delvoura-mobile-dropdown.is-open {
@@ -1068,6 +1122,7 @@ body.ant-modal-open::-webkit-scrollbar {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  padding-bottom: 12px;
 }
 
 

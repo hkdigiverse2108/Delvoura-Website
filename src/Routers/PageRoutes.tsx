@@ -14,6 +14,8 @@ import ProfilePage from "../Pages/Profile/Index";
 import BlogPage from "../Pages/Blog/Index";
 import BlogDetailsPage from "../Pages/Blog/Details";
 import CheckoutPage from "../Pages/Checkout/Index";
+import PaymentSuccessPage from "../Pages/Payment/Success";
+import PaymentFailedPage from "../Pages/Payment/Failed";
 
 export const PageRoutes = [
   { path: ROUTES.HERO, element: <Hero /> },
@@ -30,6 +32,8 @@ export const PageRoutes = [
   { path: ROUTES.BLOG, element: <BlogPage /> },
   { path: ROUTES.BLOG_DETAILS, element: <BlogDetailsPage /> },
   { path: ROUTES.CHECKOUT, element: <CheckoutPage /> },
+  { path: ROUTES.PAYMENT.SUCCESS, element: <PaymentSuccessPage /> },
+  { path: ROUTES.PAYMENT.FAILED, element: <PaymentFailedPage /> },
 ];
 
 export const AuthRoutes = [

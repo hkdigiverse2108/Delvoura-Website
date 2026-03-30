@@ -1,27 +1,38 @@
-type AddressItem = {
-  id: string;
-  label: string;
-  name: string;
-  phone: string;
-  line1: string;
-  line2: string;
-};
+import type { AddressItem } from "../../Types";
 
 type AddressPickerProps = {
-  items: AddressItem[];
+  addresses: AddressItem[];
   selectedId: string;
   onSelect: (id: string) => void;
+  fullName: string;
+  phone: string;
 };
 
-const AddressPicker = ({ items, selectedId, onSelect }: AddressPickerProps) => {
+const AddressPicker = ({ addresses, selectedId, onSelect, fullName, phone }: AddressPickerProps) => {
+  const items = addresses
+    .filter((address) => !!address._id)
+    .map((address) => {
+      const cityState = [address.city, address.state].filter(Boolean).join(", ");
+      const tail = [cityState, address.country, address.pinCode].filter(Boolean).join(" ");
+      const line2 = [address.address2, tail].filter(Boolean).join(", ");
+
+      return {
+        id: address._id as string,
+        label: address.isDefault ? "Default Address" : "Saved Address",
+        name: fullName || "Delivery Address",
+        phone: phone || "",
+        line1: address.address1 ?? "Address",
+        line2: line2 || "Add address details",
+      };
+    });
+
   return (
     <div className="space-y-3">
       {items.map((item) => {
         const isActive = item.id === selectedId;
         return ( 
-      <div className="mt-5">
+      <div className="mt-5" key={item.id}>
           <button
-            key={item.id}
             type="button"
             onClick={() => onSelect(item.id)}
             className={`delvoura-address-card w-full rounded-2xl border px-5 py-4 text-left transition ${

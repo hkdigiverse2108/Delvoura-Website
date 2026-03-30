@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Queries } from "../../Api";
 import { ROUTES } from "../../Constants";
@@ -70,7 +70,7 @@ const CollectionMenu = ({ isMobile = false, onNavigate }: CollectionMenuProps) =
           <span className={`transition-transform ${open ? "rotate-180" : ""}`}>▾</span>
         </button>
 
-        <div className={`delvoura-mobile-dropdown flex flex-col gap-5 ${open ? "is-open" : ""}`} aria-hidden={!open}>
+        <div className={`delvoura-mobile-dropdown flex flex-col gap-5 pb-4 ${open ? "is-open" : ""}`} aria-hidden={!open}>
             {staticSections.map((section, i) => (
               <div key={i}>
                 {section.title && (
@@ -99,7 +99,7 @@ const CollectionMenu = ({ isMobile = false, onNavigate }: CollectionMenuProps) =
                 Collections
               </h3>
 
-              <div className="flex flex-col gap-3">
+              <div className="delvoura-collection-scroll collection-scroll flex flex-col gap-3 pb-3">
                 {isLoading && (
                   <span className="text-sm text-[color:var(--color-text-muted)]">
                     Loading collections...
@@ -143,59 +143,61 @@ const CollectionMenu = ({ isMobile = false, onNavigate }: CollectionMenuProps) =
 
       {/* DROPDOWN */}
       <div className={`delvoura-collection-panel delvoura-light-surface absolute top-full left-0 mt-3 w-80 max-w-[92vw] rounded-3xl p-5 shadow-2xl ${ open ? "delvoura-collection-panel-open" : "delvoura-collection-panel-closed" }`} aria-hidden={!open}>
-        {staticSections.map((section, i) => (
-          <div key={i} className="mb-4">
-            {section.title && (
-              <h3 className="mb-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-on-dark)]">
-                {section.title}
-              </h3>
+        <div className="delvoura-collection-panel-scroll collection-scroll flex flex-col pb-3">
+          {staticSections.map((section, i) => (
+            <div key={i} className="mb-4">
+              {section.title && (
+                <h3 className="mb-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-on-dark)]">
+                  {section.title}
+                </h3>
+              )}
+
+              <div className="flex flex-col gap-2">
+                {section.items.map((item) => (
+                  <button key={item.value} className={`delvoura-collection-item flex items-center gap-3 rounded-2xl px-3 py-3 text-left ${item.value === "all" && isShopAllActive ? "is-active" : ""} ${item.value === activeGender ? "is-active" : ""}`} onClick={() => { if (item.value === "all") goToCollections({ sort: "new" }); if (item.value === "women") goToCollections({ sort: "new", gender: "women" }); if (item.value === "men") goToCollections({ sort: "new", gender: "men" }); if (item.value === "unisex") goToCollections({ sort: "new", gender: "unisex" }); }}>
+                    {getStaticImage(item.value) ? (
+                      <img src={getStaticImage(item.value)} alt={item.label} className="h-9 w-9 rounded-xl object-cover" />
+                    ) : (
+                      <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]"/>
+                    )}
+                    <span className="text-sm font-medium">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div className="mb-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-on-dark)]">
+            Collections
+          </div>
+          <div className="flex flex-col gap-2">
+            {isLoading && (
+              <span className="text-sm text-[color:var(--color-text-muted)]">
+                Loading collections...
+              </span>
             )}
 
-            <div className="flex flex-col gap-2">
-              {section.items.map((item) => (
-                <button key={item.value} className={`delvoura-collection-item flex items-center gap-3 rounded-2xl px-3 py-3 text-left ${item.value === "all" && isShopAllActive ? "is-active" : ""} ${item.value === activeGender ? "is-active" : ""}`} onClick={() => { if (item.value === "all") goToCollections({ sort: "new" }); if (item.value === "women") goToCollections({ sort: "new", gender: "women" }); if (item.value === "men") goToCollections({ sort: "new", gender: "men" }); if (item.value === "unisex") goToCollections({ sort: "new", gender: "unisex" }); }}>
-                  {getStaticImage(item.value) ? (
-                    <img src={getStaticImage(item.value)} alt={item.label} className="h-9 w-9 rounded-xl object-cover" />
-                  ) : (
-                    <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]"/>
-                  )}
-                  <span className="text-sm font-medium">{item.label}</span>
-                </button>
-              ))}
-            </div>
+            {!isLoading && collections.length === 0 && (
+              <span className="text-sm text-[color:var(--color-text-muted)]">
+                No collections found.
+              </span>
+            )}
+
+            {!isLoading &&
+              collections.map((item) => {
+                const imageSrc = getImageSrc(item);
+                return (
+                  <button key={item._id || item.name} className={`delvoura-collection-item flex items-center gap-3 rounded-2xl px-3 py-3 text-left ${activeCollection && activeCollection === item._id ? "is-active" : ""}`} onClick={() => goToCollections({ sort: "new", collectionFilter: item._id })}>
+                    {imageSrc ? (
+                      <img src={imageSrc} alt={item.name || "Collection"} className="h-9 w-9 rounded-xl object-cover" />
+                    ) : (
+                      <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]" />
+                    )}
+                    <span className="text-sm font-medium">{item.name || "Untitled"}</span>
+                  </button>
+                );
+              })}
           </div>
-        ))}
-
-        <div className="mb-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-on-dark)]">
-          Collections
-        </div>
-        <div className="flex flex-col gap-2">
-          {isLoading && (
-            <span className="text-sm text-[color:var(--color-text-muted)]">
-              Loading collections...
-            </span>
-          )}
-
-          {!isLoading && collections.length === 0 && (
-            <span className="text-sm text-[color:var(--color-text-muted)]">
-              No collections found.
-            </span>
-          )}
-
-          {!isLoading &&
-            collections.map((item) => {
-              const imageSrc = getImageSrc(item);
-              return (
-                <button key={item._id || item.name} className={`delvoura-collection-item flex items-center gap-3 rounded-2xl px-3 py-3 text-left ${activeCollection && activeCollection === item._id ? "is-active" : ""}`} onClick={() => goToCollections({ sort: "new", collectionFilter: item._id })}>
-                  {imageSrc ? (
-                    <img src={imageSrc} alt={item.name || "Collection"} className="h-9 w-9 rounded-xl object-cover" />
-                  ) : (
-                    <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[color:var(--color-primary)] via-[color:var(--color-accent)] to-[color:var(--color-soft-accent)]" />
-                  )}
-                  <span className="text-sm font-medium">{item.name || "Untitled"}</span>
-                </button>
-              );
-            })}
         </div>
       </div>
     </div>

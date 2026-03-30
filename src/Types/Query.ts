@@ -205,6 +205,40 @@ export type TopbarApiResponse = {
   data?: TopbarItem | { topbarItems?: string[]; topbar_data?: TopbarItem[] };
 };
 
+//============Settings type==============
+export type SettingsItem = {
+  _id?: string;
+  logo?: string;
+  isRazorpay?: boolean;
+  razorpayApiKey?: string | null;
+  razorpayApiSecret?: string | null;
+  isPhonePe?: boolean;
+  phonePeApiKey?: string | null;
+  phonePeApiSecret?: string | null;
+  phonePeVersion?: string | null;
+  link?: string | null;
+  address?: string | null;
+  phoneNumber?: string | null;
+  email?: string | null;
+  socialMediaLinks?: {
+    facebook?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+    linkedin?: string | null;
+  };
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type SettingsApiResponse = {
+  status?: number;
+  message?: string;
+  data?:
+    | SettingsItem
+    | { settings?: SettingsItem; settings_data?: SettingsItem[]; data?: SettingsItem };
+};
+
 //============Policy type==============
 export type TermsServiceItem = {
   _id?: string;

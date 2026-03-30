@@ -99,4 +99,27 @@ export const AddressSchema = Yup.object({
   isActive: Validation("mixed", "Active", { required: false }),
 });
 
+export const CheckoutSchema = Yup.object({
+  firstName: Validation("string", "First name"),
+  lastName: Validation("string", "Last name"),
+  email: Validation("string", "Email", { extraRules: (s) => s.email("Invalid email address") }),
+  countryCode: Validation("string", "Country code", { required: false, max: 6 }),
+  phone: Validation("string", "Phone", {
+    extraRules: (s) =>
+      s
+        .matches(/^\d*$/, "Phone must contain only digits")
+        .min(10, "Phone must be at least 10 digits")
+        .max(15, "Phone must be at most 15 digits"),
+  }),
+  country: Validation("string", "Country"),
+  state: Validation("string", "State"),
+  city: Validation("string", "City"),
+  pinCode: Validation("string", "Pin code", {
+    extraRules: (s) => s.matches(/^\d{6}$/, "Pin code must be 6 digits"),
+  }),
+  address1: Validation("string", "Address line 1"),
+  address2: Validation("string", "Landmark", { required: false }),
+  discountCode: Validation("string", "Discount code", { required: false }),
+});
+
 export { Validation };

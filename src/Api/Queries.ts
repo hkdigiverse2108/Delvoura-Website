@@ -1,5 +1,5 @@
   import { KEYS, URL_KEYS } from "../Constants";
-import type { AddressesApiResponse, AddressesQueryParams, BannerApiResponse, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, OrdersApiResponse, OrdersQueryParams, PrivacyPolicyApiResponse, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, RefundPolicyApiResponse, ReturnExchangeApiResponse, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TermsConditionsApiResponse, TermsServiceApiResponse, TopbarApiResponse } from "../Types";
+import type { AddressesApiResponse, AddressesQueryParams, BannerApiResponse, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, OrdersApiResponse, OrdersQueryParams, PhonepeOrderStatusResponse, PrivacyPolicyApiResponse, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, RazorpayOrderStatusResponse, RefundPolicyApiResponse, ReturnExchangeApiResponse, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SettingsApiResponse, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TermsConditionsApiResponse, TermsServiceApiResponse, TopbarApiResponse } from "../Types";
 import { Get } from "./Methods/Index";
 import { useQueries } from "./ReactQuery/Index";
 
@@ -29,6 +29,9 @@ export const Queries = {
   // ************ Topbar ***********
   useGetTopbar: () => useQueries<TopbarApiResponse>([KEYS.TOPBAR.GET_TOPBAR], () => Get<TopbarApiResponse>(URL_KEYS.TOPBAR.GET_TOPBAR),),
 
+  // ************ Settings ***********
+  useGetSettings: () => useQueries<SettingsApiResponse>([KEYS.SETTINGS.GET_SETTINGS], () => Get<SettingsApiResponse>(URL_KEYS.SETTINGS.GET_SETTINGS),),
+
   // ************ Policy ***********
   useGetTermsService: () => useQueries<TermsServiceApiResponse>([KEYS.POLICY.GET_TERMS_OF_SERVICE], () => Get<TermsServiceApiResponse>(URL_KEYS.POLICY.GET_TERMS_OF_SERVICE),),
   useGetTermsConditions: () => useQueries<TermsConditionsApiResponse>([KEYS.POLICY.GET_TERMS_CONDITIONS], () => Get<TermsConditionsApiResponse>(URL_KEYS.POLICY.GET_TERMS_CONDITIONS),),
@@ -50,4 +53,9 @@ export const Queries = {
   // ************ Order ***********
   useGetOrders: (params?: OrdersQueryParams, token?: string) => useQueries<OrdersApiResponse>([KEYS.ORDER.GET_ORDERS, params, token], () => Get<OrdersApiResponse>(URL_KEYS.ORDER.GET_ORDERS, params, undefined, token), { enabled: !!token },),
   useGetOrderById: (id?: string, token?: string) => useQueries<SingleOrderApiResponse>([KEYS.ORDER.GET_ORDER_BY_ID, id, token], () => Get<SingleOrderApiResponse>(`${URL_KEYS.ORDER.GET_ORDER_BY_ID}/${id}`, undefined, undefined, token), { enabled: !!id && !!token },),
+
+  // ************ Payment ***********
+  useGetRazorpayOrderStatus: (razorpayOrderId?: string, token?: string) => useQueries<RazorpayOrderStatusResponse>([KEYS.PAYMENT.RAZORPAY_ORDER_STATUS, razorpayOrderId, token], () => Get<RazorpayOrderStatusResponse>(`${URL_KEYS.PAYMENT.RAZORPAY_ORDER_STATUS}/${razorpayOrderId}/status`, undefined, undefined, token), { enabled: !!razorpayOrderId && !!token },),
+  useGetRazorpayOrderStatusByOrder: (orderId?: string, token?: string) => useQueries<RazorpayOrderStatusResponse>([KEYS.PAYMENT.RAZORPAY_ORDER_STATUS_BY_ORDER, orderId, token], () => Get<RazorpayOrderStatusResponse>(`${URL_KEYS.PAYMENT.RAZORPAY_ORDER_STATUS_BY_ORDER}/${orderId}/status`, undefined, undefined, token), { enabled: !!orderId && !!token },),
+  useGetPhonepeOrderStatus: (merchantOrderId?: string, token?: string) => useQueries<PhonepeOrderStatusResponse>([KEYS.PAYMENT.PHONEPE_ORDER_STATUS, merchantOrderId, token], () => Get<PhonepeOrderStatusResponse>(`${URL_KEYS.PAYMENT.PHONEPE_ORDER_STATUS}/${merchantOrderId}/status`, undefined, undefined, token), { enabled: !!merchantOrderId && !!token },),
 };

@@ -14,6 +14,7 @@ export type OrderShippingAddress = {
   city?: string;
   state?: string;
   pinCode?: string;
+  default?: boolean;
   isDefault?: boolean;
 };
 
@@ -84,7 +85,7 @@ export type CreateOrderPayload = {
   lastName: string;
   email: string;
   phone: string;
-  shippingAddress: OrderShippingAddress[];
+  shippingAddress?: OrderShippingAddress[];
   items: Array<{
     productId: string;
     quantity: number;
@@ -109,3 +110,18 @@ export type UpdateOrderShippingPayload = {
 };
 
 export type UpdateOrderShippingResponse = Record<string, unknown>;
+
+export type CheckoutFormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  countryCode: string;
+  country: string;
+  state: string;
+  city: string;
+  pinCode: string;
+  address1: string;
+  address2: string;
+  discountCode: string;
+};

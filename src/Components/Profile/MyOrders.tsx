@@ -1,6 +1,12 @@
 import { Card, Divider, Tag, Typography } from "antd";
+import { useMemo } from "react";
+import { useQueries as useReactQueries } from "@tanstack/react-query";
 import { TruckOutlined, CheckCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
-import type { OrderItem } from "../../Types";
+import { useNavigate } from "react-router-dom";
+import { Get } from "../../Api/Methods/Index";
+import { KEYS, URL_KEYS } from "../../Constants";
+import { ROUTES } from "../../Constants/Routes";
+import type { OrderItem, ProductItem, SingleProductApiResponse } from "../../Types";
 
 const { Text, Title } = Typography;
 
@@ -36,6 +42,39 @@ const getPaymentStatusConfig = (status: string) => {
 };
 
 const MyOrders = ({ orders, isLoading }: MyOrdersProps) => {
+  const navigate = useNavigate();
+  const productIds = useMemo(() => {
+    const ids = new Set<string>();
+    orders.forEach((order) => {
+      (order.items ?? []).forEach((item) => {
+        if (item.productId) ids.add(String(item.productId));
+      });
+    });
+    return Array.from(ids);
+  }, [orders]);
+
+  const productQueries = useReactQueries({
+    queries: productIds.map((id) => ({
+      queryKey: [KEYS.PRODUCT.GET_PRODUCT_BY_ID, id],
+      queryFn: async () => await Get<SingleProductApiResponse>(`${URL_KEYS.PRODUCT.GET_PRODUCT_BY_ID}/${id}`),
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      placeholderData: (previousData: SingleProductApiResponse | undefined) => previousData,
+      retry: 0,
+      staleTime: 1000 * 60,
+    })),
+  });
+
+  const productMap = useMemo(() => {
+    const map = new Map<string, ProductItem>();
+    productQueries.forEach((query, index) => {
+      const id = productIds[index];
+      const product = query.data?.data;
+      if (id && product) map.set(id, product);
+    });
+    return map;
+  }, [productQueries, productIds]);
+
   if (isLoading) {
     return (
       <div className="px-4 sm:px-6 py-4">
@@ -122,33 +161,57 @@ const MyOrders = ({ orders, isLoading }: MyOrdersProps) => {
                       Order Items ({items.reduce((acc, item) => acc + (item.quantity ?? 0), 0)} items)
                     </Text>
                     <div className="mt-3 space-y-3">
-                      {items.map((item, index) => (
-                        <div key={item.productId ?? `${order._id ?? "order"}-item-${index}`} className="flex flex-col gap-3 rounded-[12px] bg-[color:var(--color-card)] p-3 sm:flex-row sm:items-center">
-                          <div className="h-16 w-16 overflow-hidden rounded-[10px] border border-[color:var(--color-border)] bg-white">
-                            {item.image ? (
-                              <img src={item.image} alt={item.name ?? "Product"} className="h-full w-full object-cover" />
+                      {items.map((item, index) => {
+                        const product = item.productId ? productMap.get(String(item.productId)) : undefined;
+                        const displayName = product?.name ?? product?.title ?? "Product";
+                        const displayImage = product?.coverimage ?? product?.images?.[0] ?? "";
+                        const displaySubtitle = product?.title && product.title !== displayName ? product.title : "";
+                        const productId = item.productId ? String(item.productId) : "";
+
+                        return (
+                          <div
+                            key={item.productId ?? `${order._id ?? "order"}-item-${index}`}
+                            className="flex cursor-pointer flex-col gap-3 rounded-[12px] bg-[color:var(--color-card)] p-3 transition hover:shadow-sm sm:flex-row sm:items-center"
+                            onClick={() => {
+                              if (!productId) return;
+                              navigate(ROUTES.getProductDetails(productId));
+                            }}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(event) => {
+                              if (!productId) return;
+                              if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault();
+                                navigate(ROUTES.getProductDetails(productId));
+                              }
+                            }}
+                          >
+                            <div className="h-16 w-16 overflow-hidden rounded-[10px] border border-[color:var(--color-border)] bg-white">
+                              {displayImage ? (
+                                <img src={displayImage} alt={displayName} className="h-full w-full object-cover" />
                             ) : (
-                              <div className="flex h-full w-full items-center justify-center text-xs text-[color:var(--color-text-muted)]">
-                                Image
-                              </div>
-                            )}
+                                <div className="flex h-full w-full items-center justify-center text-xs text-[color:var(--color-text-muted)]">
+                                  Image
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex-1">
+                              <Text className="block font-medium text-[color:var(--color-text)]">
+                                {displayName}
+                              </Text>
+                              <Text className="text-xs text-[color:var(--color-text-muted)]">
+                                {displaySubtitle ? `${displaySubtitle} | ` : ""}Qty {item.quantity ?? 0} {item.size ? `| Size ${item.size}` : ""}
+                              </Text>
+                            </div>
+                            <div className="text-right">
+                              <Text className="text-xs text-[color:var(--color-text-muted)]">Price</Text>
+                              <Text className="block font-semibold text-[color:var(--color-text)]">
+                                {formatCurrency(item.price ?? 0, currency)}
+                              </Text>
+                            </div>
                           </div>
-                          <div className="flex-1">
-                            <Text className="block font-medium text-[color:var(--color-text)]">
-                              {item.name ?? item.productId ?? "Product"}
-                            </Text>
-                            <Text className="text-xs text-[color:var(--color-text-muted)]">
-                              Qty {item.quantity ?? 0} {item.size ? `| Size ${item.size}` : ""}
-                            </Text>
-                          </div>
-                          <div className="text-right">
-                            <Text className="text-xs text-[color:var(--color-text-muted)]">Price</Text>
-                            <Text className="block font-semibold text-[color:var(--color-text)]">
-                              {formatCurrency(item.price ?? 0, currency)}
-                            </Text>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
 

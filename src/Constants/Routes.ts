@@ -23,6 +23,12 @@ export const ROUTES = {
     //==============CHECKOUT===============
     CHECKOUT: "/checkout",
 
+    //==============PAYMENT===============
+    PAYMENT: {
+        SUCCESS: "/payment/success",
+        FAILED: "/payment/failed",
+    },
+
     //==============AUTH===============
     AUTH : {
         AUTHETICATION : "/authentication"

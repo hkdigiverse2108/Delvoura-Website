@@ -1,5 +1,5 @@
-  import { KEYS, URL_KEYS } from "../Constants";
-import type { AddressesApiResponse, AddressesQueryParams, BannerApiResponse, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, OrdersApiResponse, OrdersQueryParams, PhonepeOrderStatusResponse, PrivacyPolicyApiResponse, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, RazorpayOrderStatusResponse, RefundPolicyApiResponse, ReturnExchangeApiResponse, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SettingsApiResponse, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TermsConditionsApiResponse, TermsServiceApiResponse, TopbarApiResponse } from "../Types";
+import { KEYS, URL_KEYS } from "../Constants";
+import type { AddressesApiResponse, AddressesQueryParams, BannerApiResponse, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, InstagramApiResponse, InstagramQueryParams, OrdersApiResponse, OrdersQueryParams, PhonepeOrderStatusResponse, PrivacyPolicyApiResponse, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, RazorpayOrderStatusResponse, RefundPolicyApiResponse, ReturnExchangeApiResponse, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SettingsApiResponse, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TermsConditionsApiResponse, TermsServiceApiResponse, TopbarApiResponse } from "../Types";
 import { Get } from "./Methods/Index";
 import { useQueries } from "./ReactQuery/Index";
 
@@ -31,6 +31,9 @@ export const Queries = {
 
   // ************ Settings ***********
   useGetSettings: () => useQueries<SettingsApiResponse>([KEYS.SETTINGS.GET_SETTINGS], () => Get<SettingsApiResponse>(URL_KEYS.SETTINGS.GET_SETTINGS),),
+
+  // ************ Instagram ***********
+  useGetInstagrams: (params?: InstagramQueryParams) => useQueries<InstagramApiResponse>([KEYS.INSTAGRAM.GET_INSTAGRAMS, params], () => Get<InstagramApiResponse>(URL_KEYS.INSTAGRAM.GET_INSTAGRAMS, params),),
 
   // ************ Policy ***********
   useGetTermsService: () => useQueries<TermsServiceApiResponse>([KEYS.POLICY.GET_TERMS_OF_SERVICE], () => Get<TermsServiceApiResponse>(URL_KEYS.POLICY.GET_TERMS_OF_SERVICE),),

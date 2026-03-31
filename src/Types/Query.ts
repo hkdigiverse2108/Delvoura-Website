@@ -1,6 +1,45 @@
 //============Users type==============
 export type SingleUserApiResponse = Record<string, unknown>;
 
+//============Instagram type==============
+export type InstagramItem = {
+  _id?: string;
+  type?: "img" | "video";
+  imageUrl?: string | null;
+  link?: string | null;
+  videoUrl?: string | null;
+  isActive?: boolean;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type InstagramApiResponse = {
+  status?: number;
+  message?: string;
+  data?: {
+    instagram_data?: InstagramItem[];
+    totalData?: number;
+    state?: {
+      page?: number;
+      limit?: number;
+      totalPages?: number;
+      hasNext?: boolean;
+      hasPrev?: boolean;
+    };
+  };
+};
+
+export type InstagramQueryParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  ActiveFilter?: boolean;
+  status?: "active" | "inactive";
+  startDateFilter?: string;
+  endDateFilter?: string;
+};
+
 
 //============Collections type==============
 export type CollectionItem = {

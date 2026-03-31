@@ -108,4 +108,9 @@ export const URL_KEYS = {
     SETTINGS: {
         GET_SETTINGS: "/settings"
     },
+
+    //==============INSTAGRAM===============
+    INSTAGRAM: {
+        GET_INSTAGRAMS: "/instagram"
+    },
 } as const

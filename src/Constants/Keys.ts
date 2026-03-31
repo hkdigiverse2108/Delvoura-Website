@@ -108,4 +108,9 @@ export const KEYS = {
   SETTINGS: {
     GET_SETTINGS: "get-settings",
   },
+
+  //========Instagram=========
+  INSTAGRAM: {
+    GET_INSTAGRAMS: "get-instagrams",
+  },
 } as const;

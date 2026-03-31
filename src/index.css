@@ -150,15 +150,19 @@ textarea {
   0% {
     background-position: top, top, left, right, bottom;
   }
+
   25% {
     background-position: right, top, left, right, bottom;
   }
+
   50% {
     background-position: bottom, top, left, right, bottom;
   }
+
   75% {
     background-position: left, top, left, right, bottom;
   }
+
   100% {
     background-position: top, top, left, right, bottom;
   }
@@ -193,7 +197,7 @@ textarea {
 .delvoura-hero-banner .slick-list,
 .delvoura-hero-banner .slick-track,
 .delvoura-hero-banner .slick-slide,
-.delvoura-hero-banner .slick-slide > div {
+.delvoura-hero-banner .slick-slide>div {
   height: 100%;
 }
 
@@ -207,6 +211,28 @@ textarea {
   pointer-events: auto;
   transform: translateX(0) translateY(-50%);
   z-index: 20;
+}
+
+.instagram-track {
+  animation: delvoura-marquee 26s linear infinite;
+}
+
+.instagram-marquee:hover .instagram-track {
+  animation-play-state: paused;
+}
+
+@keyframes delvoura-marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.instagram-marquee {
+  max-width: 100%;
 }
 
 /*

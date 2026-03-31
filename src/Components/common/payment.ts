@@ -164,3 +164,16 @@ export const getStatusValue = (payload: Record<string, unknown>) =>
 
 export const isSuccessStatus = (status: string) =>
   ["success", "completed", "captured", "paid"].includes(status.toLowerCase());
+
+export const normalizePaymentStatus = (status?: string | null) => {
+  if (!status) return "pending";
+  const key = String(status).trim().toLowerCase();
+  if (["paid", "success", "completed", "captured"].includes(key)) return "paid";
+  if (["pending", "in_progress", "processing", "created", "authorized"].includes(key)) return "pending";
+  if (["failed", "failure", "cancelled", "canceled", "rejected"].includes(key)) return "failed";
+  if (["refunded", "refund", "reversed"].includes(key)) return "refunded";
+  return "pending";
+};
+
+export const isPaymentSuccess = (status?: string | null) =>
+  normalizePaymentStatus(status) === "paid";

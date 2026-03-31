@@ -5,12 +5,19 @@ import { CommonEmailInput, CommonPhoneInput, CommonTextArea, CommonTextInput } f
 import { EnvironmentOutlined, MailOutlined, PhoneOutlined, GlobalOutlined } from "@ant-design/icons";
 import { Mutations } from "../../Api";
 import type { ContactUsPayload } from "../../Types";
+import { useSettings } from "../../Utils/Hooks";
 import { ContactUsSchema } from "../../Utils/ValidationSchemas";
 
 const ContactForm = () => {
   const [success, setSuccess] = useState(false);
   const [formVersion, setFormVersion] = useState(0);
   const { mutate: contactUs, isPending } = Mutations.useContactUs();
+  const { storeInfo } = useSettings();
+
+  const addressText = storeInfo.address || "-";
+  const emailText = storeInfo.email || "-";
+  const phoneText = storeInfo.phoneNumber || "-";
+  const websiteText = storeInfo.website || "-";
 
   useEffect(() => {
     if (!success) return;
@@ -66,7 +73,7 @@ const ContactForm = () => {
                 <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-muted)]">
                   Address
                 </p>
-                <p className="mt-1 leading-6">501, Delvoura House, MG Road, Bengaluru, Karnataka 560001</p>
+                <p className="mt-1 leading-6">{addressText}</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -77,7 +84,7 @@ const ContactForm = () => {
                 <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-muted)]">
                   Email
                 </p>
-                <p className="mt-1">support@delvoura.com</p>
+                <p className="mt-1">{emailText}</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -88,7 +95,7 @@ const ContactForm = () => {
                 <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-muted)]">
                   Phone
                 </p>
-                <p className="mt-1">+91 90000 00000</p>
+                <p className="mt-1">{phoneText}</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -99,7 +106,7 @@ const ContactForm = () => {
                 <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--color-text-muted)]">
                   Website
                 </p>
-                <p className="mt-1">www.delvoura.com</p>
+                <p className="mt-1">{storeInfo.websiteHref ? (<a href={storeInfo.websiteHref} target="_blank" rel="noopener noreferrer">{websiteText}</a>) : websiteText}</p>
               </div>
             </div>
           </div>

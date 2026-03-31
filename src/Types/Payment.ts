@@ -39,8 +39,22 @@ export type PhonepeCreatePaymentResponse = Record<string, unknown>;
 export type PhonepeOrderStatusResponse = Record<string, unknown>;
 
 
+export type PaymentStatus =
+  | "success"
+  | "failed"
+  | "paid"
+  | "pending"
+  | "completed"
+  | "captured"
+  | "processing"
+  | "created"
+  | "authorized"
+  | "cancelled"
+  | "canceled"
+  | "refunded";
+
 export type PaymentResultProps = {
-  status: "success" | "failed";
+  status: PaymentStatus;
   title?: string;
   description?: string;
   note?: string;

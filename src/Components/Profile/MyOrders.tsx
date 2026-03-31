@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { useQueries as useReactQueries } from "@tanstack/react-query";
 import { TruckOutlined, CheckCircleOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { normalizePaymentStatus } from "../common";
 import { Get } from "../../Api/Methods/Index";
 import { KEYS, URL_KEYS } from "../../Constants";
 import { ROUTES } from "../../Constants/Routes";
@@ -100,7 +101,7 @@ const MyOrders = ({ orders, isLoading }: MyOrdersProps) => {
       <div className="space-y-6">
         {orders.map((order) => {
           const orderStatus = order.orderStatus ?? "placed";
-          const paymentStatus = order.paymentStatus ?? "pending";
+          const paymentStatus = normalizePaymentStatus(order.paymentStatus);
           const statusConfig = getOrderStatusConfig(orderStatus);
           const paymentConfig = getPaymentStatusConfig(paymentStatus);
           const currency = order.currency ?? "INR";

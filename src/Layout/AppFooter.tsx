@@ -1,14 +1,23 @@
-import {InstagramOutlined, TwitterOutlined, YoutubeOutlined, PhoneOutlined, MailOutlined, EnvironmentOutlined, FacebookFilled,} from "@ant-design/icons";
+import { InstagramOutlined, TwitterOutlined, PhoneOutlined, MailOutlined, EnvironmentOutlined, FacebookFilled, LinkedinFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../Constants";
+import { useSettings } from "../Utils/Hooks";
 
 const AppFooter = () => {
+  const { socialList, storeInfo } = useSettings();
+
   const socialLinks = [
     { key: "facebook", icon: <FacebookFilled /> },
     { key: "instagram", icon: <InstagramOutlined /> },
     { key: "twitter", icon: <TwitterOutlined /> },
-    { key: "youtube", icon: <YoutubeOutlined /> },
-  ];
+    { key: "linkedin", icon: <LinkedinFilled /> },
+  ]
+    .map((item) => ({ ...item, url: socialList.find((link) => link.key === item.key)?.url }))
+    .filter((item) => Boolean(item.url));
+
+  const storePhone = storeInfo.phoneNumber;
+  const storeEmail = storeInfo.email;
+  const storeAddress = storeInfo.address;
 
   const helpLinks = [
     { to: ROUTES.BLOG, label: "Blog" },
@@ -35,11 +44,7 @@ const AppFooter = () => {
               curated notes, and timeless character.
             </p>
             <div className="flex items-center gap-4 text-xl">
-              {socialLinks.map((item) => (
-                <span key={item.key} className="cursor-pointer text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-text)]" >
-                  {item.icon}
-                </span>
-              ))}
+              {socialLinks.map((item) => (<a key={item.key} href={item.url ?? "#"} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-text)]">{item.icon}</a>))}
             </div>
           </div>
 
@@ -75,20 +80,24 @@ const AppFooter = () => {
               Store Info
             </h4>
             <div className="space-y-3 text-base text-[color:var(--color-text-muted)]">
-              <div className="flex items-start gap-3">
-                <PhoneOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
-                <span>+91 90000 00000</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <MailOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
-                <span>support@delvoura.com</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <EnvironmentOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
-                <span>
-                  501, Delvoura House, MG Road, Bengaluru, Karnataka 560001
-                </span>
-              </div>
+              {storePhone ? (
+                <div className="flex items-start gap-3">
+                  <PhoneOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
+                  <span>{storePhone}</span>
+                </div>
+              ) : null}
+              {storeEmail ? (
+                <div className="flex items-start gap-3">
+                  <MailOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
+                  <span>{storeEmail}</span>
+                </div>
+              ) : null}
+              {storeAddress ? (
+                <div className="flex items-start gap-3">
+                  <EnvironmentOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
+                  <span>{storeAddress}</span>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -107,11 +116,7 @@ const AppFooter = () => {
               curated notes, and timeless character.
             </p>
             <div className="flex items-center gap-4 text-xl">
-              {socialLinks.map((item) => (
-                <span  key={item.key}  className="cursor-pointer text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-text)]"  >
-                  {item.icon}
-                </span>
-              ))}
+              {socialLinks.map((item) => (<a key={item.key} href={item.url ?? "#"} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-text)]">{item.icon}</a>))}
             </div>
           </div>
 
@@ -146,20 +151,24 @@ const AppFooter = () => {
               Store Info
             </summary>
             <div className="mt-4 space-y-3 text-base">
-              <div className="flex items-start gap-3">
-                <PhoneOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
-                <span>+91 90000 00000</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <MailOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
-                <span>support@delvoura.com</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <EnvironmentOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
-                <span>
-                  501, Delvoura House, MG Road, Bengaluru, Karnataka 560001
-                </span>
-              </div>
+              {storePhone ? (
+                <div className="flex items-start gap-3">
+                  <PhoneOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
+                  <span>{storePhone}</span>
+                </div>
+              ) : null}
+              {storeEmail ? (
+                <div className="flex items-start gap-3">
+                  <MailOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
+                  <span>{storeEmail}</span>
+                </div>
+              ) : null}
+              {storeAddress ? (
+                <div className="flex items-start gap-3">
+                  <EnvironmentOutlined className="mt-0.5 text-[color:var(--color-accent)]" />
+                  <span>{storeAddress}</span>
+                </div>
+              ) : null}
             </div>
           </details>
 

@@ -8,9 +8,12 @@ import { Queries } from "../../Api";
 import { useAppSelector } from "../../Store/Hooks";
 import ProfileCard from "./ProfileCard";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../Constants";
 
 
 const Header = () => {
+  const navigate = useNavigate()
   const [hideAuth, setHideAuth] = useState(false);
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const { data: userData } = Queries.useGetSingleUser((user as { _id?: string } | null)?._id);
@@ -45,7 +48,7 @@ const Header = () => {
                 <SearchBarWithModel showOnMobile buttonClassName="delvoura-mobile-search-btn" />
               </div>
               <div className="hidden md:flex items-center justify-center">
-                <img src="/assets/images/logo/logo-white.png" alt="Delvoura" className="h-8 w-auto"/>
+                <img src="/assets/images/logo/logo-white.png" alt="Delvoura" className="h-8 w-auto cursor-pointer" onClick={()=>navigate(ROUTES.COLLECTIONS_ALL)}/>
               </div>
             </div>
 

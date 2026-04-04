@@ -12,7 +12,7 @@ import { setSettings } from "../../Store/Slices/SettingsSlice";
 import { CheckoutSchema } from "../../Utils/ValidationSchemas";
 import { notifyError, notifySuccess, notifyWarning } from "../../Attribute";
 import { useNavigate } from "react-router-dom";
-import { clearPhonePePending, getPhonePeUrl, getProvider, getRazorpayConfig, getStatusValue, isSuccessStatus, normalizePaymentResponse, openRazorpay, readPhonePePending, storePhonePePending, } from "../common";
+import { clearPhonePePending, getPhonePeUrl, getProvider, getRazorpayConfig, getStatusValue, isSuccessStatus, markPhonePePendingNotified, markPhonePeResultNotified, normalizePaymentResponse, normalizePaymentStatus, openRazorpay, readPhonePePending, storePhonePePending, wasPhonePePendingNotified, wasPhonePeResultNotified, } from "../common";
 import type { AddressItem, CreateOrderPayload, CheckoutFormValues, SettingsItem } from "../../Types";
 
 const CheckoutContent = () => {
@@ -35,15 +35,27 @@ const CheckoutContent = () => {
       params.get("payment_status") ||
       params.get("paymentStatus");
     if (!status) return;
-    const normalized = status.toLowerCase();
-    const successStates = ["success", "completed", "captured", "paid"];
-    if (!successStates.includes(normalized)) return;
-
-    writeCart([]);
-    notifySuccess("Payment successful.");
-    clearPhonePePending();
-    navigate(ROUTES.PAYMENT.SUCCESS);
-    window.history.replaceState({}, document.title, window.location.pathname);
+    const normalized = normalizePaymentStatus(status);
+    if (normalized === "paid") {
+      writeCart([]);
+      if (!wasPhonePeResultNotified(pendingMerchantOrderId, "paid")) {
+        notifySuccess("Payment successful.");
+        markPhonePeResultNotified(pendingMerchantOrderId, "paid");
+      }
+      clearPhonePePending();
+      navigate(ROUTES.PAYMENT.SUCCESS);
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return;
+    }
+    if (normalized === "failed") {
+      if (!wasPhonePeResultNotified(pendingMerchantOrderId, "failed")) {
+        notifyError("Payment failed.");
+        markPhonePeResultNotified(pendingMerchantOrderId, "failed");
+      }
+      clearPhonePePending();
+      navigate(ROUTES.PAYMENT.FAILED);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }, [navigate]);
 
   // ====== Keep cart in sync ======
@@ -177,16 +189,37 @@ const CheckoutContent = () => {
     const payload = normalizePaymentResponse(phonepeStatusData);
     const statusValue = getStatusValue(payload);
     if (!statusValue) return;
+    const normalized = normalizePaymentStatus(statusValue);
 
-    if (isSuccessStatus(statusValue)) {
+    if (isSuccessStatus(statusValue) || normalized === "paid") {
       writeCart([]);
-      notifySuccess("Payment successful.");
+      if (!wasPhonePeResultNotified(pendingMerchantOrderId, "paid")) {
+        notifySuccess("Payment successful.");
+        markPhonePeResultNotified(pendingMerchantOrderId, "paid");
+      }
       clearPhonePePending();
+      setPendingPhonePe(null);
       navigate(ROUTES.PAYMENT.SUCCESS);
-    } else {
-      notifyWarning("Payment is still processing.");
+      return;
     }
-  }, [navigate, phonepeStatusData]);
+
+    if (normalized === "failed" || normalized === "refunded") {
+      const resultKey = normalized === "refunded" ? "refunded" : "failed";
+      if (!wasPhonePeResultNotified(pendingMerchantOrderId, resultKey)) {
+        notifyError(normalized === "refunded" ? "Payment refunded." : "Payment failed.");
+        markPhonePeResultNotified(pendingMerchantOrderId, resultKey);
+      }
+      clearPhonePePending();
+      setPendingPhonePe(null);
+      navigate(ROUTES.PAYMENT.FAILED);
+      return;
+    }
+
+    if (!wasPhonePePendingNotified(pendingMerchantOrderId)) {
+      notifyWarning("Payment is still processing.");
+      markPhonePePendingNotified(pendingMerchantOrderId);
+    }
+  }, [navigate, phonepeStatusData, pendingMerchantOrderId]);
 
   // ====== Open the correct payment UI ======
   const handlePaymentFlow = async (

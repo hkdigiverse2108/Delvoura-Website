@@ -41,6 +41,7 @@ export type OrderItem = {
   isDeleted?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  orderId?: string;
 };
 
 export type OrdersApiState = {

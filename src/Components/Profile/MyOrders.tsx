@@ -129,7 +129,7 @@ const MyOrders = ({ orders, isLoading }: MyOrdersProps) => {
                     </Text>
                     <div className="mt-1 flex flex-wrap items-center gap-2">
                       <Title level={5} className="!mb-0 font-mono">
-                        {order._id ?? order.razorpayId ?? order.phonePeId ?? "Order"}
+                        {order.orderId || "#N/A"}
                       </Title>
                       <Tag color={statusConfig.color} icon={statusConfig.icon} className="!rounded-full !px-2 !py-0 !text-xs">
                         {statusConfig.label}

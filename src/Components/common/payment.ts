@@ -118,6 +118,8 @@ export const openRazorpay = async (options: RazorpayOpenOptions) => {
 };
 
 const PHONEPE_STORAGE_KEY = "dv_phonepe_pending";
+const PHONEPE_PENDING_TOAST_KEY = "dv_phonepe_pending_toast";
+const PHONEPE_RESULT_TOAST_KEY = "dv_phonepe_result_toast";
 
 type PhonePePending = {
   merchantOrderId: string;
@@ -151,6 +153,33 @@ export const readPhonePePending = (): PhonePePending | null => {
 
 export const clearPhonePePending = () => {
   sessionStorage.removeItem(PHONEPE_STORAGE_KEY);
+  sessionStorage.removeItem(PHONEPE_PENDING_TOAST_KEY);
+  sessionStorage.removeItem(PHONEPE_RESULT_TOAST_KEY);
+};
+
+export const wasPhonePePendingNotified = (merchantOrderId?: string | null) => {
+  if (!merchantOrderId) return false;
+  return sessionStorage.getItem(PHONEPE_PENDING_TOAST_KEY) === String(merchantOrderId);
+};
+
+export const markPhonePePendingNotified = (merchantOrderId?: string | null) => {
+  if (!merchantOrderId) return;
+  sessionStorage.setItem(PHONEPE_PENDING_TOAST_KEY, String(merchantOrderId));
+};
+
+export const wasPhonePeResultNotified = (merchantOrderId?: string | null, status?: string | null) => {
+  if (!merchantOrderId || !status) return false;
+  return (
+    sessionStorage.getItem(PHONEPE_RESULT_TOAST_KEY) === `${merchantOrderId}:${String(status).toLowerCase()}`
+  );
+};
+
+export const markPhonePeResultNotified = (merchantOrderId?: string | null, status?: string | null) => {
+  if (!merchantOrderId || !status) return;
+  sessionStorage.setItem(
+    PHONEPE_RESULT_TOAST_KEY,
+    `${merchantOrderId}:${String(status).toLowerCase()}`
+  );
 };
 
 export const getStatusValue = (payload: Record<string, unknown>) =>

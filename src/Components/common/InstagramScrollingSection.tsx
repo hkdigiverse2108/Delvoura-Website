@@ -80,7 +80,7 @@ const InstagramScrollingSection = ({ containerClassName = "delvoura-container" }
                   <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: "linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 5%, transparent), color-mix(in srgb, var(--color-primary) 55%, transparent))" }} />
                   <div className="absolute inset-0 grid place-items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <span className="grid h-14 w-14 place-items-center rounded-full backdrop-blur" style={{ background: "color-mix(in srgb, var(--color-text-on-dark) 15%, transparent)", color: "var(--color-text-on-dark)" }}>
-                      <PlayCircleFilled className="text-3xl" />
+                      {hasVideo ? <PlayCircleFilled className="text-3xl" /> : <InstagramOutlined className="text-2xl" />}
                     </span>
                   </div>
                 </div>

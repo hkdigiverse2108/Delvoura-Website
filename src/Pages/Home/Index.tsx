@@ -5,7 +5,7 @@ import ProductGrid from "../../Components/Home/ProductGrid";
 import NewsletterModal from "../../Components/ConfirmModel/NewsletterModal";
 import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDataGrid } from "../../Utils/Hooks";
 import { Queries } from "../../Api";
@@ -17,47 +17,35 @@ const MainHomePage = () => {
   const { filters, setFilters, params, paginationModel, setPaginationModel } = useDataGrid({ defaultFilters: { sort: "new" }, pageSize: 20 });
   const location = useLocation();
   const navigate = useNavigate();
-  const isReloadRef = useRef(false);
-  const handledReloadRef = useRef(false);
   const { data, isLoading } = Queries.useGetProducts(params);
   const products = data?.data?.product_data || [];
   const totalData = data?.data?.totalData || 0;
   const totalPages = data?.data?.state?.totalPages;
-  
-  //Newsletter Use Effect
+
+  useEffect(() => {
+    const storageKey = "dv_newsletter_modal_shown";
+    const shown = sessionStorage.getItem(storageKey) === "1";
+    if (shown) return;
+
+    const timer = window.setTimeout(() => {
+      setNewsletterOpen(true);
+      sessionStorage.setItem(storageKey, "1");
+    }, 3000);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     const navEntries = performance.getEntriesByType("navigation");
     const isReload = navEntries.length
       ? (navEntries[0] as PerformanceNavigationTiming).type === "reload"
       : false;
 
-    isReloadRef.current = isReload;
-  }, []);
-
-  useEffect(() => {
-    const fromHero = sessionStorage.getItem("dv_from_hero") === "1";
-    const shownCount = Number(sessionStorage.getItem("dv_newsletter_shown_count") || 0);
-    const isReload = isReloadRef.current;
-
-    if ((isReload || fromHero) && shownCount < 1) {
-      const timer = window.setTimeout(() => {
-        setNewsletterOpen(true);
-        sessionStorage.setItem("dv_newsletter_shown_count", String(shownCount + 1));
-        sessionStorage.removeItem("dv_from_hero");
-      }, 3000);
-
-      return () => window.clearTimeout(timer);
-    }
-  }, [location.key]);
-
-  useEffect(() => {
-    if (!isReloadRef.current || handledReloadRef.current) return;
-    handledReloadRef.current = true;
+    if (!isReload) return;
     setFilters({ sort: "new" });
     setPaginationModel((prev) => ({ ...prev, page: 0 }));
     sessionStorage.removeItem("dv_collection_filters");
     navigate(location.pathname, { replace: true, state: null });
-    isReloadRef.current = false;
   }, [location.pathname, navigate, setFilters, setPaginationModel]);
 
   useEffect(() => {

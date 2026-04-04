@@ -1,4 +1,4 @@
-import Hero from "../Pages/Hero/Index";
+import { Navigate } from "react-router-dom";
 import MainHomePage from "../Pages/Home/Index";
 import Authencation from "../Pages/Auth";
 import { ROUTES } from "../Constants";
@@ -18,7 +18,7 @@ import PaymentSuccessPage from "../Pages/Payment/Success";
 import PaymentFailedPage from "../Pages/Payment/Failed";
 
 export const PageRoutes = [
-  { path: ROUTES.HERO, element: <Hero /> },
+  { path: ROUTES.HERO, element: <Navigate to={ROUTES.COLLECTIONS_ALL} replace /> },
   { path: ROUTES.COLLECTIONS_ALL, element: <MainHomePage /> },
   { path: ROUTES.PRODUCT_DETAILS, element: <ProductDescription /> },
   { path: ROUTES.CONTACT, element: <Contact /> },

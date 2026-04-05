@@ -9,29 +9,19 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const BlogDetailsPage = () => {
-  const [hideOfferBar, setHideOfferBar] = useState(false);
   const { id } = useParams();
   const { data, isLoading } = Queries.useGetBlogById(id);
   const post = data?.data;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 70) return setHideOfferBar(true);
-      return setHideOfferBar(false);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <div className="min-h-screen bg-[color:var(--color-bg)] text-[color:var(--color-text)]">
       <div className="sticky top-0 z-999">
         <Header />
       </div>
-      {!hideOfferBar && <OfferBar className="top-20" />}
 
       {isLoading ? (
-        <section className="delvoura-container py-16">
+        <section className="delvoura-container pb-16">
           <div className="delvoura-product-empty-state">
             <Spin
               indicator={

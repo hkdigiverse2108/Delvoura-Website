@@ -3,6 +3,7 @@ import AppFooter from "../../Layout/AppFooter";
 import { InstagramScrollingSection, OfferBar } from "../../Components/common";
 import ContactForm from "../../Components/Contact/ContactForm";
 import { useEffect, useState } from "react";
+import { BannerSlider } from "../../Components/Home";
 
 const Contact = () => {
       const [hideOfferBar, setHideOfferBar] = useState(false);
@@ -25,7 +26,7 @@ const Contact = () => {
       </div>
         {!hideOfferBar && <OfferBar className="top-20" />}
 
-      <div className="h-[55vh] w-full bg-center bg-cover" style={{ backgroundImage: "url('https://cdn.shopify.com/s/files/1/0175/6875/9862/files/homepage_banner.png')", }}/>
+      <BannerSlider />
       <ContactForm />
       <InstagramScrollingSection />
       <AppFooter />

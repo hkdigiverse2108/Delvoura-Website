@@ -2,13 +2,13 @@
 .delvoura-ingredient-btns {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  row-gap: 18px;
+  column-gap: 14px;
   margin: 12px 0 0 0;
 }
 
 .delvoura-ingredient-btn {
-  margin-left: 5px;
-
+  margin: 0;
   padding: 8px 18px;
   border-radius: 14px;
   border: 1px solid var(--color-accent);
@@ -579,10 +579,11 @@
 }
 
 .delvoura-accordion-details[open] .delvoura-accordion-content {
-  max-height: 800px;
+  max-height: 1200px;
   opacity: 1;
   padding-left: 25px;
   padding-top: 10px;
+  overflow: auto;
 }
 
 .delvoura-accordion-body {
@@ -936,6 +937,14 @@
   z-index: 10;
 }
 
+@media (max-width: 640px) {
+  .delvoura-sort-menu {
+    right: auto;
+    left: 0;
+    min-width: min(220px, 80vw);
+  }
+}
+
 .delvoura-sort-title {
   font-weight: 700;
   font-size: 14px;
@@ -965,8 +974,8 @@
   margin-top: 20px;
   display: grid;
   gap: 14px;
-  grid-auto-flow: row;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 320px);
   grid-template-rows: repeat(2, minmax(0, auto));
   overflow-x: auto;
   overflow-y: hidden;
@@ -1065,6 +1074,28 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.delvoura-inspired-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.delvoura-inspired-text.is-open {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.delvoura-inspired-toggle {
+  margin-top: 6px;
+  border: none;
+  background: transparent;
+  color: var(--color-accent);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
 }
 
 .delvoura-review-modal .ant-modal-content {
@@ -1397,10 +1428,24 @@
 
   .delvoura-product-main {
     min-height: 180px;
+    max-height: 70vh;
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .delvoura-product-main img {
+    object-fit: cover;
+    object-position: center;
+    padding: 0;
   }
 
   .delvoura-accordion-summary {
     font-size: 0.95rem;
+  }
+
+  .delvoura-accordion-details[open] .delvoura-accordion-content {
+    max-height: 65vh;
   }
 
   .delvoura-review-card {
@@ -1413,6 +1458,50 @@
   }
 
   .delvoura-review-btn {
+    width: 100%;
+  }
+
+  .delvoura-write-modal.ant-modal {
+    width: 94vw !important;
+    max-width: 94vw !important;
+    margin: 0 auto !important;
+  }
+
+  .delvoura-write-modal .ant-modal-body {
+    padding: 0 !important;
+    max-height: 82vh;
+    overflow: auto;
+  }
+
+  .delvoura-write-inner {
+    min-height: auto;
+  }
+
+  .delvoura-write-step {
+    padding: 28px 20px 16px;
+    gap: 16px;
+  }
+
+  .delvoura-write-title {
+    font-size: 20px;
+  }
+
+  .delvoura-write-textarea.ant-input {
+    min-height: 160px !important;
+  }
+
+  .delvoura-write-footer {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px 16px 18px;
+  }
+
+  .delvoura-write-steps {
+    order: 2;
+  }
+
+  .delvoura-write-back,
+  .delvoura-write-next {
     width: 100%;
   }
 }

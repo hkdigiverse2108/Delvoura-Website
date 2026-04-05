@@ -2,6 +2,7 @@ import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
 import { InstagramScrollingSection, OfferBar } from "../../Components/common";
 import { useEffect, useState } from "react";
+import { BannerSlider } from "../../Components/Home";
 
 const ShippingPolicy = () => {
       const [hideOfferBar, setHideOfferBar] = useState(false);
@@ -24,7 +25,8 @@ const ShippingPolicy = () => {
       </div>
         {!hideOfferBar && <OfferBar className="top-20" />}
 
-      <div className="h-[55vh] w-full bg-center bg-cover" style={{ backgroundImage: "url('https://cdn.shopify.com/s/files/1/0175/6875/9862/files/homepage_banner.png')", }}/>
+      {/* <div className="h-[55vh] w-full bg-center bg-cover" style={{ backgroundImage: "url('https://cdn.shopify.com/s/files/1/0175/6875/9862/files/homepage_banner.png')", }}/> */}
+      <BannerSlider />
 
       <section className="delvoura-container py-12">
         <div className="rounded-2xl border border-[color:var(--color-border-dark)] bg-[color:var(--color-card)] p-8 shadow-sm">

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../Constants";
 import { useAppSelector } from "../../Store/Hooks";
 import { InstagramScrollingSection, OfferBar } from "../../Components/common";
+import { BannerSlider } from "../../Components/Home";
 
 const Authencation = () => {
   const [hideOfferBar, setHideOfferBar] = useState(false);
@@ -58,11 +59,8 @@ const Authencation = () => {
       </div>
       {!hideOfferBar && <OfferBar className="top-20" />}
 
-      <div className="h-[55vh] w-full bg-center bg-cover" style={{
-          backgroundImage:
-            "url('https://cdn.shopify.com/s/files/1/0175/6875/9862/files/homepage_banner.png')", // add banner image
-        }}
-      />
+    <BannerSlider />
+      
       <div className="delvoura-container py-10">
         <div className="delvoura-auth-content mx-auto max-w-xl rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-6 md:p-8" style={{ boxShadow: "0 20px 60px -40px color-mix(in srgb, var(--color-primary) 35%, transparent)", }} >
           {authView === "tabs" ? (

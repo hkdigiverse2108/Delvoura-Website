@@ -10,7 +10,13 @@ type ProductInfoProps = {
 const ProductInfo = ({ product }: ProductInfoProps) => {
   const [selectedVariant, setSelectedVariant] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
+  const [showInspired, setShowInspired] = useState(false);
   const addToCart = useAddToCart();
+
+  const normalizeHtml = (value?: string) => {
+    if (!value) return "";
+    return value.replace(/&nbsp;/g, " ").replace(/\u00A0/g, " ");
+  };
 
   useEffect(() => {
     const firstVariant = (product?.variants?.[0] as any);
@@ -71,16 +77,20 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="delvoura-info-block">
         <div className="delvoura-product-inspired">
           {product?.scentStory ? (
-            <span>
-              Inspired by{" "}
-              <strong>
-                <span dangerouslySetInnerHTML={{ __html: product.scentStory }} />
-              </strong>
-            </span>
+            <div>
+              <span>
+                Inspired by{" "}
+                <strong>{product?.name || "Delvoura"}</strong>
+              </span>
+              <div className={`delvoura-html delvoura-inspired-text mt-2 ${showInspired ? "is-open" : ""}`} dangerouslySetInnerHTML={{ __html: normalizeHtml(product.scentStory) }} />
+              <button type="button" className="delvoura-inspired-toggle" onClick={() => setShowInspired((prev) => !prev)}>
+                {showInspired ? "Read less" : "Read more"}
+              </button>
+            </div>
           ) : (
             <>Inspired by <strong>{product?.name || "Delvoura"}</strong></>
           )}
-        </div>
+        </div> <br />
 
         <div className="delvoura-product-price-row">
           <span className="delvoura-product-price">Rs. {price}</span>

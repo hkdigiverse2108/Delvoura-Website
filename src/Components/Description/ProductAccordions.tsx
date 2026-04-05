@@ -10,7 +10,8 @@ const ProductAccordions = ({ product }: ProductAccordionsProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const renderHtml = (html?: string, fallback?: string) => {
     if (html) {
-      return <div className="delvoura-html" dangerouslySetInnerHTML={{ __html: html }} />;
+      const normalized = html.replace(/&nbsp;/g, " ").replace(/\u00A0/g, " ");
+      return <div className="delvoura-html" dangerouslySetInnerHTML={{ __html: normalized }} />;
     }
     return <p>{fallback}</p>;
   };
@@ -60,6 +61,7 @@ const ProductAccordions = ({ product }: ProductAccordionsProps) => {
     ],
     [product]
   );
+
   return (
     <div className="delvoura-product-accordions">
       {accordionData.map((item, idx) => (

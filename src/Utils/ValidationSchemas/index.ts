@@ -22,7 +22,7 @@ export const ForgetPasswordSchema = Yup.object({
 });
 
 export const VerifyOtpSchema = Yup.object({
-  otp: Validation("string", "OTP", { extraRules: (s) => s.matches(/^\d{4}$/, "OTP must be 4 digits") }),
+  otp: Validation("string", "OTP", { extraRules: (s) => s.matches(/^\d{6}$/, "OTP must be 6 digits") }),
 });
 
 export const ResetForgetPasswordSchema = Yup.object({

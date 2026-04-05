@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../Layout/Header/Index";
 import AppFooter from "../../Layout/AppFooter";
-import { EmptyState, InstagramScrollingSection, OfferBar } from "../../Components/common";
+import { EmptyState, InstagramScrollingSection } from "../../Components/common";
 import { BlogDetails } from "../../Components/Blog";
 import { Queries } from "../../Api";
 import { Spin } from "antd";

@@ -36,10 +36,10 @@ const ProductAccordions = ({ product }: ProductAccordionsProps) => {
       {
         title: "Ingredients",
         content: (
-          <div className="delvoura-accordion-body">
+          <div className="delvoura-accordion-body delvoura-ingredients-body">
             <div className="delvoura-ingredient-btns">
               {(product?.ingredients || []).map((item) => (
-                <button key={item} type="button" className="delvoura-ingredient-btn">{item}</button>
+                <button key={item} type="button" className="delvoura-ingredient-btn m-4" style={{margin:"2px"}}>{item}</button>
               ))}
             </div>
           </div>

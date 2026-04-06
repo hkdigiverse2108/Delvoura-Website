@@ -52,11 +52,7 @@ const CheckoutForm = ({ addresses, selectedAddressId, onSelectAddress, showAddre
         <div className="flex items-center justify-between">
           <h3 className="text-base font-semibold">Shipping Address</h3>
           {canUseSavedAddresses && (
-            <button
-              type="button"
-              onClick={onToggleAddressForm}
-              className="cursor-pointer rounded-md border border-[color:var(--color-border)] px-3 py-1 text-xs font-semibold text-[color:var(--color-text)] hover:border-[color:var(--color-border)]"
-            >
+            <button type="button" onClick={onToggleAddressForm} className="cursor-pointer rounded-md border border-[color:var(--color-border)] px-3 py-1 text-xs font-semibold text-[color:var(--color-text)] hover:border-[color:var(--color-border)]">
               {showAddressForm ? "Back to Saved Addresses" : "Use Different Address"}
             </button>
           )}
@@ -93,13 +89,13 @@ const CheckoutForm = ({ addresses, selectedAddressId, onSelectAddress, showAddre
         </p>
 
         <div className="mt-4 overflow-hidden rounded-2xl border border-[color:var(--color-accent)] bg-[color:var(--color-secondary-bg)]">
-          <div className="flex items-start justify-between gap-4 px-4 py-3">
+          <div className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <div className="text-sm font-semibold">
                 Razorpay Secure (UPI, Cards, Int'l Cards, Wallets)
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 sm:justify-end">
               <img src="/assets/images/checkout/upi.svg" alt="UPI" className="h-5 w-auto" />
               <img src="/assets/images/checkout/visa.svg" alt="Visa" className="h-5 w-auto" />
               <img src="/assets/images/checkout/masterCard.svg" alt="Mastercard" className="h-5 w-auto" />

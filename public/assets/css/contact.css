@@ -259,6 +259,28 @@
   color: var(--color-accent) !important;
 }
 
+@media (max-width: 520px) {
+  .delvoura-contact-select {
+    width: 140px !important;
+  }
+
+  .delvoura-contact-select .ant-select-selector {
+    padding: 0 8px !important;
+  }
+
+  .delvoura-contact-select .ant-select-selection-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 380px) {
+  .delvoura-contact-select {
+    width: 120px !important;
+  }
+}
+
 .delvoura-contact-success {
   position: absolute;
   inset: 0;

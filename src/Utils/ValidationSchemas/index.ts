@@ -108,8 +108,8 @@ export const CheckoutSchema = Yup.object({
     extraRules: (s) =>
       s
         .matches(/^\d*$/, "Phone must contain only digits")
-        .min(10, "Phone must be at least 10 digits")
-        .max(15, "Phone must be at most 15 digits"),
+        .min(10, "Phone must be 10 digits")
+        .max(10, "Phone must be 10 digits"),
   }),
   country: Validation("string", "Country"),
   state: Validation("string", "State"),

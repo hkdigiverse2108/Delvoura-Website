@@ -4,7 +4,9 @@
   flex-wrap: wrap;
   row-gap: 18px;
   column-gap: 14px;
-  margin: 12px 0 0 0;
+  margin: 0;
+  padding: 12px;
+  width: 100%;
 }
 
 .delvoura-ingredient-btn {
@@ -935,6 +937,10 @@
   gap: 8px;
   box-shadow: 0 18px 38px -26px color-mix(in srgb, var(--color-text) 40%, transparent);
   z-index: 10;
+}
+
+.delvoura-ingredients-body {
+  padding: 12px;
 }
 
 @media (max-width: 640px) {

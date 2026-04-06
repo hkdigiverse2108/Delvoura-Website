@@ -143,13 +143,6 @@ const MyOrders = ({ orders, isLoading }: MyOrdersProps) => {
                       Placed on {createdAt}
                     </Text>
                   </div>
-
-                  <div className="rounded-[12px] bg-[color:var(--color-card)] px-4 py-2 text-right">
-                    <Text className="block text-xs text-[color:var(--color-text-muted)]">Total Amount</Text>
-                    <Text className="text-lg font-semibold text-[color:var(--color-text)]">
-                      {formatCurrency(total, currency)}
-                    </Text>
-                  </div>
                 </div>
 
                 <Divider className="!my-2" />
@@ -161,58 +154,75 @@ const MyOrders = ({ orders, isLoading }: MyOrdersProps) => {
                     <Text className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-text-muted)]">
                       Order Items ({items.reduce((acc, item) => acc + (item.quantity ?? 0), 0)} items)
                     </Text>
-                    <div className="mt-3 space-y-3">
-                      {items.map((item, index) => {
-                        const product = item.productId ? productMap.get(String(item.productId)) : undefined;
-                        const displayName = product?.name ?? product?.title ?? "Product";
-                        const displayImage = product?.coverimage ?? product?.images?.[0] ?? "";
-                        const displaySubtitle = product?.title && product.title !== displayName ? product.title : "";
-                        const productId = item.productId ? String(item.productId) : "";
+                    <div className="mt-3 overflow-x-auto rounded-[12px] border-2 border-[color:var(--color-border)] bg-white">
+                      <table className="min-w-[720px] w-full border-collapse">
+                        <thead>
+                          <tr className="bg-[color:var(--color-card)] text-left text-xs font-semibold text-[color:var(--color-text-muted)]">
+                            <th className="px-3 py-2">Sr. No.</th>
+                            <th className="px-3 py-2">Image</th>
+                            <th className="px-3 py-2">Title</th>
+                            <th className="px-3 py-2">Subtitle</th>
+                            <th className="px-3 py-2">Qty</th>
+                            <th className="px-3 py-2 text-right">Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {items.map((item, index) => {
+                            const product = item.productId ? productMap.get(String(item.productId)) : undefined;
+                            const displayName = product?.name ?? product?.title ?? "Product";
+                            const displaySubtitle = product?.title && product.title !== displayName ? product.title : "";
+                            const displayImage = product?.coverimage ?? product?.images?.[0] ?? "";
+                            const productId = item.productId ? String(item.productId) : "";
 
-                        return (
-                          <div
-                            key={item.productId ?? `${order._id ?? "order"}-item-${index}`}
-                            className="flex cursor-pointer flex-col gap-3 rounded-[12px] bg-[color:var(--color-card)] p-3 transition hover:shadow-sm sm:flex-row sm:items-center"
-                            onClick={() => {
-                              if (!productId) return;
-                              navigate(ROUTES.getProductDetails(productId));
-                            }}
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(event) => {
-                              if (!productId) return;
-                              if (event.key === "Enter" || event.key === " ") {
-                                event.preventDefault();
-                                navigate(ROUTES.getProductDetails(productId));
-                              }
-                            }}
-                          >
-                            <div className="h-16 w-16 overflow-hidden rounded-[10px] border border-[color:var(--color-border)] bg-white">
-                              {displayImage ? (
-                                <img src={displayImage} alt={displayName} className="h-full w-full object-cover" />
-                            ) : (
-                                <div className="flex h-full w-full items-center justify-center text-xs text-[color:var(--color-text-muted)]">
-                                  Image
-                                </div>
-                              )}
-                            </div>
-                            <div className="flex-1">
-                              <Text className="block font-medium text-[color:var(--color-text)]">
-                                {displayName}
-                              </Text>
-                              <Text className="text-xs text-[color:var(--color-text-muted)]">
-                                {displaySubtitle ? `${displaySubtitle} | ` : ""}Qty {item.quantity ?? 0} {item.size ? `| Size ${item.size}` : ""}
-                              </Text>
-                            </div>
-                            <div className="text-right">
-                              <Text className="text-xs text-[color:var(--color-text-muted)]">Price</Text>
-                              <Text className="block font-semibold text-[color:var(--color-text)]">
-                                {formatCurrency(item.price ?? 0, currency)}
-                              </Text>
-                            </div>
-                          </div>
-                        );
-                      })}
+                            return (
+                              <tr
+                                key={item.productId ?? `${order._id ?? "order"}-item-${index}`}
+                                className="cursor-pointer border-b border-[color:var(--color-border)] hover:bg-[color:var(--color-card)] last:border-b-0"
+                                onClick={() => {
+                                  if (!productId) return;
+                                  navigate(ROUTES.getProductDetails(productId));
+                                }}
+                                onKeyDown={(event) => {
+                                  if (!productId) return;
+                                  if (event.key === "Enter" || event.key === " ") {
+                                    event.preventDefault();
+                                    navigate(ROUTES.getProductDetails(productId));
+                                  }
+                                }}
+                                role="button"
+                                tabIndex={0}
+                              >
+                                <td className="px-3 py-3 text-sm text-[color:var(--color-text-muted)]">
+                                  {index + 1}
+                                </td>
+                                <td className="px-3 py-3">
+                                  <div className="h-10 w-10 overflow-hidden rounded-[8px] border border-[color:var(--color-border)] bg-white">
+                                    {displayImage ? (
+                                      <img src={displayImage} alt={displayName} className="h-full w-full object-cover" />
+                                    ) : (
+                                      <div className="flex h-full w-full items-center justify-center text-[10px] text-[color:var(--color-text-muted)]">
+                                        Image
+                                      </div>
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="px-3 py-3 text-sm font-medium text-[color:var(--color-text)]">
+                                  {displayName}
+                                </td>
+                                <td className="px-3 py-3 text-sm text-[color:var(--color-text-muted)]">
+                                  {displaySubtitle || "-"}
+                                </td>
+                                <td className="px-3 py-3 text-sm text-[color:var(--color-text)]">
+                                  {item.quantity ?? 0}
+                                </td>
+                                <td className="px-3 py-3 text-right text-sm font-semibold text-[color:var(--color-text)]">
+                                  {formatCurrency(item.price ?? 0, currency)}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
 

@@ -1,5 +1,6 @@
 ﻿import { InstagramOutlined, PlayCircleFilled } from "@ant-design/icons";
 import { Typography } from "antd";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Queries } from "../../Api/Queries";
 import type { InstagramItem } from "../../Types";
 
@@ -41,11 +42,39 @@ const normalizeInstagramItems = (items: InstagramItem[] | undefined | null): Ins
   }));
 };
 
+const getInstagramCardWidth = (containerWidth: number) => {
+  if (containerWidth >= 1200) return 223;
+  if (containerWidth >= 900) return 195;
+  if (containerWidth >= 640) return 147;
+  return 115;
+};
+
+const createRepeatedInstagramItems = (baseItems: InstagramCardItem[], containerWidth: number) => {
+  if (!baseItems.length) return baseItems;
+  const cardWidth = getInstagramCardWidth(containerWidth);
+  const baseWidth = Math.max(baseItems.length * cardWidth, cardWidth);
+  const requiredWidth = containerWidth * 2;
+  const repeatCount = Math.max(2, Math.ceil(requiredWidth / baseWidth));
+  return Array.from({ length: repeatCount }, () => baseItems).flat();
+};
+
 const InstagramScrollingSection = ({ containerClassName = "delvoura-container" }: { containerClassName?: string }) => {
   const { data } = Queries.useGetInstagrams({ status: "active" });
-  const normalizedItems = normalizeInstagramItems(data?.data?.instagram_data);
-  const items = [...normalizedItems, ...normalizedItems];
+  const normalizedItems = useMemo(() => normalizeInstagramItems(data?.data?.instagram_data), [data?.data?.instagram_data]);
+  const [items, setItems] = useState<InstagramCardItem[]>(normalizedItems);
+  const marqueeRef = useRef<HTMLDivElement | null>(null);
   const fallbackImage = placeholderImages[0]?.src;
+
+  useEffect(() => {
+    const updateItems = () => {
+      const width = marqueeRef.current?.clientWidth ?? window.innerWidth;
+      setItems(createRepeatedInstagramItems(normalizedItems, width));
+    };
+
+    updateItems();
+    window.addEventListener("resize", updateItems);
+    return () => window.removeEventListener("resize", updateItems);
+  }, [normalizedItems]);
 
   return (
     <section className="w-full overflow-x-hidden py-12">
@@ -60,7 +89,7 @@ const InstagramScrollingSection = ({ containerClassName = "delvoura-container" }
       </div>
 
       <div className={`mt-8 ${containerClassName} overflow-x-hidden`}>
-        <div className="instagram-marquee overflow-hidden rounded-3xl bg-[color:var(--color-surface-dark)] px-[3px] py-3 sm:px-[4px]" style={{ boxShadow: "0 18px 28px -20px color-mix(in srgb, var(--color-primary) 65%, transparent)" }}>
+        <div ref={marqueeRef} className="instagram-marquee overflow-hidden rounded-3xl bg-[color:var(--color-surface-dark)] px-[3px] py-3 sm:px-[4px]" style={{ boxShadow: "0 18px 28px -20px color-mix(in srgb, var(--color-primary) 65%, transparent)" }}>
           <div className="instagram-track flex w-max items-center gap-[3px]">
             {items.map((item, index) => {
               const resolvedVideoUrl = resolveMediaUrl(item.videoUrl ?? undefined);

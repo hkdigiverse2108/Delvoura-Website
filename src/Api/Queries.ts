@@ -2,6 +2,7 @@ import { KEYS, URL_KEYS } from "../Constants";
 import type { AddressesApiResponse, AddressesQueryParams, BannerApiResponse, BlogsApiResponse, BlogsQueryParams, CollectionsApiResponse, CollectionsQueryParams, InstagramApiResponse, InstagramQueryParams, OrdersApiResponse, OrdersQueryParams, PhonepeOrderStatusResponse, PrivacyPolicyApiResponse, ProductsApiResponse, ProductsQueryParams, RatingsApiResponse, RatingsQueryParams, RazorpayOrderStatusResponse, RefundPolicyApiResponse, ReturnExchangeApiResponse, ScentsApiResponse, ScentsQueryParams, SeasonsApiResponse, SeasonsQueryParams, SettingsApiResponse, SingleAddressApiResponse, SingleBlogApiResponse, SingleOrderApiResponse, SingleProductApiResponse, SingleUserApiResponse, TermsConditionsApiResponse, TermsServiceApiResponse, TopbarApiResponse } from "../Types";
 import { Get } from "./Methods/Index";
 import { useQueries } from "./ReactQuery/Index";
+import type { AppQueryOptions } from "./ReactQuery/Index";
 
 
 
@@ -15,7 +16,7 @@ export const Queries = {
 
   // ************ Product ***********
   useGetProducts: (params?: ProductsQueryParams) =>useQueries<ProductsApiResponse>([KEYS.PRODUCT.GET_PRODUCTS, params],() => Get<ProductsApiResponse>(URL_KEYS.PRODUCT.GET_PRODUCTS, params),),
-  useGetProductById: (id?: string) =>useQueries<SingleProductApiResponse>([KEYS.PRODUCT.GET_PRODUCT_BY_ID, id],() => Get<SingleProductApiResponse>(`${URL_KEYS.PRODUCT.GET_PRODUCT_BY_ID}/${id}`),{ enabled: !!id },),
+  useGetProductById: (id?: string, options?: AppQueryOptions<SingleProductApiResponse>) =>useQueries<SingleProductApiResponse>([KEYS.PRODUCT.GET_PRODUCT_BY_ID, id],() => Get<SingleProductApiResponse>(`${URL_KEYS.PRODUCT.GET_PRODUCT_BY_ID}/${id}`),{ enabled: !!id, ...options },),
 
   // ************ Rating ***********
   useGetRatings: (params?: RatingsQueryParams) => useQueries<RatingsApiResponse>( [KEYS.RATING.GET_RATINGS, params], () => Get<RatingsApiResponse>(URL_KEYS.RATING.GET_RATINGS, params), { enabled: !!params?.productId },),

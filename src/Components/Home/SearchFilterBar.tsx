@@ -109,13 +109,15 @@ const SearchFilterBar = ({ filters, onChange }: SearchFilterBarProps) => {
       <div className="delvoura-container">
         <div className="delvoura-home-filter-bar w-full" ref={barRef}>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
-            <div className="flex w-full flex-1 flex-col gap-3 sm:flex-row sm:items-center">
-              <div className="w-full flex-1 md:max-w-[620px]">
+            <div className="delvoura-search-filter-row flex w-full flex-1 flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="delvoura-search-bar-wrapper flex-1 min-w-0 md:max-w-[620px]">
                 <SearchBarWithModal showOnMobile buttonText="Search" buttonClassName="delvoura-home-search-btn w-full" />
               </div>
-              <Button type="default" icon={showFilters ? <CloseOutlined /> : <FilterOutlined />} className="delvoura-filter-btn" ref={filterBtnRef} onClick={() => setShowFilters((prev) => !prev)}>
-                Filter
-              </Button>
+              <div className="delvoura-filter-btn-wrapper">
+                <Button type="default" icon={showFilters ? <CloseOutlined /> : <FilterOutlined />} className="delvoura-filter-btn" ref={filterBtnRef} onClick={() => setShowFilters((prev) => !prev)} aria-label="Toggle filters">
+                  <span className="delvoura-filter-btn-label">Filter</span>
+                </Button>
+              </div>
             </div>
 
             <div className="lg:ml-auto">

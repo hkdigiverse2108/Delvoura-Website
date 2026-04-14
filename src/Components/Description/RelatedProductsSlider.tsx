@@ -22,7 +22,6 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(4);
-  const [activePage, setActivePage] = useState(0);
   
   const { products, isLoading: isLoadingProducts } = useFeaturedProducts(excludeId);
   
@@ -52,12 +51,6 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
   
   const scrollThumbs = (direction: "prev" | "next") => scroll(thumbsRef, direction, 140);
   
-  const goToPage = (page: number) => {
-    if (!trackRef.current || !cardRef.current) return;
-    const cardWidth = cardRef.current.getBoundingClientRect().width + 16;
-    trackRef.current.scrollTo({ left: page * cardWidth * slidesPerView, behavior: "smooth" });
-  };
-  
   useEffect(() => {
     const updateSlides = () => {
       const width = window.innerWidth;
@@ -70,19 +63,6 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
     window.addEventListener("resize", updateSlides);
     return () => window.removeEventListener("resize", updateSlides);
   }, []);
-  
-  useEffect(() => {
-    const track = trackRef.current;
-    const card = cardRef.current;
-    if (!track || !card) return;
-    const cardWidth = card.getBoundingClientRect().width + 16;
-    const onScroll = () => setActivePage(Math.round(track.scrollLeft / (cardWidth * slidesPerView)) || 0);
-    onScroll();
-    track.addEventListener("scroll", onScroll, { passive: true });
-    return () => track.removeEventListener("scroll", onScroll);
-  }, [slidesPerView]);
-  
-  const totalPages = Math.ceil(products.length / slidesPerView);
   
   const getPrice = (product: ProductItem, variant?: string) => {
     const variants = product.variants as any[];
@@ -149,11 +129,6 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
           )}
         </div>
         
-        {totalPages > 0 && (
-          <div className="delvoura-related-dots" role="tablist">
-            {Array.from({ length: totalPages }).map((_, idx) => <button key={`dot-${idx}`} type="button" role="tab" aria-selected={activePage === idx} className={`delvoura-related-dot ${activePage === idx ? "is-active" : ""}`} onClick={() => goToPage(idx)} />)}
-          </div>
-        )}
       </div>
       
       <Modal open={!!selectedProduct} onCancel={() => setSelectedProduct(null)} footer={null} centered width={1080} closable={false} className="delvoura-select-options-modal" maskStyle={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }} bodyStyle={{ padding: 0 }}>

@@ -66,19 +66,25 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
               <EmptyState message="No products found" imageAlt="No products" />
             )
           ) : (
-            products.map((product, idx) => (
-            <article key={product._id || `${product.name}-${idx}`} className="delvoura-product-card cursor-pointer" onClick={() => navigate(ROUTES.getProductDetails(product._id || ""))}>
-              <div className="delvoura-product-media">
-                <img src={product.coverimage || product.images?.[0] || ""} alt={product.name || "Product"} loading="lazy" />
-                <div className="delvoura-product-media-shadow" />
-                <div className="delvoura-product-media-shadow-bottom" />
-                <div className="delvoura-product-badges">
-                  {product.gender ? <Tag key={product.gender} className="delvoura-product-badge">{product.gender}</Tag> : null}
-                </div>
-                <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={(event) => { event.stopPropagation(); const firstVariant = (product.variants?.[0] as any)?.size || (product.variants?.[0] as any) || "50 ml"; setSelectedProduct(product); setSelectedVariant(firstVariant); setQuantity(1); setActiveImageIndex(0); }}>
-                  Select Options
-                </Button>
-              </div>
+            products.map((product, idx) => {
+              const productId = product._id || (product as any).id || "";
+              return (
+                <article
+                  key={productId || `${product.name}-${idx}`}
+                  className="delvoura-product-card cursor-pointer"
+                  onClick={() => { if (!productId) return; navigate(ROUTES.getProductDetails(productId)); }}
+                >
+                  <div className="delvoura-product-media">
+                    <img src={product.coverimage || product.images?.[0] || ""} alt={product.name || "Product"} loading="lazy" />
+                    <div className="delvoura-product-media-shadow" />
+                    <div className="delvoura-product-media-shadow-bottom" />
+                    <div className="delvoura-product-badges">
+                      {product.gender ? <Tag key={product.gender} className="delvoura-product-badge">{product.gender}</Tag> : null}
+                    </div>
+                    <Button className="delvoura-product-cta delvoura-product-cta-overlay" type="default" onClick={(event) => { event.stopPropagation(); const firstVariant = (product.variants?.[0] as any)?.size || (product.variants?.[0] as any) || "50 ml"; setSelectedProduct(product); setSelectedVariant(firstVariant); setQuantity(1); setActiveImageIndex(0); }}>
+                      Select Options
+                    </Button>
+                  </div>
 
               <div className="delvoura-product-content ">
                 <h3 className="delvoura-product-title">{product.name || "Untitled"}</h3>
@@ -118,7 +124,8 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                 </Button>
               </div>
             </article>
-          ))) }
+          );
+        }) )}
         </div>
       </div>
 

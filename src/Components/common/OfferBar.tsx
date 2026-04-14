@@ -13,8 +13,8 @@ const OfferBar = ({ className = "" }: { className?: string }) => {
   if (items.length === 0) return null;
 
   return (
-    <div className={`fixed left-0 right-0 top-0 z-[500] mt-3 ${className}`}>
-      <div className="delvoura-container h-auto rounded-xl bg-[#111111] px-2 py-3 text-center text-[14px] sm:text-[13px] font-light tracking-[0.02em] text-[#ffffff]"  style={{  boxShadow: "none",  }}  >
+    <div className={`fixed left-0 right-0 top-0 z-[500] mt-0 sm:mt-3 ${className}`}>
+      <div className="delvoura-container h-auto rounded-xl bg-[#111111] px-2 py-1 sm:py-3 text-center text-[9px] sm:text-[14px] font-light tracking-[0.02em] text-[#ffffff]" style={{ boxShadow: "none", }}  >
         {items.map((item, index) => (
           <span key={`${item}-${index}`}>
             {item}

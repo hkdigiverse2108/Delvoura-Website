@@ -9,7 +9,7 @@ import AppFooter from "../../Layout/AppFooter";
 const ProductDescription = () => {
   const [hideOfferBar, setHideOfferBar] = useState(false);
   const { id } = useParams();
-  const { data } = Queries.useGetProductById(id);
+  const { data } = Queries.useGetProductById(id, { placeholderData: undefined });
   const product = data?.data || null;
 
   useEffect(() => {

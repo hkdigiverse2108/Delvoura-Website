@@ -35,7 +35,7 @@ const AppFooter = () => {
 
   return (
     <footer className="delvoura-header-theme delvoura-header-shell delvoura-footer-shell border-t border-[var(--color-border)] text-[color:var(--color-text)]">
-      <div className="delvoura-container py-14">
+      <div className="delvoura-container py-5 md:py-14">
         <div className="hidden gap-20 md:grid md:grid-cols-[1fr_1.2fr_1fr]">
           <div className="space-y-5 max-w-[320px]">
             <img src="/assets/images/logo/logo-white.png" alt="Delvoura" className="h-10 w-auto"/>

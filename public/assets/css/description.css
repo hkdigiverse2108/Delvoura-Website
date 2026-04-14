@@ -805,7 +805,7 @@
   .delvoura-related-products .delvoura-product-media {
     width: 100%;
     flex: 0 0 auto;
-    height: 260px;
+    height: 400px;
   }
 
   .delvoura-related-products .delvoura-product-media img {
@@ -1405,7 +1405,7 @@
 
 @media (max-width: 640px) {
   .delvoura-product-page {
-    padding: 110px 0 70px;
+    padding: 70px 0 70px;
   }
 
   .delvoura-gallery-nav,

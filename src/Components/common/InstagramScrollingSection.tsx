@@ -85,7 +85,7 @@ const InstagramScrollingSection = ({ containerClassName = "delvoura-container" }
           </span>
           <Title level={3} className="!m-0 !text-[color:var(--color-text)] text-center">Catch the Delvoura on Instagram!</Title>
         </div>
-        <Text className="text-[color:var(--color-text-muted)]">A curated feed of aroma, artistry, and allureâ€”join the fragrance journey.</Text>
+        <Text className="text-[color:var(--color-text-muted)]">A curated feed of aroma, artistry, and allure—join the fragrance journey.</Text>
       </div>
 
       <div className={`mt-8 ${containerClassName} overflow-x-hidden`}>

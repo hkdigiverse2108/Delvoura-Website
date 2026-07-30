@@ -26,8 +26,8 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
   }, [product]);
 
   const variants = product?.variants?.length ? product.variants : [];
-  const selected = variants.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant);
-  const price = typeof selected === "object" ? selected?.price ?? product?.price ?? 0 : product?.price ?? 0;
+  const selected = variants.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant) || variants[0];
+  const price = typeof selected === "object" ? selected?.price ?? selected?.mrp ?? product?.price ?? product?.mrp ?? 0 : product?.price ?? product?.mrp ?? 0;
   const mrp = typeof selected === "object" ? selected?.mrp ?? product?.mrp : product?.mrp;
   
   //============== Handle Add To Cart (Product Detail) ==============
@@ -94,7 +94,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
 
         <div className="delvoura-product-price-row">
           <span className="delvoura-product-price">Rs. {price}</span>
-          {mrp && mrp !== price && (
+          {Boolean(mrp) && mrp! > price && (
             <span className="delvoura-product-price-old">M.R.P. {mrp}</span>
           )}
         </div>

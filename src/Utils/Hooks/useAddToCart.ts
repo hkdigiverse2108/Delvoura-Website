@@ -18,8 +18,8 @@ const getVariantLabel = (product?: ProductItem | null, selectedVariant?: string)
 const getVariantPrice = (product?: ProductItem | null, variantLabel?: string) => {
   if (!product) return 0;
   const variants = product.variants as any[] | undefined;
-  const selected = variants?.find((v) => (typeof v === "object" ? v.size : v) === variantLabel);
-  if (selected && typeof selected === "object") return Number(selected?.price ?? selected?.mrp ?? product.price ?? 0);
+  const selected = (variantLabel ? variants?.find((v) => (typeof v === "object" ? v.size : v) === variantLabel) : undefined) || variants?.[0];
+  if (selected && typeof selected === "object") return Number(selected?.price ?? selected?.mrp ?? product.price ?? product.mrp ?? 0);
   return Number(product.price ?? product.mrp ?? 0);
 };
 

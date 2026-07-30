@@ -65,9 +65,14 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
   }, []);
   
   const getPrice = (product: ProductItem, variant?: string) => {
-    const variants = product.variants as any[];
-    const selected = variants?.find(v => (typeof v === "object" ? v.size : v) === variant);
-    if (selected && typeof selected === "object") return selected.price ?? 0;
+    const variants = (product.variants || []) as any[];
+    const selected = variant
+      ? variants.find(v => (typeof v === "object" ? v.size : v) === variant)
+      : variants[0];
+    const target = selected || variants[0];
+    if (target && typeof target === "object") {
+      return target.price ?? target.mrp ?? product.price ?? product.mrp ?? 0;
+    }
     return product.price ?? product.mrp ?? 0;
   };
   const addToCart = useAddToCart();
@@ -153,13 +158,13 @@ const RelatedProductsSlider = ({ excludeId }: RelatedProductsSliderProps) => {
               <div className="delvoura-select-options-price-row">
                 {(() => {
                   const variants = selectedProduct.variants as any[] | undefined;
-                  const selected = variants?.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant);
-                  const price = typeof selected === "object" ? selected?.price ?? 0 : selectedProduct.price ?? 0;
+                  const selected = variants?.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant) || variants?.[0];
+                  const price = typeof selected === "object" ? selected?.price ?? selected?.mrp ?? selectedProduct.price ?? 0 : selectedProduct.price ?? selectedProduct.mrp ?? 0;
                   const mrp = typeof selected === "object" ? selected?.mrp ?? selectedProduct.mrp : selectedProduct.mrp;
                   return (
                     <>
                       <span className="delvoura-select-options-price">Rs. {price}</span>
-                      {mrp && mrp !== price && <span className="delvoura-select-options-price-old">Rs. {mrp}</span>}
+                      {Boolean(mrp) && mrp! > price && <span className="delvoura-select-options-price-old">Rs. {mrp}</span>}
                     </>
                   );
                 })()}

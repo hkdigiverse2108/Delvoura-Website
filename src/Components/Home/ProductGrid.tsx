@@ -107,7 +107,7 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                   <span className="delvoura-product-price">
                     {(() => {
                       const firstVariant = (product.variants?.[0] as any);
-                      const price = typeof firstVariant === "object" ? firstVariant?.price ?? 0 : product.price ?? product.mrp ?? 0;
+                      const price = typeof firstVariant === "object" ? firstVariant?.price ?? firstVariant?.mrp ?? product.price ?? product.mrp ?? 0 : product.price ?? product.mrp ?? 0;
                       return `Rs. ${price}`;
                     })()}
                   </span>
@@ -160,13 +160,13 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
               <div className="delvoura-select-options-price-row">
                 {(() => {
                   const variants = selectedProduct.variants as any[] | undefined;
-                  const selected = variants?.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant);
-                  const price = typeof selected === "object" ? selected?.price ?? 0 : selectedProduct.price ?? 0;
+                  const selected = variants?.find((v) => (typeof v === "object" ? v.size : v) === selectedVariant) || variants?.[0];
+                  const price = typeof selected === "object" ? selected?.price ?? selected?.mrp ?? selectedProduct.price ?? 0 : selectedProduct.price ?? selectedProduct.mrp ?? 0;
                   const mrp = typeof selected === "object" ? selected?.mrp ?? selectedProduct.mrp : selectedProduct.mrp;
                   return (
                     <>
                       <span className="delvoura-select-options-price">Rs. {price}</span>
-                      {mrp && mrp !== price && (
+                      {Boolean(mrp) && mrp! > price && (
                         <span className="delvoura-select-options-price-old">Rs. {mrp}</span>
                       )}
                     </>

@@ -1,4 +1,4 @@
-﻿Ingredient buttons like filter buttons
+Ingredient buttons like filter buttons
 .delvoura-ingredient-btns {
   display: flex;
   flex-wrap: wrap;
@@ -980,13 +980,8 @@
   margin-top: 20px;
   display: grid;
   gap: 14px;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(240px, 320px);
-  grid-template-rows: repeat(2, minmax(0, auto));
-  overflow-x: auto;
-  overflow-y: hidden;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   padding: 2px 0 6px;
-  scrollbar-width: none;
   align-content: start;
 }
 
@@ -1016,7 +1011,7 @@
   padding: 16px 18px;
   display: grid;
   gap: 10px;
-  max-width: 320px;
+  width: 100%;
   height: auto;
   cursor: pointer;
   transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;

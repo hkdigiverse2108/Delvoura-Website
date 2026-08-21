@@ -36,7 +36,6 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
   const price = Number(rawPrice) || 0;
   const mrp = Number(rawMrp) || 0;
   
-  const saving = mrp > price ? mrp - price : 0;
   const discountPercent = mrp > price && mrp > 0 ? Math.round(((mrp - price) / mrp) * 100) : 0;
   const prepaidPrice = (price * 0.9).toFixed(2); // 10% prepaid discount preview
 

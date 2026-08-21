@@ -1072,6 +1072,7 @@ Ingredient buttons like filter buttons
   color: var(--color-text);
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1079,12 +1080,14 @@ Ingredient buttons like filter buttons
 .delvoura-inspired-text {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
 .delvoura-inspired-text.is-open {
   -webkit-line-clamp: unset;
+  line-clamp: unset;
   overflow: visible;
 }
 
@@ -1134,6 +1137,7 @@ Ingredient buttons like filter buttons
 .delvoura-review-modal-body .delvoura-review-text {
   display: block;
   -webkit-line-clamp: unset;
+  line-clamp: unset;
   -webkit-box-orient: unset;
   overflow: visible;
 }

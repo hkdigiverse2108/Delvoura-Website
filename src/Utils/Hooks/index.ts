@@ -4,3 +4,4 @@ export * from "./useFeaturedProducts";
 export * from "./useCart";
 export * from "./useAddToCart";
 export * from "./useSettings";
+export * from "./useWishlist";

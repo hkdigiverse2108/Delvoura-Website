@@ -1,5 +1,6 @@
 import { ConfigProvider } from "antd";
 import Cart from "./Cart";
+import WishlistBtn from "./WishlistBtn";
 import CollectionMenu from "./CollectionMenu";
 import LoginAndSignupBtns from "./LoginAndSignupBtns";
 import SearchBarWithModel from "./SearchBarWithModel";
@@ -52,14 +53,16 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-4">
-              <div className="flex items-center gap-3 md:hidden">
+            <div className="flex items-center justify-end gap-3 md:gap-4">
+              <div className="flex items-center gap-2 md:hidden">
+                <WishlistBtn />
                 <Cart />
               </div>
 
               {/* DESKTOP */}
-              <div className="hidden md:flex items-center gap-4">
+              <div className="hidden md:flex items-center gap-3">
                 <SearchBarWithModel />
+                <WishlistBtn />
                 {!isLoggedIn 
                 ? ( !hideAuth ? <LoginAndSignupBtns /> : null) 
                 : ( <ProfileCard user={user} userData={userData} /> )}

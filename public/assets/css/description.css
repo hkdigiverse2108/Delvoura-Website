@@ -123,9 +123,8 @@ Ingredient buttons like filter buttons
   border-radius: 18px;
   border: 1px solid var(--color-border);
   background: var(--color-card);
-  aspect-ratio: 4 / 5;
-  min-height: 400px;
-  max-height: 600px;
+  aspect-ratio: 1 / 1;
+  width: 100%;
   padding: 0;
   display: flex;
   align-items: center;
@@ -1430,7 +1429,7 @@ Ingredient buttons like filter buttons
   .delvoura-product-main {
     min-height: 180px;
     max-height: 70vh;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1 / 1;
     width: 100%;
     max-width: 100%;
   }

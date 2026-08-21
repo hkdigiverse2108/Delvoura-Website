@@ -22,6 +22,8 @@ export const ROUTES = {
     BLOG_DETAILS: "/blog/:id",
     //==============CHECKOUT===============
     CHECKOUT: "/checkout",
+    //==============WISHLIST===============
+    WISHLIST: "/wishlist",
 
     //==============PAYMENT===============
     PAYMENT: {

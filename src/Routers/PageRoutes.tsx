@@ -14,6 +14,7 @@ import ProfilePage from "../Pages/Profile/Index";
 import BlogPage from "../Pages/Blog/Index";
 import BlogDetailsPage from "../Pages/Blog/Details";
 import CheckoutPage from "../Pages/Checkout/Index";
+import WishlistPage from "../Pages/Wishlist/Index";
 import PaymentSuccessPage from "../Pages/Payment/Success";
 import PaymentFailedPage from "../Pages/Payment/Failed";
 
@@ -21,6 +22,7 @@ export const PageRoutes = [
   { path: ROUTES.HERO, element: <Navigate to={ROUTES.COLLECTIONS_ALL} replace /> },
   { path: ROUTES.COLLECTIONS_ALL, element: <MainHomePage /> },
   { path: ROUTES.PRODUCT_DETAILS, element: <ProductDescription /> },
+  { path: ROUTES.WISHLIST, element: <WishlistPage /> },
   { path: ROUTES.CONTACT, element: <Contact /> },
   { path: ROUTES.SHIPPING, element: <Shipping /> },
   { path: ROUTES.RETURNS_EXCHANGES, element: <ReturnsAndExchanges /> },

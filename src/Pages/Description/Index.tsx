@@ -39,7 +39,9 @@ const ProductDescription = () => {
               </div>
             </div> <br /><br /><br />
             <RelatedProductsSlider excludeId={product?._id} /> <br /><br />
-            <ProductReviews productId={product?._id} ratingSummary={product?.ratingSummary} /> <br /><br />
+            <div id="product-reviews-section">
+              <ProductReviews productId={product?._id} ratingSummary={product?.ratingSummary} />
+            </div> <br /><br />
             <InstagramScrollingSection containerClassName="w-full" />
           </div>
         </div>

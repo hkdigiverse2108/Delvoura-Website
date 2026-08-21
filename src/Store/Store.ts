@@ -6,6 +6,7 @@ import seasonReducer from "./Slices/SeasonSlice";
 import addressReducer from "./Slices/AddressSlice";
 import orderReducer from "./Slices/OrderSlice";
 import settingsReducer from "./Slices/SettingsSlice";
+import wishlistReducer from "./Slices/WishlistSlice";
 
 const Store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const Store = configureStore({
     address: addressReducer,
     order: orderReducer,
     settings: settingsReducer,
+    wishlist: wishlistReducer,
   },
 });
 
